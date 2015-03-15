@@ -6,6 +6,7 @@ Zadaci:
 1) Dodati novi file s vašim imenom(npr. Luka.txt) i poslati na repozitorij.
 2) Ispod dopisati svoje ime i poslati na repozitorij (mislim da je to push):
 Luka
+Emina
 ***
 
-3) Javite se kad uradite ovo pa da probamo napraviti konflikt i riješiti ga, jer æe ovo oko ovog sigurno biti problema, a ovdje to nije jednostavno kao na TFS-u. 
+3) Javite se kad uradite ovo pa da probamo napraviti konflikt i riješiti ga, jer æe ovo oko ovog sigurno biti problema, a ovdje to nije jednostavno kao na TFS-u.
