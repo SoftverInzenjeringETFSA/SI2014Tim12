@@ -1,13 +1,14 @@
 Ovo je prvi file koji morate skinuti.
 
 Zadaci:
-0 - skinuti sve öto treba. Mislim da na GitHubu ima njihov git program. ToËnije imam njihov GitHub - GUI i Git Shell - konzola njihova. Vjerojatno Êe te se trebati i konektovati nekako... ja sam ovo davno uradio pa sam zaboravio kako ide.
+0 - skinuti sve ≈°to treba. Mislim da na GitHubu ima njihov git program. Toƒçnije imam njihov GitHub - GUI i Git Shell - konzola njihova. Vjerojatno ƒáe te se trebati i konektovati nekako... ja sam ovo davno uradio pa sam zaboravio kako ide.
 
-1) Dodati novi file s vaöim imenom(npr. Luka.txt) i poslati na repozitorij.
+1) Dodati novi file s va≈°im imenom(npr. Luka.txt) i poslati na repozitorij.
 2) Ispod dopisati svoje ime i poslati na repozitorij (mislim da je to push):
 Luka
 Emina
 Haris
+Selma
 ***
 
-3) Javite se kad uradite ovo pa da probamo napraviti konflikt i rijeöiti ga, jer Êe ovo oko ovog sigurno biti problema, a ovdje to nije jednostavno kao na TFS-u.
+3) Javite se kad uradite ovo pa da probamo napraviti konflikt i rije≈°iti ga, jer ƒáe ovo oko ovog sigurno biti problema, a ovdje to nije jednostavno kao na TFS-u.
