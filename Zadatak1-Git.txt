@@ -9,6 +9,6 @@ Luka
 Emina
 Haris
 Selma
-***
+Enil
 
 3) Javite se kad uradite ovo pa da probamo napraviti konflikt i riješiti ga, jer će ovo oko ovog sigurno biti problema, a ovdje to nije jednostavno kao na TFS-u.
