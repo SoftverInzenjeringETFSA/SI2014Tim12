@@ -64,9 +64,9 @@ public class PasswordMgr extends JDialog {
 		contentPanel.add(txtpnNoviPasswword);
 		
 		JLabel txtpnPonovljeniNoviPassword = new JLabel();
-		txtpnPonovljeniNoviPassword.setText("Ponovljeni novi password");
+		txtpnPonovljeniNoviPassword.setText("Ponovite novi password");
 		txtpnPonovljeniNoviPassword.setBackground(SystemColor.menu);
-		txtpnPonovljeniNoviPassword.setBounds(10, 73, 134, 20);
+		txtpnPonovljeniNoviPassword.setBounds(10, 73, 159, 20);
 		contentPanel.add(txtpnPonovljeniNoviPassword);
 		
 		

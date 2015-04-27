@@ -3,15 +3,19 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
+
 import java.awt.BorderLayout;
+
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Dialog.ModalityType;
 
 
 public class PrikazPacijentaGUI {
 
-	private JFrame frmPrikazPacijenta;
+	private JDialog frmPrikazPacijenta;
 	private JTable table;
 
 	/**
@@ -42,7 +46,8 @@ public class PrikazPacijentaGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmPrikazPacijenta = new JFrame();
+		frmPrikazPacijenta = new JDialog();
+		frmPrikazPacijenta.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmPrikazPacijenta.setResizable(false);
 		frmPrikazPacijenta.setTitle("Prikaz pacijenta");
 		frmPrikazPacijenta.setBounds(100, 100, 450, 403);

@@ -3,16 +3,20 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
+
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import java.awt.Dialog.ModalityType;
 
 
 public class KreiranjePacijentaGUI {
 
-	private JFrame frmRegistracijaNovogPacijenta;
+	private JDialog frmRegistracijaNovogPacijenta;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -46,7 +50,8 @@ public class KreiranjePacijentaGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmRegistracijaNovogPacijenta = new JFrame();
+		frmRegistracijaNovogPacijenta = new JDialog();
+		frmRegistracijaNovogPacijenta.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmRegistracijaNovogPacijenta.setResizable(false);
 		frmRegistracijaNovogPacijenta.setTitle("Registracija novog pacijenta");
 		frmRegistracijaNovogPacijenta.setBounds(100, 100, 393, 341);

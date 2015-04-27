@@ -3,21 +3,27 @@ package GUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
 import java.awt.Window.Type;
+
 import javax.swing.JSpinner;
+
 import org.jdesktop.swingx.JXMonthView;
 import org.jdesktop.swingx.JXDatePicker;
+
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Dialog.ModalityType;
 
 public class Termini {
 
-	private JFrame frmR;
+	private JDialog dlgR;
 	private JTable table;
 
 	/**
@@ -28,7 +34,7 @@ public class Termini {
 			public void run() {
 				try {
 					Termini window = new Termini();
-					window.frmR.setVisible(true);
+					window.dlgR.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,47 +47,47 @@ public class Termini {
 	 */
 	public Termini() {
 		initialize();
-		frmR.setVisible(true);
+		dlgR.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmR = new JFrame();
-		frmR.setType(Type.UTILITY);
-		frmR.setTitle("Termini");
-		frmR.setBounds(100, 100, 465, 480);
-		frmR.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmR.getContentPane().setLayout(null);
+		dlgR = new JDialog();
+		dlgR.setModalityType(ModalityType.APPLICATION_MODAL);
+		dlgR.setTitle("Termini");
+		dlgR.setBounds(100, 100, 465, 480);
+		dlgR.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		dlgR.getContentPane().setLayout(null);
 		
 		JXMonthView monthView = new JXMonthView();
 		monthView.setBounds(25, 30, 245, 176);
-		frmR.getContentPane().add(monthView);
+		dlgR.getContentPane().add(monthView);
 		
 		JLabel lblVrstaPregleda = new JLabel("Vrsta pregleda:");
 		lblVrstaPregleda.setBounds(293, 31, 200, 22);
-		frmR.getContentPane().add(lblVrstaPregleda);
+		dlgR.getContentPane().add(lblVrstaPregleda);
 		
 		JRadioButton rdbtnSedmicni = new JRadioButton("Sedmi\u010Dni");
 		rdbtnSedmicni.setBounds(293, 73, 127, 25);
-		frmR.getContentPane().add(rdbtnSedmicni);
+		dlgR.getContentPane().add(rdbtnSedmicni);
 		
 		JRadioButton rdbtnMjesecni = new JRadioButton("Mjese\u010Dni");
 		rdbtnMjesecni.setBounds(293, 103, 127, 25);
-		frmR.getContentPane().add(rdbtnMjesecni);
+		dlgR.getContentPane().add(rdbtnMjesecni);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(293, 55, 95, 9);
-		frmR.getContentPane().add(separator);
+		dlgR.getContentPane().add(separator);
 		
 		JButton btnPrikaziTermine = new JButton("Prikazi termine");
 		btnPrikaziTermine.setBounds(140, 219, 140, 25);
-		frmR.getContentPane().add(btnPrikaziTermine);
+		dlgR.getContentPane().add(btnPrikaziTermine);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 257, 395, 145);
-		frmR.getContentPane().add(scrollPane);
+		dlgR.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		table.setFillsViewportHeight(true);
@@ -102,8 +108,6 @@ public class Termini {
 		table.getColumnModel().getColumn(0).setPreferredWidth(105);
 		table.getColumnModel().getColumn(1).setPreferredWidth(105);
 		table.getColumnModel().getColumn(2).setPreferredWidth(105);
-		scrollPane.setViewportView(table);
-		
-		
+		scrollPane.setViewportView(table);		
 	}
 }

@@ -4,21 +4,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import java.awt.Dialog.ModalityType;
 
 
 public class PacijentiGUI {
 
-	private JFrame frame;
+	private JDialog frame;
 	private JTable table;
 	private JToolBar toolBar;
 	private JButton btnNoviPacijent;
@@ -53,7 +57,8 @@ public class PacijentiGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JDialog();
+		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 518, 354);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
