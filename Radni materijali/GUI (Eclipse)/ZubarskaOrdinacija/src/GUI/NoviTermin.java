@@ -30,7 +30,6 @@ public class NoviTermin {
 			public void run() {
 				try {
 					NoviTermin window = new NoviTermin();
-					window.frmRegistracijaNovogTermina.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,6 +42,7 @@ public class NoviTermin {
 	 */
 	public NoviTermin() {
 		initialize();
+		frmRegistracijaNovogTermina.setVisible(true);
 	}
 
 	/**

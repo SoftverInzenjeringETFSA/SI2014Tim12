@@ -11,6 +11,7 @@ import javax.swing.JSpinner;
 import org.jdesktop.swingx.JXMonthView;
 import org.jdesktop.swingx.JXDatePicker;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,6 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,7 +38,6 @@ public class Termini {
 			public void run() {
 				try {
 					Termini window = new Termini();
-					window.dlgR.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -78,6 +79,10 @@ public class Termini {
 		JRadioButton rdbtnMjesecni = new JRadioButton("Mjese\u010Dni");
 		rdbtnMjesecni.setBounds(293, 103, 127, 25);
 		dlgR.getContentPane().add(rdbtnMjesecni);
+		
+		ButtonGroup grp = new ButtonGroup();
+		grp.add(rdbtnMjesecni);
+		grp.add(rdbtnSedmicni);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(293, 55, 95, 9);
