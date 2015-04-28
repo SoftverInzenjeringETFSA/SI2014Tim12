@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Dialog.ModalityType;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Termini {
 
@@ -81,12 +83,17 @@ public class Termini {
 		separator.setBounds(293, 55, 95, 9);
 		dlgR.getContentPane().add(separator);
 		
-		JButton btnPrikaziTermine = new JButton("Prikazi termine");
-		btnPrikaziTermine.setBounds(140, 219, 140, 25);
-		dlgR.getContentPane().add(btnPrikaziTermine);
+		JButton btnNoviTermin = new JButton("Registruj novi termin");
+		btnNoviTermin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new NoviTermin();
+			}
+		});
+		btnNoviTermin.setBounds(259, 393, 161, 25);
+		dlgR.getContentPane().add(btnNoviTermin);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 257, 395, 145);
+		scrollPane.setBounds(25, 235, 395, 145);
 		dlgR.getContentPane().add(scrollPane);
 		
 		table = new JTable();
