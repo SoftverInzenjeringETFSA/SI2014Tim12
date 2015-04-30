@@ -17,10 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
-
 import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 
 public class PacijentiGUI {
@@ -61,7 +58,6 @@ public class PacijentiGUI {
 	 */
 	private void initialize() {
 		frame = new JDialog();
-		frame.setTitle("Pacijenti");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 518, 354);
@@ -91,20 +87,10 @@ public class PacijentiGUI {
 		frame.getContentPane().add(toolBar);
 		
 		btnNoviPacijent = new JButton("Novi pacijent");
-		btnNoviPacijent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new KreiranjePacijentaGUI();
-			}
-		});
 		btnNoviPacijent.setIcon(new ImageIcon(PacijentiGUI.class.getResource("/GUI/AddIcon.png")));
 		toolBar.add(btnNoviPacijent);
 		
 		JButton btnModifikacijaPacijenta = new JButton("Modifikacija pacijenta");
-		btnModifikacijaPacijenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new ModifikacijaPacijentaGUI();
-			}
-		});
 		toolBar.add(btnModifikacijaPacijenta);
 		
 		JLabel lblPretraivanjePo = new JLabel("Pretra\u017Eivanje po:");

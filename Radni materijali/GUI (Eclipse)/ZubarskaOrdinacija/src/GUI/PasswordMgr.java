@@ -48,6 +48,7 @@ public class PasswordMgr extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
+		setTitle ("Promjena passworda");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		
@@ -58,7 +59,7 @@ public class PasswordMgr extends JDialog {
 		contentPanel.add(txtpnStariPassword);
 		
 		JLabel txtpnNoviPasswword = new JLabel();
-		txtpnNoviPasswword.setText("Novi passwword");
+		txtpnNoviPasswword.setText("Novi password");
 		txtpnNoviPasswword.setBackground(SystemColor.menu);
 		txtpnNoviPasswword.setBounds(10, 42, 96, 20);
 		contentPanel.add(txtpnNoviPasswword);
