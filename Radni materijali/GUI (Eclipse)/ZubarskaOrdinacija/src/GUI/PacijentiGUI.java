@@ -61,6 +61,7 @@ public class PacijentiGUI {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		frame.setTitle("Pacijenti");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 518, 354);
