@@ -24,8 +24,9 @@ import javax.swing.JLabel;
 public class loginGUI {
 
 	private JDialog frmPrijava;
-	private static JPasswordField sifraTxt;
 	private JLabel lblLozinka;
+	private JPasswordField passwordField;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -69,26 +70,10 @@ public class loginGUI {
 		});
 		frmPrijava.setResizable(false);
 		frmPrijava.setTitle("Prijava");
-		frmPrijava.setBounds(100, 100, 302, 123);
+		frmPrijava.setBounds(100, 100, 307, 149);
 		frmPrijava.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frmPrijava.getContentPane().setLayout(null);
 		frmPrijava.setLocationRelativeTo(null);
-		sifraTxt = new JPasswordField("");
-		sifraTxt.setToolTipText("");
-		sifraTxt.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent evt) {
-	            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-	            {
-	                Prijava();
-	            }
-			}
-		});
-		sifraTxt.setForeground(Color.BLACK);
-
-		sifraTxt.setBounds(111, 20, 166, 25);
-		frmPrijava.getContentPane().add(sifraTxt);
-		sifraTxt.setColumns(10);
 		
 		JButton prijavaBtn = new JButton("Prijavi se");
 		prijavaBtn.addActionListener(new ActionListener() {
@@ -96,12 +81,29 @@ public class loginGUI {
 				Prijava();
 			}
 		});
-		prijavaBtn.setBounds(164, 55, 113, 23);
+		prijavaBtn.setBounds(164, 86, 113, 23);
 		frmPrijava.getContentPane().add(prijavaBtn);
 		
 		lblLozinka = new JLabel("Password:");
-		lblLozinka.setBounds(10, 25, 79, 14);
+		lblLozinka.setBounds(10, 60, 79, 14);
 		frmPrijava.getContentPane().add(lblLozinka);
+		
+		passwordField = new JPasswordField("");
+		passwordField.setToolTipText("");
+		passwordField.setForeground(Color.GRAY);
+		passwordField.setColumns(10);
+		passwordField.setBounds(111, 55, 166, 20);
+		frmPrijava.getContentPane().add(passwordField);
+		
+		JLabel label = new JLabel("Korisni\u010Dko ime:");
+		label.setBounds(10, 24, 95, 14);
+		frmPrijava.getContentPane().add(label);
+		
+		textField = new JTextField();
+		textField.setForeground(Color.GRAY);
+		textField.setColumns(10);
+		textField.setBounds(111, 21, 166, 20);
+		frmPrijava.getContentPane().add(textField);
 		
 	}
 	
