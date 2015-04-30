@@ -98,37 +98,13 @@ public class MainForma {
 		TP.addTab ("Pacijenti", null, p3, "Tab za manipulaciju podacima o pacijentima");
 		p3.setLayout(new MigLayout("", "[123px][][]", "[23px][][]"));
 		
-		JButton btnKreiranjePacijenta = new JButton("Kreiranje pacijenta");
-		btnKreiranjePacijenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new KreiranjePacijentaGUI();
-			}
-		});
-		p3.add(btnKreiranjePacijenta, "cell 0 0,alignx left,aligny top");
-		
-		JButton btnModifikacijaPacijenta = new JButton("Modifikacija pacijenta");
-		btnModifikacijaPacijenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new ModifikacijaPacijentaGUI();
-			}
-		});
-		p3.add(btnModifikacijaPacijenta, "cell 1 0");
-		
-		JButton btnPrikazPacijenta = new JButton("Prikaz pacijenta");
-		btnPrikazPacijenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new PrikazPacijentaGUI();
-			}
-		});
-		p3.add(btnPrikazPacijenta, "cell 2 0,alignx left");
-		
 		JButton btnPacijenti = new JButton("Pacijenti");
 		btnPacijenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PacijentiGUI();
 			}
 		});
-		p3.add(btnPacijenti, "cell 0 1");
+		p3.add(btnPacijenti, "cell 0 0");
 		JPanel p4 = new JPanel();
 		TP.addTab ("Posjete", null, p4, "Evidencija posjeta za pacijente");
 		p4.setLayout(new MigLayout("", "[][]", "[]"));
