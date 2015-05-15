@@ -1,4 +1,4 @@
-package bll.service;
+package ba.unsa.etf.si.tim12.bll.service;
 
 public class MaterijaliManager {
 	Session session;

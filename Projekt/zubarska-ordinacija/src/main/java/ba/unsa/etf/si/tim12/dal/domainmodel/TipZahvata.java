@@ -1,4 +1,4 @@
-package dal.domainmodel;
+package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class TipZahvata implements java.io.Serializable  {
 	long id;
