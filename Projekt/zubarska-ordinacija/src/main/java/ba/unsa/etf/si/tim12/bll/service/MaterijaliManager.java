@@ -12,8 +12,8 @@ public class MaterijaliManager {
 		
 	}
 	
-	public  MaterijaliVM nadjiPoImenu(String ime) {
-		return new MaterijaliVM();
+	public  MaterijalVM nadjiPoImenu(String ime) {
+		return new MaterijalVM();
 		//TODO: THIS
 		
 	}
@@ -24,14 +24,14 @@ public class MaterijaliManager {
 		
 	}
 	
-	public  MaterijaliVM nadjiPoTipuZahvata(long tipZahvataId) {
-		return new MaterijaliVM();
+	public  MaterijalVM nadjiPoTipuZahvata(long tipZahvataId) {
+		return new MaterijalVM();
 		//TODO: THIS
 		
 	}
 	
-	public  MaterijaliVM nadjiPoObavljenomZahvatu(long obavljeniZahvatId) {
-		return new MaterijaliVM();
+	public  MaterijalVM nadjiPoObavljenomZahvatu(long obavljeniZahvatId) {
+		return new MaterijalVM();
 		//TODO: THIS
 		
 	}

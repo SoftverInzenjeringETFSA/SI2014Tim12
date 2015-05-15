@@ -10,7 +10,7 @@ public class PacijentManager {
 	
 	public PacijentManager(Session session) {}
 	
-	public  boolean dodajNovogPacijenta(noviPacijentVM pacijent) {
+	public  boolean dodajNovogPacijenta(NoviPacijentVM pacijent) {
 		return true;
 		//TODO: This
 	}

@@ -16,7 +16,7 @@ public class KorisnikManager {
 	//TODO: THIS}
 	}
 	
-	public  boolean promjeniPassword(PromjeniPasswordVM model) {
+	public  boolean promjeniPassword(PromjenaPasswordaVM model) {
 		return true;
 		//TODO: THIS}
 		
