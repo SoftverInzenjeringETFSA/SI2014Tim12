@@ -3,7 +3,6 @@ import java.util.Scanner;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
-
 public class PacijentManager {
 	Session session;
 	
