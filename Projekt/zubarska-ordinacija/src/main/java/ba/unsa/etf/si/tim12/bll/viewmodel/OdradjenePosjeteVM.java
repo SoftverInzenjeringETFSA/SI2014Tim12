@@ -1,9 +1,11 @@
 package ba.unsa.etf.si.tim12.bll.viewmodel;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class OdradjenePosjeteVM {
 	private Date vrijeme;
 	private int ukupnoPosjeta;
+	private ArrayList<OdradjenePosjeteRowVM> odradjenePosjete;
 	
 	public Date getVrijeme() {
 		return vrijeme;
