@@ -1,5 +1,7 @@
 package ba.unsa.etf.si.tim12.bll.service;
-import java.util.Scanner;
+import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+
+import java.util.*;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
@@ -8,16 +10,34 @@ public class PacijentManager {
 	
 	public PacijentManager(Session session) {}
 	
-	public  boolean dodajNovogPacijenta(noviPacijentVM pacijent) {}
+	public  boolean dodajNovogPacijenta(noviPacijentVM pacijent) {
+		return true;
+		//TODO: This
+	}
 	
-	public  boolean modificirajPacijenta(PacijentVM pacijent) {}
+	public  boolean modificirajPacijenta(PacijentVM pacijent) {
+		return true;
+		//TODO: This
+	}
 	
-	public  PrikazPacijentaVM dajPacijenta(lond id) {}
+	public  PrikazPacijentaVM dajPacijenta(long id) {
+		return new PrikazPacijentaVM();
+		//TODO: This
+	}
 	
-	public  set<PacijentVM> nadjiPoIdu(long pacijentId) {}
+	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
+		return new ArrayList<PacijentVM>();
+		//TODO: This
+	}
 	
-	public  set<PacijentVM> nadjiPoImenu(String pacijentIme) {}
+	public  ArrayList<PacijentVM> nadjiPoImenu(String pacijentIme) {
+		return new ArrayList<PacijentVM>();
+		//TODO: This
+	}
 	
-	public  set<PacijentVM> nadjiPoOpisu(String opis) {}
+	public  ArrayList<PacijentVM> nadjiPoOpisu(String opis) {
+		return new ArrayList<PacijentVM>();
+		//TODO: This
+	}
 
 }

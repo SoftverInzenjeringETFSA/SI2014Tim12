@@ -1,5 +1,8 @@
 package ba.unsa.etf.si.tim12.bll.service;
-import java.util.Scanner;
+import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+
+import java.util.*;
+
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
@@ -8,10 +11,16 @@ public class TerminManager {
 	
 	public TerminManager(Session session) {}
 	
-	public  set<TerminVM> nadjiPoPacijentu(long idpacijenta) {}
+	public  ArrayList<TerminVM> nadjiPoPacijentu(long idpacijenta) {
+		return new ArrayList<TerminVM>();
+		//TODO: This
+	}
 	
-	public  set<TerminVM> nadjiPoVremenu(Date vrijemePoc, Date vrijemeKraj) {}
+	public  ArrayList<TerminVM> nadjiPoVremenu(Date vrijemePoc, Date vrijemeKraj) {
+		return new ArrayList<TerminVM>();
+		//TODO: This
+	}
 	
-	public  void odkaziTermin(lond terminId) {}
+	public  void odkaziTermin(long terminId) {}
 
 }

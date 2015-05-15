@@ -1,4 +1,7 @@
 package ba.unsa.etf.si.tim12.bll.service;
+
+import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+
 import java.util.*;
 
 import org.hibernate.Transaction;
@@ -19,7 +22,7 @@ public class IzvjestajManager {
 	
 	public  PosjetePacijentaVM posjetePacijenta(long idPacijenta) { return new PosjetePacijentaVM();}
 	
-	public  OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {return new ODradjenePosjeteVM();}
+	public  OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {return new OdradjenePosjeteVM();}
 	
 	
 }
