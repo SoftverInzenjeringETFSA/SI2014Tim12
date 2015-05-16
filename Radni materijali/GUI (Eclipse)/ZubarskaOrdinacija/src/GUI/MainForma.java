@@ -180,25 +180,28 @@ public class MainForma {
 		p6.add(btnPrikazMaterijala, "cell 1 0");
 		JPanel p7 = new JPanel();
 		TP.addTab ("Izvještaji", null, p7, "Pregled izvještaja");
-		p7.setLayout(new MigLayout("", "[][][][][]", "[][][]"));
 		
 		JButton btnOPosjetama = new JButton("O posjetama i zahvatima");
+		btnOPosjetama.setBounds(10, 7, 343, 23);
 		btnOPosjetama.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IzvjestajPosjeteZahvati();
 			}
 		});
-		p7.add(btnOPosjetama, "cell 0 0");
+		p7.setLayout(null);
+		p7.add(btnOPosjetama);
 		
 		JButton btnOSvimUlazima = new JButton("O svim ulazima");
+		btnOSvimUlazima.setBounds(10, 41, 338, 23);
 		btnOSvimUlazima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IzvjestajUlazi();
 			}
 		});
-		p7.add(btnOSvimUlazima, "cell 1 0,alignx center");
+		p7.add(btnOSvimUlazima);
 		
 		JButton btnOPosjetamaPacijenta = new JButton("O posjetama pacijenta");
+		btnOPosjetamaPacijenta.setBounds(10, 109, 338, 23);
 		btnOPosjetamaPacijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IzvjestajPacijent();
@@ -206,16 +209,23 @@ public class MainForma {
 		});
 		
 		JButton btnNewButton_1 = new JButton("O potro\u0161enim materijalima");
+		btnNewButton_1.setBounds(10, 75, 338, 23);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IzvjestajMaterijali();
 			}
 		});
-		p7.add(btnNewButton_1, "cell 2 0,alignx center");
-		p7.add(btnOPosjetamaPacijenta, "cell 0 2,alignx center");
+		p7.add(btnNewButton_1);
+		p7.add(btnOPosjetamaPacijenta);
 		
-		JButton btnODnevnimPosjetama = new JButton("O dnevnim posjetama");
-		p7.add(btnODnevnimPosjetama, "cell 1 2,alignx center");
+		JButton btnODnevnimPosjetama = new JButton("O dnevnim/sedmi\u010Dnim/mjese\u010Dnim posjetama");
+		btnODnevnimPosjetama.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IzvjestajPosjeteDSM();
+			}
+		});
+		btnODnevnimPosjetama.setBounds(10, 143, 338, 23);
+		p7.add(btnODnevnimPosjetama);
 		frame.setVisible(true);
 	}
 
