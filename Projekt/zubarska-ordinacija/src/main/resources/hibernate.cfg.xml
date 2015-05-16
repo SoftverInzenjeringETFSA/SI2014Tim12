@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="">
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">2014SIEtf</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost/tim12</property>
+  <property name="hibernate.connection.username">EtfSI2014</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.hbm2ddl.auto">update</property>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Materijal.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Korisnik.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/MaterijalTipZahvata.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/ObavljeniZahvat.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Pacijent.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Termin.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Posjeta.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/TipZahvata.hbm.xml"/>
+  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/UtroseniMaterijal.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>

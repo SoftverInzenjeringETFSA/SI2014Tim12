@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-May-2015 14:03:31 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="ba.unsa.etf.si.tim12.dal.domainmodel.Posjeta" table="POSJETA">
+  <id name="id" type="long">
+   <column name="ID"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="pacijentId"
+   not-null="true" type="long">
+   <column name="PACIJENTID"/>
+  </property>
+  <property generated="never" lazy="false" name="doktor" not-null="true" type="java.lang.String">
+   <column name="DOKTOR"/>
+  </property>
+  <property generated="never" lazy="false" name="dijagnoza" type="java.lang.String">
+   <column name="DIJAGNOZA"/>
+  </property>
+  <property generated="never" lazy="false" name="vrijeme"
+   not-null="true" type="java.util.Date">
+   <column name="VRIJEME"/>
+  </property>
+ </class>
+</hibernate-mapping>

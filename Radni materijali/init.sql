@@ -199,7 +199,7 @@ CREATE INDEX `fk_UtroseniMaterijal_ObavljeniZahvat1_idx` ON `SI2014Tim12`.`Utros
 
 CREATE INDEX `fk_UtroseniMaterijal_Materijal1_idx` ON `SI2014Tim12`.`UtroseniMaterijal` (`materijalId` ASC);
 
-
+/*
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;*/

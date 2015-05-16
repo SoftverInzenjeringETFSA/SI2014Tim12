@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-May-2015 14:03:31 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="ba.unsa.etf.si.tim12.dal.domainmodel.Pacijent" table="PACIJENT">
+  <id name="id" type="long">
+   <column name="ID"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="ime" not-null="true" type="java.lang.String">
+   <column name="IME"/>
+  </property>
+  <property generated="never" lazy="false" name="prezime"
+   not-null="true" type="java.lang.String">
+   <column name="PREZIME"/>
+  </property>
+  <property generated="never" lazy="false" name="opis" type="java.lang.String">
+   <column name="OPIS"/>
+  </property>
+  <property generated="never" lazy="false" name="telefon"
+   not-null="true" type="java.lang.String">
+   <column name="TELEFON"/>
+  </property>
+  <property generated="never" lazy="false" name="datumRodjenja"
+   not-null="true" type="java.util.Date">
+   <column name="DATUMRODJENJA"/>
+  </property>
+ </class>
+</hibernate-mapping>
