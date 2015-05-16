@@ -6,7 +6,7 @@
  <class name="ba.unsa.etf.si.tim12.dal.domainmodel.Termin" table="TERMIN">
   <id name="id" type="long">
    <column name="ID"/>
-   <generator class="assigned"/>
+   <generator class="native"/>
   </id>
   <property generated="never" lazy="false" name="pacijentId"
    not-null="true" type="long">

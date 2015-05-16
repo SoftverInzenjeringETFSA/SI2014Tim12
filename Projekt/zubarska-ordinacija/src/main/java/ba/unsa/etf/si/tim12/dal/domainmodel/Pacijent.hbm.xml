@@ -6,7 +6,7 @@
  <class name="ba.unsa.etf.si.tim12.dal.domainmodel.Pacijent" table="PACIJENT">
   <id name="id" type="long">
    <column name="ID"/>
-   <generator class="assigned"/>
+   <generator class="native"/>
   </id>
   <property generated="never" lazy="false" name="ime" not-null="true" type="java.lang.String">
    <column name="IME"/>

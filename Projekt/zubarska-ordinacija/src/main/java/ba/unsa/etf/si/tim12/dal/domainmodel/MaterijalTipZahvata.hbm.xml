@@ -6,7 +6,7 @@
  <class name="ba.unsa.etf.si.tim12.dal.domainmodel.MaterijalTipZahvata" table="MATERIJALTIPZAHVATA">
   <id name="materijalId" type="long">
    <column name="MATERIJALID"/>
-   <generator class="assigned"/>
+   <generator class="native"/>
   </id>
   <property generated="never" lazy="false" name="tipZahvataId"
    not-null="true" type="long">
