@@ -18,16 +18,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 
-public class PrikazZahvataGUI {
+public class IzvjestajPacijent {
 
 	private JDialog frame;
 	private JTable table;
-	private JTextField textField;
-	private JButton btnNewButton;
+	private JLabel lblPacijent;
+	private JComboBox comboBox;
 
 	/**
 	 * Launch the application.
@@ -36,7 +34,7 @@ public class PrikazZahvataGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrikazZahvataGUI window = new PrikazZahvataGUI();
+					IzvjestajPacijent window = new IzvjestajPacijent();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +46,7 @@ public class PrikazZahvataGUI {
 	/**
 	 * Create the application.
 	 */
-	public PrikazZahvataGUI() {
+	public IzvjestajPacijent() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -58,15 +56,15 @@ public class PrikazZahvataGUI {
 	 */
 	private void initialize() {
 		frame = new JDialog();
-		frame.setTitle("Prikaz zahvata");
+		frame.setTitle("Izvje\u0161taj o obavljenim posjetama pacijenta");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 524, 364);
+		frame.setBounds(100, 100, 550, 364);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 67, 471, 221);
+		scrollPane.setBounds(22, 90, 503, 185);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -74,42 +72,27 @@ public class PrikazZahvataGUI {
 			new Object[][] {
 			},
 			new String[] {
-			 "Naziv", "Materijali", "Cijena"
+				"Opis zahvata", "Dijagnoza", "Doktor", "Vrijeme posjete"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
 		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
 		
-		JLabel lblPretraivanjePo = new JLabel("Pretra\u017Eivanje po imenu zahvata:");
-		lblPretraivanjePo.setBounds(22, 21, 204, 19);
-		frame.getContentPane().add(lblPretraivanjePo);
-		
-		textField = new JTextField();
-		textField.setBounds(226, 20, 158, 19);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		btnNewButton = new JButton("Pretra\u017Ei");
-		btnNewButton.setIcon(new ImageIcon(PrikazZahvataGUI.class.getResource("/GUI/SearchIcon.png")));
-		btnNewButton.setBounds(394, 20, 99, 20);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnModifikacijaMaterijala = new JButton("Obri\u0161i");
-		btnModifikacijaMaterijala.setBounds(240, 299, 121, 23);
+		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
+		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(372, 299, 121, 23);
+		btnOdustani.setBounds(404, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
 		
-		JButton button = new JButton("Modifikacija cijene");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new ModifikacijaZahvataGUI();
-			}
-		});
-		button.setBounds(85, 299, 145, 23);
-		frame.getContentPane().add(button);
+		lblPacijent = new JLabel("Pacijent:");
+		lblPacijent.setBounds(22, 47, 78, 28);
+		frame.getContentPane().add(lblPacijent);
+		
+		comboBox = new JComboBox();
+		comboBox.setBounds(110, 51, 130, 20);
+		frame.getContentPane().add(comboBox);
 	}
 }

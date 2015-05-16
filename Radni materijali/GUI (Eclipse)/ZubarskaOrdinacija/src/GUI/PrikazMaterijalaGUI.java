@@ -18,6 +18,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Dialog.ModalityType;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class PrikazMaterijalaGUI {
@@ -26,6 +28,7 @@ public class PrikazMaterijalaGUI {
 	private JTable table;
 	private JTextField textField;
 	private JButton btnNewButton;
+	private JButton btnDodajKoliinu;
 
 	/**
 	 * Launch the application.
@@ -72,7 +75,7 @@ public class PrikazMaterijalaGUI {
 			new Object[][] {
 			},
 			new String[] {
-			 "Ime materijala", "Jedinièna cijena", "Mjerna jedinica"
+				"Ime materijala", "Jedini\u010Dna cijena", "Dostupna koli\u010Dina"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -93,12 +96,21 @@ public class PrikazMaterijalaGUI {
 		btnNewButton.setBounds(394, 20, 99, 20);
 		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnModifikacijaMaterijala = new JButton("Modifikacija");
+		JButton btnModifikacijaMaterijala = new JButton("Obri\u0161i");
 		btnModifikacijaMaterijala.setBounds(240, 299, 121, 23);
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
 		btnOdustani.setBounds(372, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
+		
+		btnDodajKoliinu = new JButton("Dodaj koli\u010Dinu");
+		btnDodajKoliinu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new KolicinaMaterijalaGUI();
+			}
+		});
+		btnDodajKoliinu.setBounds(109, 299, 121, 23);
+		frame.getContentPane().add(btnDodajKoliinu);
 	}
 }

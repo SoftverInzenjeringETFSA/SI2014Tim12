@@ -1,0 +1,116 @@
+package GUI;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import java.awt.Window.Type;
+
+import javax.swing.JSpinner;
+
+import org.jdesktop.swingx.JXMonthView;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.Dialog.ModalityType;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+
+public class RezervacijaTerminaGUI {
+
+	private JDialog dlgR;
+	private JTextField textField;
+	private JTextField textField_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RezervacijaTerminaGUI window = new RezervacijaTerminaGUI();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public RezervacijaTerminaGUI() {
+		initialize();
+		dlgR.setVisible(true);
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		dlgR = new JDialog();
+		dlgR.setResizable(false);
+		dlgR.setModalityType(ModalityType.APPLICATION_MODAL);
+		dlgR.setTitle("Zakazivanje termina");
+		dlgR.setBounds(100, 100, 426, 479);
+		dlgR.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		dlgR.getContentPane().setLayout(null);
+		
+		JXMonthView monthView = new JXMonthView();
+		monthView.setBounds(124, 155, 245, 176);
+		dlgR.getContentPane().add(monthView);
+		
+		ButtonGroup grp = new ButtonGroup();
+		
+		JButton btnNoviTermin = new JButton("Registruj novi termin");
+		btnNoviTermin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new NoviTermin();
+			}
+		});
+		btnNoviTermin.setBounds(208, 394, 161, 25);
+		dlgR.getContentPane().add(btnNoviTermin);
+		
+		JLabel lblPacijent = new JLabel("Pacijent:");
+		lblPacijent.setBounds(29, 23, 69, 14);
+		dlgR.getContentPane().add(lblPacijent);
+		
+		JLabel lblDoktor = new JLabel("Doktor:");
+		lblDoktor.setBounds(29, 65, 63, 14);
+		dlgR.getContentPane().add(lblDoktor);
+		
+		textField = new JTextField();
+		textField.setBounds(124, 60, 245, 25);
+		dlgR.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(124, 18, 245, 25);
+		dlgR.getContentPane().add(comboBox);
+		
+		JLabel lblVrijeme = new JLabel("Vrijeme:");
+		lblVrijeme.setBounds(29, 108, 69, 14);
+		dlgR.getContentPane().add(lblVrijeme);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(124, 97, 245, 25);
+		dlgR.getContentPane().add(textField_1);
+		
+		JLabel lblDatum = new JLabel("Datum:");
+		lblDatum.setBounds(29, 155, 69, 14);
+		dlgR.getContentPane().add(lblDatum);
+	}
+}

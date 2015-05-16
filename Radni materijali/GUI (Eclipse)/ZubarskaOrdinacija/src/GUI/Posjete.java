@@ -24,13 +24,15 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import java.awt.Component;
 import java.awt.Dialog.ModalityType;
+import javax.swing.JTextPane;
 
 public class Posjete {
 
 	private JDialog dlgPosjeteRegistracija;
-	private JTextField txtDijagnoza;
 	private JTextField textFieldCijena;
 	private JTextField textFieldUkCijena;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -67,17 +69,13 @@ public class Posjete {
 		dlgPosjeteRegistracija.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dlgPosjeteRegistracija.getContentPane().setLayout(null);
 		
-		JLabel lblPacijent = new JLabel("Pacijent");
+		JLabel lblPacijent = new JLabel("Pacijent:");
 		lblPacijent.setBounds(31, 61, 56, 16);
 		dlgPosjeteRegistracija.getContentPane().add(lblPacijent);
 		
-		JLabel lblZahvat = new JLabel("Zahvat");
+		JLabel lblZahvat = new JLabel("Zahvat:");
 		lblZahvat.setBounds(420, 61, 56, 16);
 		dlgPosjeteRegistracija.getContentPane().add(lblZahvat);
-		
-		JLabel lblSimptomi = new JLabel("Simptomi");
-		lblSimptomi.setBounds(31, 90, 56, 16);
-		dlgPosjeteRegistracija.getContentPane().add(lblSimptomi);
 		
 		JComboBox comboBoxPacijent = new JComboBox();
 		lblPacijent.setLabelFor(comboBoxPacijent);
@@ -91,39 +89,19 @@ public class Posjete {
 		comboBoxZahvati.setBounds(527, 58, 231, 22);
 		dlgPosjeteRegistracija.getContentPane().add(comboBoxZahvati);
 		
-		JTextArea textArea = new JTextArea();
-		lblSimptomi.setLabelFor(textArea);
-		textArea.setFont(new Font("Arial", Font.PLAIN, 14));
-		textArea.setBounds(138, 92, 231, 105);
-		dlgPosjeteRegistracija.getContentPane().add(textArea);
-		
-		JLabel lblDijagnoza = new JLabel("Dijagnoza");
-		lblDijagnoza.setBounds(31, 213, 56, 16);
+		JLabel lblDijagnoza = new JLabel("Dijagnoza:");
+		lblDijagnoza.setBounds(31, 165, 97, 16);
 		dlgPosjeteRegistracija.getContentPane().add(lblDijagnoza);
 		
-		JLabel lblCijena = new JLabel("Cijena");
+		JLabel lblCijena = new JLabel("Cijena:");
 		lblCijena.setBounds(420, 162, 56, 16);
 		dlgPosjeteRegistracija.getContentPane().add(lblCijena);
-		
-		txtDijagnoza = new JTextField();
-		lblDijagnoza.setLabelFor(txtDijagnoza);
-		txtDijagnoza.setBounds(138, 210, 231, 22);
-		dlgPosjeteRegistracija.getContentPane().add(txtDijagnoza);
-		txtDijagnoza.setColumns(10);
 		
 		textFieldCijena = new JTextField();
 		lblCijena.setLabelFor(textFieldCijena);
 		textFieldCijena.setColumns(10);
 		textFieldCijena.setBounds(527, 159, 231, 22);
 		dlgPosjeteRegistracija.getContentPane().add(textFieldCijena);
-		
-		JButton btnRegistruj = new JButton("Registruj pacijenta");
-		btnRegistruj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnRegistruj.setBounds(138, 256, 150, 25);
-		dlgPosjeteRegistracija.getContentPane().add(btnRegistruj);
 		
 		JSeparator separator_pacijent = new JSeparator();
 		separator_pacijent.setBounds(31, 46, 338, 2);
@@ -141,7 +119,7 @@ public class Posjete {
 		separator_zahvat.setBounds(420, 46, 338, 2);
 		dlgPosjeteRegistracija.getContentPane().add(separator_zahvat);
 		
-		JLabel lblMaterijal = new JLabel("Materijal");
+		JLabel lblMaterijal = new JLabel("Materijal:");
 		lblMaterijal.setBounds(420, 90, 56, 22);
 		dlgPosjeteRegistracija.getContentPane().add(lblMaterijal);
 		
@@ -151,7 +129,7 @@ public class Posjete {
 		comboBoxMaterijal.setBounds(527, 90, 231, 22);
 		dlgPosjeteRegistracija.getContentPane().add(comboBoxMaterijal);
 		
-		JLabel lblKoliinaMaterijala = new JLabel("Koli\u010Dina materijala [mg]");
+		JLabel lblKoliinaMaterijala = new JLabel("Koli\u010Dina materijala [mg]:");
 		lblKoliinaMaterijala.setBounds(420, 124, 150, 22);
 		dlgPosjeteRegistracija.getContentPane().add(lblKoliinaMaterijala);
 		
@@ -160,11 +138,11 @@ public class Posjete {
 		spinnerKolicinaMaterijala.setBounds(642, 124, 116, 22);
 		dlgPosjeteRegistracija.getContentPane().add(spinnerKolicinaMaterijala);
 		
-		JButton btnDodajZahvat = new JButton("Dodaj zahvat");
-		btnDodajZahvat.setBounds(548, 256, 107, 25);
+		JButton btnDodajZahvat = new JButton("Registruj posjetu");
+		btnDodajZahvat.setBounds(527, 279, 231, 25);
 		dlgPosjeteRegistracija.getContentPane().add(btnDodajZahvat);
 		
-		JLabel lblUkupnaCijena = new JLabel("Ukupna cijena");
+		JLabel lblUkupnaCijena = new JLabel("Ukupna cijena:");
 		lblUkupnaCijena.setBounds(420, 194, 95, 16);
 		dlgPosjeteRegistracija.getContentPane().add(lblUkupnaCijena);
 		
@@ -173,6 +151,28 @@ public class Posjete {
 		textFieldUkCijena.setColumns(10);
 		textFieldUkCijena.setBounds(527, 191, 231, 22);
 		dlgPosjeteRegistracija.getContentPane().add(textFieldUkCijena);
-		dlgPosjeteRegistracija.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{comboBoxPacijent, textArea, txtDijagnoza, btnRegistruj, comboBoxZahvati, comboBoxMaterijal, spinnerKolicinaMaterijala, textFieldCijena, textFieldUkCijena, btnDodajZahvat, lblInformacijeOPacijentu, separator_pacijent, lblPacijent, lblSimptomi, lblDijagnoza, lblCijena, lblInformacijeOZahvatu, separator_zahvat, lblZahvat, lblMaterijal, lblKoliinaMaterijala, lblUkupnaCijena, dlgPosjeteRegistracija.getContentPane()}));
+		
+		JLabel lblDoktor = new JLabel("Doktor:");
+		lblDoktor.setBounds(31, 93, 56, 16);
+		dlgPosjeteRegistracija.getContentPane().add(lblDoktor);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(138, 91, 231, 22);
+		dlgPosjeteRegistracija.getContentPane().add(textField);
+		
+		JLabel lblVrijemePosjete = new JLabel("Vrijeme posjete:");
+		lblVrijemePosjete.setBounds(31, 128, 107, 16);
+		dlgPosjeteRegistracija.getContentPane().add(lblVrijemePosjete);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(138, 125, 231, 22);
+		dlgPosjeteRegistracija.getContentPane().add(textField_1);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(138, 161, 231, 143);
+		dlgPosjeteRegistracija.getContentPane().add(textPane);
+		dlgPosjeteRegistracija.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{comboBoxPacijent, comboBoxZahvati, comboBoxMaterijal, spinnerKolicinaMaterijala, textFieldCijena, textFieldUkCijena, btnDodajZahvat, lblInformacijeOPacijentu, separator_pacijent, lblPacijent, lblDijagnoza, lblCijena, lblInformacijeOZahvatu, separator_zahvat, lblZahvat, lblMaterijal, lblKoliinaMaterijala, lblUkupnaCijena, dlgPosjeteRegistracija.getContentPane()}));
 	}
 }

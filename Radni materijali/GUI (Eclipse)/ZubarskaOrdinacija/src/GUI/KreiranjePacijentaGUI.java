@@ -87,18 +87,13 @@ public class KreiranjePacijentaGUI {
 		textField_2.setBounds(153, 73, 196, 20);
 		panel_1.add(textField_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(153, 106, 196, 20);
-		panel_1.add(textField_3);
-		
 		JLabel lblBrojTelefona = new JLabel("Broj telefona:");
 		lblBrojTelefona.setBounds(29, 73, 86, 20);
 		panel_1.add(lblBrojTelefona);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(29, 106, 86, 20);
-		panel_1.add(lblEmail);
+		JLabel lblDatumRodjenja = new JLabel("Datum ro\u0111enja:");
+		lblDatumRodjenja.setBounds(29, 104, 86, 20);
+		panel_1.add(lblDatumRodjenja);
 		
 		JButton btnKreiraj = new JButton("Kreiraj");
 		btnKreiraj.setBounds(192, 257, 157, 23);
@@ -115,5 +110,10 @@ public class KreiranjePacijentaGUI {
 		JTextPane textPane = new JTextPane();
 		textPane.setBounds(153, 144, 196, 90);
 		panel_1.add(textPane);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(153, 106, 196, 20);
+		panel_1.add(textField_3);
 	}
 }

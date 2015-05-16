@@ -78,7 +78,7 @@ public class IzvjestajMaterijali {
 			new Object[][] {
 			},
 			new String[] {
-			 "ID", "Materijal", "Jed.cijena", "m.jedinica", "Kolièina","Ukupna cijena"
+				"ID", "Materijal", "Jed.cijena", "m.jedinica", "Koli\u010Dina", "Ukupna cijena"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -89,12 +89,12 @@ public class IzvjestajMaterijali {
 		lblPretraivanjePo.setBounds(22, 21, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
-		JButton btnModifikacijaMaterijala = new JButton("Prikazi");
-		btnModifikacijaMaterijala.setBounds(240, 299, 121, 23);
+		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
+		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(372, 299, 121, 23);
+		btnOdustani.setBounds(404, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
 		
 		lblOd = new JLabel("Od:");
@@ -102,7 +102,7 @@ public class IzvjestajMaterijali {
 		frame.getContentPane().add(lblOd);
 		
 		lblOddo = new JLabel("Do:");
-		lblOddo.setBounds(265, 47, 27, 28);
+		lblOddo.setBounds(297, 47, 27, 28);
 		frame.getContentPane().add(lblOddo);
 		
 		comboBox = new JComboBox();
@@ -118,15 +118,15 @@ public class IzvjestajMaterijali {
 		frame.getContentPane().add(comboBox_2);
 		
 		comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(288, 51, 49, 20);
+		comboBox_3.setBounds(334, 51, 49, 20);
 		frame.getContentPane().add(comboBox_3);
 		
 		comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(347, 51, 49, 20);
+		comboBox_4.setBounds(398, 51, 49, 20);
 		frame.getContentPane().add(comboBox_4);
 		
 		comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(406, 51, 68, 20);
+		comboBox_5.setBounds(457, 51, 68, 20);
 		frame.getContentPane().add(comboBox_5);
 	}
 }
