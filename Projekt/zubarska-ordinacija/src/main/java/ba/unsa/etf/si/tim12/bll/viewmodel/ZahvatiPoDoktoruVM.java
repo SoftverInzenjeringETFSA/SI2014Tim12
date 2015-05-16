@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ZahvatiPoDoktoruVM {
-	String doktor;
-	Date vrijemeOd,vrijemeDo;
-	double ukupnaCijena;
-	int ukupnoPosjeta;
+	private String doktor;
+	private Date vrijemeOd,vrijemeDo;
+	private double ukupnaCijena;
+	private int ukupnoPosjeta;
+	
 	private ArrayList<ZahvatiPoDoktoruRowVM> zahvati;
 	
 	public ZahvatiPoDoktoruVM() {

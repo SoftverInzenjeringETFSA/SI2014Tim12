@@ -54,6 +54,8 @@ public class MaterijalTest {
 			
 			
 			m.setCijena(6.66);
+			
+			//Nakon svakog commita, potrebno je ponovo napraviti transakciju, ako cemo raditi s bazom nesto
 			t = session.beginTransaction();
 			session.update(m);
 				assertEquals("", 6.66, m.getCijena(), 0.00001);
@@ -74,6 +76,7 @@ public class MaterijalTest {
 			t.commit();
 			
 			
+			//Ako imamo samo Selecte... nije potrebna transakcija
 			q = session.createQuery("SELECT COUNT(*) FROM Materijal");
 			Long newCount = (Long) q.uniqueResult();
 			assertNotNull(newCount);
@@ -86,7 +89,8 @@ public class MaterijalTest {
 			fail("Greska" + e.getMessage());
 		}finally{
 			//VAZNO: ne zaboraviti zatvoriti konekciju u GUI-u
-			session.close();
+			if(session != null)
+				session.close();
 		}
 	}
 }
