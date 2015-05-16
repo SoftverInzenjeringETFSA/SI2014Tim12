@@ -3,9 +3,9 @@ package ba.unsa.etf.si.tim12.dal.domainmodel;
 import java.util.Date;
 
 public class Posjeta implements java.io.Serializable {
-	long id,pacijentId;
-	String doktor,dijagnoza;
-	Date vrijeme;
+	private long id,pacijentId;
+	private String doktor,dijagnoza;
+	private Date vrijeme;
 	
 	public long getId() {
 		return id;

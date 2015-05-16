@@ -1,8 +1,8 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class MaterijalTipZahvata implements java.io.Serializable {
-	long materijalId,tipZahvataId;
-	double kolicina;
+	private long materijalId,tipZahvataId;
+	private double kolicina;
 	
 	public long getMaterijalId() {
 		return materijalId;

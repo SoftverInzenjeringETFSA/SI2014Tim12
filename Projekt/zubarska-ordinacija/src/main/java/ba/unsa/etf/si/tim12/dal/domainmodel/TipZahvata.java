@@ -1,9 +1,9 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class TipZahvata implements java.io.Serializable  {
-	long id;
-	String naziv,opis;
-	double cijena;
+	private long id;
+	private String naziv,opis;
+	private double cijena;
 
 	
 	public long getId() {

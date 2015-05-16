@@ -1,8 +1,8 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class Korisnik implements java.io.Serializable {
-	long id;
-	String username,password;
+	private long id;
+	private String username,password;
 	
 	public long getId() {
 		return id;

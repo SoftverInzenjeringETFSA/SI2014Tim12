@@ -1,8 +1,8 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class ObavljeniZahvat implements java.io.Serializable {
-	Long id,zahvatId,posjetaId;
-	double cijena;
+	private Long id,zahvatId,posjetaId;
+	private double cijena;
 	
 	public Long getId() {
 		return id;

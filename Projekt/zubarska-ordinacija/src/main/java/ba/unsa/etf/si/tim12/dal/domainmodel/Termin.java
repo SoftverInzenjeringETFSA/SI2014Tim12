@@ -3,10 +3,10 @@ package ba.unsa.etf.si.tim12.dal.domainmodel;
 import java.util.Date;
 
 public class Termin implements java.io.Serializable {
-	long id,pacijentId;
-	String doktor;
-	Date vrijeme;
-	boolean otkazano; 
+	private long id,pacijentId;
+	private String doktor;
+	private Date vrijeme;
+	private boolean otkazano; 
 	
 	
 	public long getId() {

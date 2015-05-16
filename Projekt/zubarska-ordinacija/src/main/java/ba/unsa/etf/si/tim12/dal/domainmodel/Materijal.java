@@ -1,9 +1,9 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class Materijal implements java.io.Serializable {
-	long id;
-	String naziv,mjernaJedinica;
-	double cijena;
+	private long id;
+	private String naziv,mjernaJedinica;
+	private double cijena;
 	
 	public long getId() {
 		return id;
