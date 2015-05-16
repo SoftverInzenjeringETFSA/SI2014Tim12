@@ -19,4 +19,10 @@ public class OdradjenePosjeteVM {
 	public void setUkupnoPosjeta(int ukupnoPosjeta) {
 		this.ukupnoPosjeta = ukupnoPosjeta;
 	}
+	public ArrayList<OdradjenePosjeteRowVM> getOdradjenePosjete() {
+		return odradjenePosjete;
+	}
+	public void setOdradjenePosjete(ArrayList<OdradjenePosjeteRowVM> odradjenePosjete) {
+		this.odradjenePosjete = odradjenePosjete;
+	}
 }
