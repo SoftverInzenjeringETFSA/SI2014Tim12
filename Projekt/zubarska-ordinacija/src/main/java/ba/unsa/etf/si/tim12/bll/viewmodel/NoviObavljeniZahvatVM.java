@@ -8,6 +8,9 @@ public class NoviObavljeniZahvatVM {
 	private double cijena;
 	private ArrayList<NoviOZahvatMaterijalVM> materijali;
 	
+	public NoviObavljeniZahvatVM() {
+		materijali = new ArrayList<NoviOZahvatMaterijalVM>();
+	}
 	public long getPosjetaId() {
 		return posjetaId;
 	}

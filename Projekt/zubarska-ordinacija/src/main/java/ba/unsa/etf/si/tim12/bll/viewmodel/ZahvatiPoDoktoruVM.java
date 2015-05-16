@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.viewmodel;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ZahvatiPoDoktoruVM {
@@ -7,7 +8,11 @@ public class ZahvatiPoDoktoruVM {
 	Date vrijemeOd,vrijemeDo;
 	double ukupnaCijena;
 	int ukupnoPosjeta;
+	private ArrayList<ZahvatiPoDoktoruRowVM> zahvati;
 	
+	public ZahvatiPoDoktoruVM() {
+		zahvati = new ArrayList<ZahvatiPoDoktoruRowVM>();
+	}
 	public String getDoktor() {
 		return doktor;
 	}
@@ -37,5 +42,11 @@ public class ZahvatiPoDoktoruVM {
 	}
 	public void setUkupnoPosjeta(int ukupnoPosjeta) {
 		this.ukupnoPosjeta = ukupnoPosjeta;
+	}
+	public ArrayList<ZahvatiPoDoktoruRowVM> getZahvati() {
+		return zahvati;
+	}
+	public void setZahvati(ArrayList<ZahvatiPoDoktoruRowVM> zahvati) {
+		this.zahvati = zahvati;
 	}
 }

@@ -7,6 +7,9 @@ public class OdradjenePosjeteVM {
 	private int ukupnoPosjeta;
 	private ArrayList<OdradjenePosjeteRowVM> odradjenePosjete;
 	
+	public OdradjenePosjeteVM() {
+		odradjenePosjete = new ArrayList<OdradjenePosjeteRowVM>();
+	}
 	public Date getVrijeme() {
 		return vrijeme;
 	}

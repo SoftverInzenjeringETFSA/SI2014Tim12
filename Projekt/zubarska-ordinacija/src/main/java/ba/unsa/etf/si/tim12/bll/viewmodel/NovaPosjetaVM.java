@@ -9,6 +9,10 @@ public class NovaPosjetaVM {
 	private String dijagnoza;
 	private Date vrijeme;
 	private ArrayList<NoviObavljeniZahvatVM> obavljeniZahvati;
+	
+	public NovaPosjetaVM() {
+		obavljeniZahvati = new ArrayList<NoviObavljeniZahvatVM>();
+	}
 	public long getPacijentId() {
 		return pacijentId;
 	}

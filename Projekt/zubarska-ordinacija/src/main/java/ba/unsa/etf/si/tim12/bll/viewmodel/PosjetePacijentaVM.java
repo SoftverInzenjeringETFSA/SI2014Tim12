@@ -8,6 +8,9 @@ public class PosjetePacijentaVM {
 	private int ukupnoPosjeta;
 	private ArrayList<PosjetePacijentaRowVM> posjete;
 	
+	public PosjetePacijentaVM() {
+		posjete = new ArrayList<PosjetePacijentaRowVM>();
+	}
 	public ArrayList<PosjetePacijentaRowVM> getPosjete() {
 		return posjete;
 	}

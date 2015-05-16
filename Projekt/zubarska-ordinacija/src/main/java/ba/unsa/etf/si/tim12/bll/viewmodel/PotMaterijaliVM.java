@@ -1,5 +1,7 @@
 package ba.unsa.etf.si.tim12.bll.viewmodel;
 
+import java.util.ArrayList;
+
 public class PotMaterijaliVM {
 private long idMaterijala;
 private String nazivMaterijala;
@@ -7,7 +9,20 @@ private double jedinicnaCijena;
 private String mjernaJedinica;
 private double kolicina;
 private double ukupnaCijena;
+private ArrayList<PotMaterijaliRowVM> materijali;
 
+public PotMaterijaliVM() {
+	materijali = new ArrayList<PotMaterijaliRowVM>();
+}
+public ArrayList<PotMaterijaliRowVM> getMaterijali() {
+	return materijali;
+}
+public void setMaterijali(ArrayList<PotMaterijaliRowVM> materijali) {
+	this.materijali = materijali;
+}
+public void setIdMaterijala(long idMaterijala) {
+	this.idMaterijala = idMaterijala;
+}
 public long getIdMaterijala() {
 	return idMaterijala;
 }
@@ -26,7 +41,6 @@ public double getJedinicnaCijena(){
 	return jedinicnaCijena;
 	
 }
-
 public void setJedinicnaCijena (double jedinicnaCijena)
  {
 	this.jedinicnaCijena=jedinicnaCijena;
