@@ -12,6 +12,11 @@ public class PrikazPacijentaVM {
 	private String opis;
 	private ArrayList<TerminVM> termini;
 	private ArrayList<PosjetaVM> posjete;
+	
+	public PrikazPacijentaVM() {
+		termini = new ArrayList<TerminVM>();
+		posjete = new ArrayList<PosjetaVM>();
+	}
 	public long getId() {
 		return id;
 	}
