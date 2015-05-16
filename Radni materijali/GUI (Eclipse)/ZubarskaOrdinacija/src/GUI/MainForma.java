@@ -94,6 +94,14 @@ public class MainForma {
 		JPanel p2 = new JPanel();
 		TP.addTab ("Narudžbe", null, p2, "Pregled narudžbi za pacijente");
 		p2.setLayout(new MigLayout("", "[]", "[]"));
+		
+		JButton button = new JButton("Termini");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new Termini();
+			}
+		});
+		p2.add(button, "cell 0 0");
 		JPanel p3 = new JPanel();
 		TP.addTab ("Pacijenti", null, p3, "Tab za manipulaciju podacima o pacijentima");
 		p3.setLayout(new MigLayout("", "[123px][][]", "[23px][][]"));
@@ -109,7 +117,7 @@ public class MainForma {
 		TP.addTab ("Posjete", null, p4, "Evidencija posjeta za pacijente");
 		p4.setLayout(new MigLayout("", "[][]", "[]"));
 		
-		JButton btnPosjete = new JButton("Posjete");
+		JButton btnPosjete = new JButton("Registracija posjeta");
 		btnPosjete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new Posjete();
@@ -117,13 +125,13 @@ public class MainForma {
 		});
 		p4.add(btnPosjete, "cell 0 0");
 		
-		JButton btnTermini = new JButton("Termini");
-		btnTermini.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Termini();
+		JButton btnPrikazPosjeta = new JButton("Prikaz posjeta");
+		btnPrikazPosjeta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new PosjeteGUI();
 			}
 		});
-		p4.add(btnTermini, "cell 1 0");
+		p4.add(btnPrikazPosjeta, "cell 1 0");
 		JPanel p5 = new JPanel();
 		TP.addTab ("Zahvati", null, p5, "Evidencija zahvata");
 		p5.setLayout(new MigLayout("", "[][]", "[]"));

@@ -96,9 +96,9 @@ public class ModifikacijaPacijentaGUI {
 		lblBrojTelefona.setBounds(29, 73, 86, 20);
 		panel_1.add(lblBrojTelefona);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(29, 106, 86, 20);
-		panel_1.add(lblEmail);
+		JLabel lblDatumRodjenja = new JLabel("Datum ro\u0111enja:");
+		lblDatumRodjenja.setBounds(29, 106, 86, 20);
+		panel_1.add(lblDatumRodjenja);
 		
 		JButton btnKreiraj = new JButton("Modifikuj");
 		btnKreiraj.setBounds(192, 257, 157, 23);
