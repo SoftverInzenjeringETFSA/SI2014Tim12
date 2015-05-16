@@ -20,18 +20,12 @@ import javax.swing.ImageIcon;
 import java.awt.Dialog.ModalityType;
 
 
-public class IzvjestajMaterijali {
+public class IzvjestajPacijent {
 
 	private JDialog frame;
 	private JTable table;
-	private JLabel lblOd;
-	private JLabel lblOddo;
+	private JLabel lblPacijent;
 	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
-	private JComboBox comboBox_4;
-	private JComboBox comboBox_5;
 
 	/**
 	 * Launch the application.
@@ -40,7 +34,7 @@ public class IzvjestajMaterijali {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzvjestajMaterijali window = new IzvjestajMaterijali();
+					IzvjestajPacijent window = new IzvjestajPacijent();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +46,7 @@ public class IzvjestajMaterijali {
 	/**
 	 * Create the application.
 	 */
-	public IzvjestajMaterijali() {
+	public IzvjestajPacijent() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -62,7 +56,7 @@ public class IzvjestajMaterijali {
 	 */
 	private void initialize() {
 		frame = new JDialog();
-		frame.setTitle("Finansijski izvjestaj materijala");
+		frame.setTitle("Izvje\u0161taj o obavljenim posjetama pacijenta");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 550, 364);
@@ -78,16 +72,12 @@ public class IzvjestajMaterijali {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Materijal", "Jed.cijena", "m.jedinica", "Koli\u010Dina", "Ukupna cijena"
+				"Opis zahvata", "Dijagnoza", "Doktor", "Vrijeme posjete"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
 		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
-		
-		JLabel lblPretraivanjePo = new JLabel("Odaberite vremenski interval:");
-		lblPretraivanjePo.setBounds(22, 21, 204, 19);
-		frame.getContentPane().add(lblPretraivanjePo);
 		
 		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
 		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
@@ -97,36 +87,12 @@ public class IzvjestajMaterijali {
 		btnOdustani.setBounds(404, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
 		
-		lblOd = new JLabel("Od:");
-		lblOd.setBounds(22, 47, 27, 28);
-		frame.getContentPane().add(lblOd);
-		
-		lblOddo = new JLabel("Do:");
-		lblOddo.setBounds(297, 47, 27, 28);
-		frame.getContentPane().add(lblOddo);
+		lblPacijent = new JLabel("Pacijent:");
+		lblPacijent.setBounds(22, 47, 78, 28);
+		frame.getContentPane().add(lblPacijent);
 		
 		comboBox = new JComboBox();
-		comboBox.setBounds(46, 51, 49, 20);
+		comboBox.setBounds(110, 51, 130, 20);
 		frame.getContentPane().add(comboBox);
-		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(105, 51, 49, 20);
-		frame.getContentPane().add(comboBox_1);
-		
-		comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(164, 51, 68, 20);
-		frame.getContentPane().add(comboBox_2);
-		
-		comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(334, 51, 49, 20);
-		frame.getContentPane().add(comboBox_3);
-		
-		comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(398, 51, 49, 20);
-		frame.getContentPane().add(comboBox_4);
-		
-		comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(457, 51, 68, 20);
-		frame.getContentPane().add(comboBox_5);
 	}
 }

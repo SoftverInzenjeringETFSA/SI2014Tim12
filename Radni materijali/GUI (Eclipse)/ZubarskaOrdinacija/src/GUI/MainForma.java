@@ -92,16 +92,24 @@ public class MainForma {
 		});
 		
 		JPanel p2 = new JPanel();
-		TP.addTab ("Narudžbe", null, p2, "Pregled narudžbi za pacijente");
-		p2.setLayout(new MigLayout("", "[]", "[]"));
+		TP.addTab ("Termini", null, p2, "Pregled narudžbi za pacijente");
+		p2.setLayout(new MigLayout("", "[][][]", "[]"));
 		
-		JButton button = new JButton("Termini");
-		button.addActionListener(new ActionListener() {
+		JButton btnRezervacijaTermina = new JButton("Rezervacija termina");
+		btnRezervacijaTermina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new Termini();
+				new RezervacijaTerminaGUI();
 			}
 		});
-		p2.add(button, "cell 0 0");
+		p2.add(btnRezervacijaTermina, "cell 0 0");
+		
+		JButton btnPregledTermina = new JButton("Pregled termina");
+		btnPregledTermina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new PrikazTerminaGUI();
+			}
+		});
+		p2.add(btnPregledTermina, "cell 1 0");
 		JPanel p3 = new JPanel();
 		TP.addTab ("Pacijenti", null, p3, "Tab za manipulaciju podacima o pacijentima");
 		p3.setLayout(new MigLayout("", "[123px][][]", "[23px][][]"));
@@ -172,15 +180,42 @@ public class MainForma {
 		p6.add(btnPrikazMaterijala, "cell 1 0");
 		JPanel p7 = new JPanel();
 		TP.addTab ("Izvještaji", null, p7, "Pregled izvještaja");
-		p7.setLayout(new MigLayout("", "[]", "[]"));
+		p7.setLayout(new MigLayout("", "[][][][][]", "[][][]"));
 		
-		JButton btnNewButton_1 = new JButton("Izvje\u0161taj materijala");
+		JButton btnOPosjetama = new JButton("O posjetama i zahvatima");
+		btnOPosjetama.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IzvjestajPosjeteZahvati();
+			}
+		});
+		p7.add(btnOPosjetama, "cell 0 0");
+		
+		JButton btnOSvimUlazima = new JButton("O svim ulazima");
+		btnOSvimUlazima.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IzvjestajUlazi();
+			}
+		});
+		p7.add(btnOSvimUlazima, "cell 1 0,alignx center");
+		
+		JButton btnOPosjetamaPacijenta = new JButton("O posjetama pacijenta");
+		btnOPosjetamaPacijenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new IzvjestajPacijent();
+			}
+		});
+		
+		JButton btnNewButton_1 = new JButton("O potro\u0161enim materijalima");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IzvjestajMaterijali();
 			}
 		});
-		p7.add(btnNewButton_1, "cell 0 0");
+		p7.add(btnNewButton_1, "cell 2 0,alignx center");
+		p7.add(btnOPosjetamaPacijenta, "cell 0 2,alignx center");
+		
+		JButton btnODnevnimPosjetama = new JButton("O dnevnim posjetama");
+		p7.add(btnODnevnimPosjetama, "cell 1 2,alignx center");
 		frame.setVisible(true);
 	}
 

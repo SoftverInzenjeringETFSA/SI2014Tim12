@@ -20,7 +20,7 @@ import javax.swing.ImageIcon;
 import java.awt.Dialog.ModalityType;
 
 
-public class IzvjestajMaterijali {
+public class IzvjestajUlazi {
 
 	private JDialog frame;
 	private JTable table;
@@ -40,7 +40,7 @@ public class IzvjestajMaterijali {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzvjestajMaterijali window = new IzvjestajMaterijali();
+					IzvjestajUlazi window = new IzvjestajUlazi();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class IzvjestajMaterijali {
 	/**
 	 * Create the application.
 	 */
-	public IzvjestajMaterijali() {
+	public IzvjestajUlazi() {
 		initialize();
 		frame.setVisible(true);
 	}
@@ -62,7 +62,7 @@ public class IzvjestajMaterijali {
 	 */
 	private void initialize() {
 		frame = new JDialog();
-		frame.setTitle("Finansijski izvjestaj materijala");
+		frame.setTitle("Finansijski izvjestaj o svim ulazima");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 550, 364);
@@ -78,7 +78,7 @@ public class IzvjestajMaterijali {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Materijal", "Jed.cijena", "m.jedinica", "Koli\u010Dina", "Ukupna cijena"
+				"ID", "Ime", "Prezime", "Zahvat", "Vrijeme posjete", "Cijena"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
