@@ -59,13 +59,14 @@ public class PrikazTerminaGUI {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		MainForma.Prekini(frame);
 		frame.setTitle("Termini");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 518, 354);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setLocationRelativeTo(null);
 		JLabel lblPretraivanjePo = new JLabel("Termini do datuma:");
 		lblPretraivanjePo.setBounds(10, 25, 181, 19);
 		frame.getContentPane().add(lblPretraivanjePo);

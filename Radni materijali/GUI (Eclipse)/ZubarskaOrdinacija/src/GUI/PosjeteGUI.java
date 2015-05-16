@@ -59,13 +59,14 @@ public class PosjeteGUI {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		MainForma.Prekini(frame);
 		frame.setTitle("Posjete");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 518, 354);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setLocationRelativeTo(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setToolTipText("Pacijent");
 		scrollPane.setBounds(10, 118, 492, 197);

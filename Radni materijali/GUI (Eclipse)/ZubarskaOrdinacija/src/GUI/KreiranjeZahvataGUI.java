@@ -11,11 +11,15 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+
 import java.awt.Dialog.ModalityType;
+
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JCheckBoxMenuItem;
+
 import java.awt.List;
+
 import javax.swing.JComboBox;
 
 
@@ -55,12 +59,13 @@ public class KreiranjeZahvataGUI {
 	 */
 	private void initialize() {
 		frmKreiranjeZahvata = new JDialog();
+		MainForma.Prekini(frmKreiranjeZahvata);
 		frmKreiranjeZahvata.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmKreiranjeZahvata.setResizable(false);
 		frmKreiranjeZahvata.setTitle("Kreiranje zahvata");
 		frmKreiranjeZahvata.setBounds(100, 100, 358, 407);
 		frmKreiranjeZahvata.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		frmKreiranjeZahvata.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frmKreiranjeZahvata.getContentPane().add(panel, BorderLayout.NORTH);
 		

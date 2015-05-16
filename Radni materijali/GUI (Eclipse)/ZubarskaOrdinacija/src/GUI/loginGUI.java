@@ -1,9 +1,12 @@
 package GUI;
 
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.EventQueue;
 
+import javax.swing.AbstractButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
@@ -17,6 +20,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
@@ -64,21 +68,31 @@ public class loginGUI {
 			public void keyPressed(KeyEvent evt) {
 	            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
 	            {
-	                Prijava();
+					if (Prijava());
+					{
+						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
+						frmPrijava.setVisible (false);
+						frmPrijava.dispose();
+					}
 	            }
 			}
 		});
 		frmPrijava.setResizable(false);
 		frmPrijava.setTitle("Prijava");
 		frmPrijava.setBounds(100, 100, 307, 149);
-		frmPrijava.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		frmPrijava.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		frmPrijava.getContentPane().setLayout(null);
 		frmPrijava.setLocationRelativeTo(null);
 		
 		JButton prijavaBtn = new JButton("Prijavi se");
 		prijavaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Prijava();
+				if (Prijava());
+					{
+						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
+						frmPrijava.setVisible (false);
+						frmPrijava.dispose();
+					}
 			}
 		});
 		prijavaBtn.setBounds(164, 86, 113, 23);
@@ -108,10 +122,12 @@ public class loginGUI {
 	}
 	
 	// Implemetirati funkciju za prijavu 
-	public void Prijava() {
+	public Boolean Prijava() {
 		JOptionPane.showMessageDialog(frmPrijava,
 			    "Nije implementirano.",
 			    "Obavještenje",
 			    JOptionPane.INFORMATION_MESSAGE);
+		return true; //neka za sada stoji da je korisnik logovan
+
 	}
 }

@@ -2,17 +2,28 @@ package GUI;
 
 import java.awt.EventQueue;
 
+import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.Toolkit;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
@@ -22,10 +33,20 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import java.awt.BorderLayout;
+
 import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 
 public class MainForma {
 
@@ -76,7 +97,7 @@ public class MainForma {
 		p1.setLayout(new MigLayout("", "[67px][119px][][][][][][][][][][][]", "[23px][][][][][][][]"));
 		
 				JButton btnLogout = new JButton("LogOut");
-				p1.add(btnLogout, "cell 12 6,alignx right,aligny center");
+				p1.add(btnLogout, "cell 0 0,growx,aligny center");
 				btnLogout.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						new loginGUI();
@@ -84,7 +105,12 @@ public class MainForma {
 				});
 		
 		JButton btnNewButton = new JButton("Izmijeni password");
-		p1.add(btnNewButton, "cell 12 7,alignx left");
+		p1.add(btnNewButton, "cell 0 1,alignx left");
+		
+		BackgroundPanel bp = new BackgroundPanel();
+		JLabel jl = new JLabel();
+		jl.setIcon(new ImageIcon("src/zubic.png"));
+		p1.add(jl, "cell 2 0 20 15, grow");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PasswordMgr();
@@ -182,7 +208,7 @@ public class MainForma {
 		TP.addTab ("Izvještaji", null, p7, "Pregled izvještaja");
 		
 		JButton btnOPosjetama = new JButton("O posjetama i zahvatima");
-		btnOPosjetama.setBounds(10, 7, 343, 23);
+		btnOPosjetama.setBounds(10, 7, 338, 23);
 		btnOPosjetama.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new IzvjestajPosjeteZahvati();
@@ -227,6 +253,56 @@ public class MainForma {
 		btnODnevnimPosjetama.setBounds(10, 143, 338, 23);
 		p7.add(btnODnevnimPosjetama);
 		frame.setVisible(true);
+	}
+	class BackgroundPanel extends JPanel
+	{
+	    BufferedImage img;
+	    public BackgroundPanel()
+	    {
+	        try {
+				//img = ImageIO.read(new File (getClass().getResource("/zubic.jpg").toString()));
+				img = ImageIO.read(new File ("src/zubic.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	    }
+	    @Override
+	    public void paintComponent(Graphics g)
+	    {
+	    	super.paintComponent(g);
+	         Graphics2D g2d = (Graphics2D) g;
+	         g2d.drawImage(img, 0, 0, 3000, 4000, this);
+	    }
+	}
+	public static void Prekini (final JFrame dialog) {
+	    ActionListener escListener = new ActionListener() {
+
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            dialog.setVisible(false);
+	            dialog.dispose();
+	        }
+	    };
+
+	    dialog.getRootPane().registerKeyboardAction(escListener,
+	            KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+	            JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+	}
+	public static void Prekini (final JDialog dialog) {
+	    ActionListener escListener = new ActionListener() {
+
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            dialog.setVisible(false);
+	            dialog.dispose();
+	        }
+	    };
+
+	    dialog.getRootPane().registerKeyboardAction(escListener,
+	            KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+	            JComponent.WHEN_IN_FOCUSED_WINDOW);
+
 	}
 
 }

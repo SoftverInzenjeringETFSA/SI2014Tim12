@@ -42,6 +42,7 @@ public class PasswordMgr extends JDialog {
 	 * Create the dialog.
 	 */
 	public PasswordMgr() {
+		MainForma.Prekini(this);
 		setBounds(100, 100, 381, 190);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,7 +52,7 @@ public class PasswordMgr extends JDialog {
 		setTitle ("Promjena passworda");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		
+		setLocationRelativeTo(null);
 		JLabel txtpnStariPassword = new JLabel();
 		txtpnStariPassword.setText("Stari password");
 		txtpnStariPassword.setBackground(SystemColor.control);

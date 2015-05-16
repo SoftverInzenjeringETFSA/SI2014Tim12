@@ -11,13 +11,17 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+
 import java.awt.Dialog.ModalityType;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class IzvjestajUlazi {
@@ -62,13 +66,14 @@ public class IzvjestajUlazi {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		MainForma.Prekini(frame);
 		frame.setTitle("Finansijski izvjestaj o svim ulazima");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 550, 364);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setLocationRelativeTo(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(22, 90, 503, 185);
 		frame.getContentPane().add(scrollPane);
@@ -91,10 +96,29 @@ public class IzvjestajUlazi {
 		
 		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
 		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
+		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frame,
+					    "Nije implementirano.",
+					    "Obavještenje",
+					    JOptionPane.INFORMATION_MESSAGE);
+			}
+		});		
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
 		btnOdustani.setBounds(404, 299, 121, 23);
+		btnOdustani.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible (false);
+				frame.dispose();
+				
+			}
+		});
 		frame.getContentPane().add(btnOdustani);
 		
 		lblOd = new JLabel("Od:");

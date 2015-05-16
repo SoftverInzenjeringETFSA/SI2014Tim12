@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
@@ -61,13 +62,14 @@ public class RezervacijaTerminaGUI {
 	 */
 	private void initialize() {
 		dlgR = new JDialog();
+		MainForma.Prekini(dlgR);
 		dlgR.setResizable(false);
 		dlgR.setModalityType(ModalityType.APPLICATION_MODAL);
 		dlgR.setTitle("Zakazivanje termina");
 		dlgR.setBounds(100, 100, 426, 479);
 		dlgR.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dlgR.getContentPane().setLayout(null);
-		
+		dlgR.setLocationRelativeTo(null);
 		JXMonthView monthView = new JXMonthView();
 		monthView.setBounds(124, 155, 245, 176);
 		dlgR.getContentPane().add(monthView);

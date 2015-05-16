@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Calendar;
 
 import javax.swing.JButton;
+
 import java.awt.Dialog.ModalityType;
 
 public class NoviTermin {
@@ -50,13 +51,14 @@ public class NoviTermin {
 	 */
 	private void initialize() {
 		frmRegistracijaNovogTermina = new JDialog();
+		MainForma.Prekini(frmRegistracijaNovogTermina);
 		frmRegistracijaNovogTermina.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmRegistracijaNovogTermina.setType(Type.NORMAL);
 		frmRegistracijaNovogTermina.setTitle("Registracija novog termina");
 		frmRegistracijaNovogTermina.setBounds(100, 100, 386, 245);
 		frmRegistracijaNovogTermina.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frmRegistracijaNovogTermina.getContentPane().setLayout(null);
-		
+		frmRegistracijaNovogTermina.setLocationRelativeTo(null);
 		JLabel lblPacijent = new JLabel("Pacijent");
 		lblPacijent.setBounds(25, 25, 55, 22);
 		frmRegistracijaNovogTermina.getContentPane().add(lblPacijent);

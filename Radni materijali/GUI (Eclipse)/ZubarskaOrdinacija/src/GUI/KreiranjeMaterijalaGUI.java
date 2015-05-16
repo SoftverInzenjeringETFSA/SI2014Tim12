@@ -11,7 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+
 import java.awt.Dialog.ModalityType;
+
 import javax.swing.SwingConstants;
 import javax.swing.JToolBar;
 import javax.swing.JComboBox;
@@ -53,12 +55,13 @@ public class KreiranjeMaterijalaGUI {
 	 */
 	private void initialize() {
 		frmDodavanjeMaterijala = new JDialog();
+		MainForma.Prekini(frmDodavanjeMaterijala);
 		frmDodavanjeMaterijala.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmDodavanjeMaterijala.setResizable(false);
 		frmDodavanjeMaterijala.setTitle("Dodavanje novog materijala");
 		frmDodavanjeMaterijala.setBounds(100, 100, 336, 204);
 		frmDodavanjeMaterijala.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		frmDodavanjeMaterijala.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frmDodavanjeMaterijala.getContentPane().add(panel, BorderLayout.NORTH);
 		

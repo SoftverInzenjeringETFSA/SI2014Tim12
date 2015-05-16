@@ -24,6 +24,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import java.awt.Component;
 import java.awt.Dialog.ModalityType;
+
 import javax.swing.JTextPane;
 
 public class Posjete {
@@ -63,12 +64,13 @@ public class Posjete {
 	 */
 	private void initialize() {
 		dlgPosjeteRegistracija = new JDialog();
+		MainForma.Prekini(dlgPosjeteRegistracija);
 		dlgPosjeteRegistracija.setModalityType(ModalityType.APPLICATION_MODAL);
 		dlgPosjeteRegistracija.setTitle("Posjete - registracija");
 		dlgPosjeteRegistracija.setBounds(100, 100, 829, 366);
 		dlgPosjeteRegistracija.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dlgPosjeteRegistracija.getContentPane().setLayout(null);
-		
+		dlgPosjeteRegistracija.setLocationRelativeTo(null);
 		JLabel lblPacijent = new JLabel("Pacijent:");
 		lblPacijent.setBounds(31, 61, 56, 16);
 		dlgPosjeteRegistracija.getContentPane().add(lblPacijent);

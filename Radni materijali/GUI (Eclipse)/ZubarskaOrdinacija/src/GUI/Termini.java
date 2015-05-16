@@ -58,12 +58,13 @@ public class Termini {
 	 */
 	private void initialize() {
 		dlgR = new JDialog();
+		MainForma.Prekini(dlgR);
 		dlgR.setModalityType(ModalityType.APPLICATION_MODAL);
 		dlgR.setTitle("Termini");
 		dlgR.setBounds(100, 100, 465, 480);
 		dlgR.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dlgR.getContentPane().setLayout(null);
-		
+		dlgR.setLocationRelativeTo(null);
 		JXMonthView monthView = new JXMonthView();
 		monthView.setBounds(25, 30, 245, 176);
 		dlgR.getContentPane().add(monthView);

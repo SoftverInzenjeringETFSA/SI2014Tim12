@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import java.awt.Dialog.ModalityType;
 
 
@@ -47,13 +48,14 @@ public class PrikazPacijentaGUI {
 	 */
 	private void initialize() {
 		frmPrikazPacijenta = new JDialog();
+		MainForma.Prekini(frmPrikazPacijenta);
 		frmPrikazPacijenta.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmPrikazPacijenta.setResizable(false);
 		frmPrikazPacijenta.setTitle("Prikaz pacijenta");
 		frmPrikazPacijenta.setBounds(100, 100, 450, 403);
 		frmPrikazPacijenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmPrikazPacijenta.getContentPane().setLayout(null);
-		
+		frmPrikazPacijenta.setLocationRelativeTo(null);
 		JLabel lblIme = new JLabel("Ime:");
 		lblIme.setBounds(10, 11, 126, 21);
 		frmPrikazPacijenta.getContentPane().add(lblIme);

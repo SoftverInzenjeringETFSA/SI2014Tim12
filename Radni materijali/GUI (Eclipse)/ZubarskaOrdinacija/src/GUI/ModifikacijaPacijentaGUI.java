@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+
 import java.awt.Dialog.ModalityType;
 
 
@@ -51,12 +52,13 @@ public class ModifikacijaPacijentaGUI {
 	 */
 	private void initialize() {
 		frmModifikacijaPacijenta = new JDialog();
+		MainForma.Prekini(frmModifikacijaPacijenta);
 		frmModifikacijaPacijenta.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmModifikacijaPacijenta.setResizable(false);
 		frmModifikacijaPacijenta.setTitle("Modifikacija pacijenta");
 		frmModifikacijaPacijenta.setBounds(100, 100, 393, 341);
 		frmModifikacijaPacijenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		frmModifikacijaPacijenta.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frmModifikacijaPacijenta.getContentPane().add(panel, BorderLayout.NORTH);
 		

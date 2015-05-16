@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -59,13 +60,14 @@ public class PrikazMaterijalaGUI {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		MainForma.Prekini(frame);
 		frame.setTitle("Prikaz materijala");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 524, 364);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setLocationRelativeTo(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 67, 483, 221);
 		frame.getContentPane().add(scrollPane);

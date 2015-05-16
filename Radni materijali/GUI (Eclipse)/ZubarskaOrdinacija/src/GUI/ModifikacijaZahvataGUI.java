@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+
 import java.awt.Dialog.ModalityType;
 
 
@@ -48,12 +49,13 @@ public class ModifikacijaZahvataGUI {
 	 */
 	private void initialize() {
 		frmModifikacijaZahvata = new JDialog();
+		MainForma.Prekini(frmModifikacijaZahvata);
 		frmModifikacijaZahvata.setResizable(false);
 		frmModifikacijaZahvata.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmModifikacijaZahvata.setTitle("Modifikacija cijene zahvata");
 		frmModifikacijaZahvata.setBounds(100, 100, 393, 204);
 		frmModifikacijaZahvata.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		frmModifikacijaZahvata.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frmModifikacijaZahvata.getContentPane().add(panel, BorderLayout.NORTH);
 		

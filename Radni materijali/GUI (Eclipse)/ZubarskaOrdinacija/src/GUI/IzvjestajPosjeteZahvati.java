@@ -17,7 +17,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+
 import java.awt.Dialog.ModalityType;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class IzvjestajPosjeteZahvati {
@@ -62,13 +65,15 @@ public class IzvjestajPosjeteZahvati {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		MainForma.Prekini(frame);
 		frame.setTitle("Izvje\u0161taj o svim posjetama i zahvatima sa cijenama");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 550, 364);
+		
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setLocationRelativeTo(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(22, 90, 503, 185);
 		frame.getContentPane().add(scrollPane);
@@ -95,6 +100,15 @@ public class IzvjestajPosjeteZahvati {
 		
 		JButton btnOdustani = new JButton("Odustani");
 		btnOdustani.setBounds(404, 299, 121, 23);
+		btnOdustani.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible (false);
+				frame.dispose();
+				
+			}
+		});
 		frame.getContentPane().add(btnOdustani);
 		
 		lblOd = new JLabel("Od:");
