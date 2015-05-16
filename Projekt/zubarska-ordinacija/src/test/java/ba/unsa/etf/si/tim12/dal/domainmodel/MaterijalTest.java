@@ -61,6 +61,7 @@ public class MaterijalTest {
 				assertEquals("", 6.66, m.getCijena(), 0.00001);
 			t.commit();
 			
+			//Kompajler ne kaže da treba beginTransaction za session.get
 			t = session.beginTransaction();
 			
 			novi = (Materijal) session.get(Materijal.class, m.getId());
