@@ -37,7 +37,7 @@ public class PacijentManager {
 		
 		t.commit();
 		
-		//ili null vratiti?
+		//TODO ili null vratiti umjesto da se izuzetak baci?
 		if(l.size() < 0)
 			throw new PacijentNotFound("Pacijent s id-om: " + id + " nije pronadjen.");
 		

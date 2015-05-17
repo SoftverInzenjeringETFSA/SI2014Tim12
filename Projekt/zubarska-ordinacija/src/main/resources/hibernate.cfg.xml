@@ -9,14 +9,14 @@
   <property name="hibernate.connection.username">EtfSI2014</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Korisnik.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Materijal.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/MaterijalTipZahvata.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/ObavljeniZahvat.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Pacijent.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Termin.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/Posjeta.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/TipZahvata.hbm.xml"/>
-  <mapping resource="ba/unsa/etf/si/tim12/dal/domainmodel/UtroseniMaterijal.hbm.xml"/>
+  <mapping resource="Korisnik.hbm.xml"/>
+  <mapping resource="Materijal.hbm.xml"/>
+  <mapping resource="MaterijalTipZahvata.hbm.xml"/>
+  <mapping resource="ObavljeniZahvat.hbm.xml"/>
+  <mapping resource="Pacijent.hbm.xml"/>
+  <mapping resource="Termin.hbm.xml"/>
+  <mapping resource="Posjeta.hbm.xml"/>
+  <mapping resource="TipZahvata.hbm.xml"/>
+  <mapping resource="UtroseniMaterijal.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
