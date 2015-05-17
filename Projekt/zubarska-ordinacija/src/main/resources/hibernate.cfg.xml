@@ -8,7 +8,7 @@
   <property name="hibernate.connection.url">jdbc:mysql://localhost/tim12</property>
   <property name="hibernate.connection.username">EtfSI2014</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-  <property name="hibernate.hbm2ddl.auto">update</property>
+  <property name="hibernate.hbm2ddl.auto">create-drop</property>
   <mapping resource="Korisnik.hbm.xml"/>
   <mapping resource="Materijal.hbm.xml"/>
   <mapping resource="MaterijalTipZahvata.hbm.xml"/>

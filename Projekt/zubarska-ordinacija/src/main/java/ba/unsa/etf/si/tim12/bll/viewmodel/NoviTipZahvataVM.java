@@ -3,12 +3,15 @@ package ba.unsa.etf.si.tim12.bll.viewmodel;
 import java.util.ArrayList;
 
 public class NoviTipZahvataVM {
+	
+	private String naziv;
+	private double cijena;
+	private String opis;
+	private ArrayList<NoviTipZahvataMaterijalVM> materijali;
+	
 	public NoviTipZahvataVM() {
 		materijali = new ArrayList<NoviTipZahvataMaterijalVM>();
 	}
-	private String naziv;
-	private double cijena;
-	private ArrayList<NoviTipZahvataMaterijalVM> materijali;
 	
 	public String getNaziv() {
 		return naziv;
@@ -28,4 +31,14 @@ public class NoviTipZahvataVM {
 	public void setMaterijali(ArrayList<NoviTipZahvataMaterijalVM> materijali) {
 		this.materijali = materijali;
 	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	
 }

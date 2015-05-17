@@ -33,7 +33,9 @@ public class PacijentManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = sess.beginTransaction();
 		
-		sess.save(pac);
+		long id = (Long) sess.save(pac);
+		
+		pac.setId(id);
 		
 		t.commit();
 		sess.close();
@@ -97,7 +99,6 @@ public class PacijentManagerTest {
 			long id = NadjiSlobodanID();
 			PrikazPacijentaVM vm = pManager.dajPacijenta(id);
 			
-
 		} catch(PacijentNotFound e){ 
 			e.printStackTrace();
 			//u GUI-u ne bi proslijedili nego bi nešto uradili s njim

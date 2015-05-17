@@ -1,6 +1,11 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class Materijal implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4028936004155348882L;
+	
 	private long id;
 	private String naziv,mjernaJedinica;
 	private double cijena;

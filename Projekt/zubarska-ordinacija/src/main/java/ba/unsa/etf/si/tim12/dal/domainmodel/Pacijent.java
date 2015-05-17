@@ -3,6 +3,12 @@ package ba.unsa.etf.si.tim12.dal.domainmodel;
 import java.util.Date;
 
 public class Pacijent implements java.io.Serializable {
+	
+	/**
+	 * 
+	 */
+	//private static final long serialVersionUID = 580664400325378245L;
+	
 	private long id;
 	private String imeIPrezime,opis,telefon;
 	private Date datumRodjenja;
