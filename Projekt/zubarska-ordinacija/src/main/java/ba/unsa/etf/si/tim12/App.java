@@ -40,9 +40,7 @@ public class App
 			// TODO Auto-generated catch block
 			System.out.println("Greska: " + e.getMessage());
 			e.printStackTrace();
-		} finally {
-			
-		}
+		} 
 		
 		
 	}

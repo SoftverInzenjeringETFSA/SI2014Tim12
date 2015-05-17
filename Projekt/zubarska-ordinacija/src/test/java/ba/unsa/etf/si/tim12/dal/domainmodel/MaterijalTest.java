@@ -71,7 +71,7 @@ public class MaterijalTest {
 			Long count = (Long) q.uniqueResult();
 			assertNotNull(count);
 			
-			System.out.println("Broj materijala: " + count);
+			//System.out.println("Broj materijala: " + count);
 						
 			session.delete(m);
 			t.commit();

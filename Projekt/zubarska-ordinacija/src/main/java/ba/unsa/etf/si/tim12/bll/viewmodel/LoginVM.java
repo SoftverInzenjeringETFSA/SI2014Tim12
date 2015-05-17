@@ -1,8 +1,10 @@
 package ba.unsa.etf.si.tim12.bll.viewmodel;
 
 public class LoginVM {
+	
 	private String username;
 	private String password;
+	
 	public String getUsername() {
 		return username;
 	}
