@@ -1,9 +1,18 @@
-*.class
-*.vpp~3
-Radni materijali/UML Dizajn/Dijagrami Luka.vpp~4
-*.bak
-Radni materijali/UML Dizajn/VPfiles/dijagramiSumejja.vpp.bak~1
-*.vpp~2
+# Windows image file caches
 Thumbs.db
-Radni materijali/GUI (Eclipse)/ZubarskaOrdinacija/bin/
-Projekt/zubarska-ordinacija/target/
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
