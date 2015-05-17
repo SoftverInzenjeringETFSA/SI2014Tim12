@@ -11,8 +11,8 @@ public class PosjetaManager {
 	
 	public PosjetaManager(Session session) {}
 	
-	public  PosjetaVM nadjiPoPacijentu(long idpacijenta) {
-		return new PosjetaVM();
+	public  ArrayList<PosjetaVM> nadjiPoPacijentu(long idpacijenta) {
+		return new ArrayList<PosjetaVM>();
 		//TODO: This
 	}
 	
