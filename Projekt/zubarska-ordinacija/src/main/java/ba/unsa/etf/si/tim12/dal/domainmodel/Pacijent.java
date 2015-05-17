@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Pacijent implements java.io.Serializable {
 	private long id;
-	private String ime,prezime,opis,telefon;
+	private String imeIPrezime,opis,telefon;
 	private Date datumRodjenja;
 	
 	public long getId() {
@@ -13,18 +13,7 @@ public class Pacijent implements java.io.Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getIme() {
-		return ime;
-	}
-	public void setIme(String ime) {
-		this.ime = ime;
-	}
-	public String getPrezime() {
-		return prezime;
-	}
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
-	}
+	
 	public String getOpis() {
 		return opis;
 	}
@@ -42,6 +31,12 @@ public class Pacijent implements java.io.Serializable {
 	}
 	public void setDatumRodjenja(Date datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
+	}
+	public String getImeIPrezime() {
+		return imeIPrezime;
+	}
+	public void setImeIPrezime(String imeIPrezime) {
+		this.imeIPrezime = imeIPrezime;
 	}
 
 

@@ -5,8 +5,7 @@ import java.util.Date;
 
 public class PrikazPacijentaVM {
 	private long id;
-	private String ime;
-	private String prezime;
+	private String imeIPrezime;
 	private Date datumRodjenja;
 	private String brojTelefona;
 	private String opis;
@@ -17,24 +16,27 @@ public class PrikazPacijentaVM {
 		termini = new ArrayList<TerminVM>();
 		posjete = new ArrayList<PosjetaVM>();
 	}
+	
+	public PrikazPacijentaVM(long id, String imeIPrezime, 
+			Date datumRodjenja, String brojTelefona, String opis) {
+		
+		this.id = id;
+		this.imeIPrezime = imeIPrezime;
+		this.datumRodjenja = datumRodjenja;
+		this.brojTelefona = brojTelefona;
+		this.opis = opis;
+		
+		termini = new ArrayList<TerminVM>();
+		posjete = new ArrayList<PosjetaVM>();
+	}
+	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getIme() {
-		return ime;
-	}
-	public void setIme(String ime) {
-		this.ime = ime;
-	}
-	public String getPrezime() {
-		return prezime;
-	}
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
-	}
+	
 	public Date getDatumRodjenja() {
 		return datumRodjenja;
 	}
@@ -64,6 +66,14 @@ public class PrikazPacijentaVM {
 	}
 	public void setPosjete(ArrayList<PosjetaVM> posjete) {
 		this.posjete = posjete;
+	}
+
+	public String getImeIPrezime() {
+		return imeIPrezime;
+	}
+
+	public void setImeIPrezime(String imeIPrezime) {
+		this.imeIPrezime = imeIPrezime;
 	}
 	
 }
