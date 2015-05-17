@@ -93,7 +93,7 @@ public class MainForma {
 		ImageIcon ihome = new ImageIcon (getClass().getResource("/home_16px.png"));
 		
 		JPanel p1 = new JPanel();
-		TP.addTab ("Home", ihome, p1, "Poèetna stranica");
+		TP.addTab ("Home", ihome, p1, "Poï¿½etna stranica");
 		p1.setLayout(new MigLayout("", "[67px][119px][][][][][][][][][][][]", "[23px][][][][][][][]"));
 		
 				JButton btnLogout = new JButton("LogOut");
@@ -118,7 +118,7 @@ public class MainForma {
 		});
 		
 		JPanel p2 = new JPanel();
-		TP.addTab ("Termini", null, p2, "Pregled narudžbi za pacijente");
+		TP.addTab ("Termini", null, p2, "Pregled narudÅ¾bi za pacijente");
 		p2.setLayout(new MigLayout("", "[][][]", "[]"));
 		
 		JButton btnRezervacijaTermina = new JButton("Rezervacija termina");
@@ -205,7 +205,7 @@ public class MainForma {
 		});
 		p6.add(btnPrikazMaterijala, "cell 1 0");
 		JPanel p7 = new JPanel();
-		TP.addTab ("Izvještaji", null, p7, "Pregled izvještaja");
+		TP.addTab ("Izvjeï¿½taji", null, p7, "Pregled izvjeï¿½taja");
 		
 		JButton btnOPosjetama = new JButton("O posjetama i zahvatima");
 		btnOPosjetama.setBounds(10, 7, 338, 23);
