@@ -17,13 +17,29 @@ public class PacijentManager {
 	}
 	
 	public  boolean dodajNovogPacijenta(NoviPacijentVM pacijent) {
-		return true;
-		//TODO: This
+	
+		Transaction t = session.beginTransaction();
+		
+		Pacijent p = new Pacijent();
+		System.out.println(p.getId());
+		p.setImeIPrezime(pacijent.getImeIPrezime());
+		p.setDatumRodjenja(pacijent.getDatumRodenja());
+		p.setTelefon(pacijent.getBrojTelefona());
+		p.setOpis(pacijent.getOpis());
+
+		session.save(p);
+		
+		System.out.println(p.getId());
+		t.commit();
+		
+			return true;
+		
+	
 	}
 	
 	public  boolean modificirajPacijenta(PacijentVM pacijent) {
 		return true;
-		//TODO: This
+		
 	}
 	
 	public  PrikazPacijentaVM dajPacijenta(long id) throws PacijentNotFound {
@@ -31,8 +47,11 @@ public class PacijentManager {
 		
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM(p.id, p.imeIPrezime, "+
 				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.id = :id";
+		
 		Query q = session.createQuery(hql);
+		
 		q.setLong("id", id);
+		
 		List l = q.list();
 		
 		t.commit();
