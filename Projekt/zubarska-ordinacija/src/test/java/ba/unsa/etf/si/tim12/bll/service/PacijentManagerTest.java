@@ -11,6 +11,7 @@ import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 import static org.junit.Assert.*;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
@@ -50,7 +51,7 @@ public class PacijentManagerTest {
 	}
 
 	@Test
-	public void testDajPacijenta() throws Exception {
+	public void testDajPacijentaPostojiPacijentBezTerminaiPosjeta() throws Exception {
 		Session sess = null;
 		
 		try{
@@ -82,6 +83,44 @@ public class PacijentManagerTest {
 			if(sess != null)
 				sess.close();
 		}
+	}
+	
+	@Test(expected = PacijentNotFound.class)
+	public void testDajPacijentaNePostojiPacijent() throws Exception {
+		Session sess = null;
+		
+		try{
+			sess = HibernateUtil.getSessionFactory().openSession();
+			
+			PacijentManager pManager = new PacijentManager(sess);
+			
+			long id = NadjiSlobodanID();
+			PrikazPacijentaVM vm = pManager.dajPacijenta(id);
+			
+
+		} catch(PacijentNotFound e){ 
+			e.printStackTrace();
+			//u GUI-u ne bi proslijedili nego bi nešto uradili s njim
+			throw e;
+		} catch(Exception e){
+			e.printStackTrace();
+			//u GUIu ne bi proslijedili nego bi nešto uradili s njim
+			throw e;
+		} finally {
+			if(sess != null)
+				sess.close();
+		}
+	}
+
+	private long NadjiSlobodanID() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		Query q = sess.createQuery("SELECT MAX(id) FROM Pacijent");
+		long max_id = (Long) q.uniqueResult();
+		
+		sess.close();
+		
+		return max_id + 1;
 	}
 
 }
