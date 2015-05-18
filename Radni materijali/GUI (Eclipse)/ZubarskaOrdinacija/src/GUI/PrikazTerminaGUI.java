@@ -68,16 +68,16 @@ public class PrikazTerminaGUI {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		JLabel lblPretraivanjePo = new JLabel("Termini do datuma:");
-		lblPretraivanjePo.setBounds(10, 25, 181, 19);
+		lblPretraivanjePo.setBounds(10, 55, 181, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
 		btnNewButton = new JButton("Pretra\u017Ei");
 		btnNewButton.setIcon(new ImageIcon(PrikazTerminaGUI.class.getResource("/GUI/SearchIcon.png")));
-		btnNewButton.setBounds(403, 66, 99, 20);
+		btnNewButton.setBounds(403, 95, 99, 20);
 		frame.getContentPane().add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 97, 492, 180);
+		scrollPane.setBounds(10, 126, 492, 151);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -91,20 +91,37 @@ public class PrikazTerminaGUI {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblDoktor = new JLabel("Doktor:");
-		lblDoktor.setBounds(10, 67, 181, 19);
+		lblDoktor.setBounds(10, 96, 181, 19);
 		frame.getContentPane().add(lblDoktor);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(165, 67, 192, 19);
+		textField_1.setBounds(166, 96, 192, 19);
 		frame.getContentPane().add(textField_1);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(165, 24, 193, 20);
+		comboBox.setBounds(165, 54, 193, 20);
 		frame.getContentPane().add(comboBox);
 		
 		JButton btnOdkaiTermin = new JButton("Otka\u017Ei termin");
 		btnOdkaiTermin.setBounds(362, 291, 140, 23);
 		frame.getContentPane().add(btnOdkaiTermin);
+		
+		JLabel lblTerminiOdDatuma = new JLabel("Termini od datuma:");
+		lblTerminiOdDatuma.setBounds(10, 25, 181, 19);
+		frame.getContentPane().add(lblTerminiOdDatuma);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(165, 23, 193, 20);
+		frame.getContentPane().add(comboBox_1);
+		
+		JButton btnDodajPosjetu = new JButton("Dodaj posjetu");
+		btnDodajPosjetu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PosjeteIzTerminaGUI();
+			}
+		});
+		btnDodajPosjetu.setBounds(210, 291, 140, 23);
+		frame.getContentPane().add(btnDodajPosjetu);
 	}
 }

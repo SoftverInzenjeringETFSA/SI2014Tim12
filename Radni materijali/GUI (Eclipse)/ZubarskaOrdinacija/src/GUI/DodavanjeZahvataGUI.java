@@ -23,12 +23,11 @@ import java.awt.List;
 import javax.swing.JComboBox;
 
 
-public class KreiranjeZahvataGUI {
+public class DodavanjeZahvataGUI {
 
 	private JDialog frmKreiranjeZahvata;
-	private JTextField textField;
-	private JTextField textField_1;
 	private JTextField textField_2;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -37,7 +36,7 @@ public class KreiranjeZahvataGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					KreiranjeZahvataGUI window = new KreiranjeZahvataGUI();
+					DodavanjeZahvataGUI window = new DodavanjeZahvataGUI();
 					window.frmKreiranjeZahvata.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +48,7 @@ public class KreiranjeZahvataGUI {
 	/**
 	 * Create the application.
 	 */
-	public KreiranjeZahvataGUI() {
+	public DodavanjeZahvataGUI() {
 		initialize();
 		frmKreiranjeZahvata.setVisible(true);
 	}
@@ -62,7 +61,7 @@ public class KreiranjeZahvataGUI {
 		MainForma.Prekini(frmKreiranjeZahvata);
 		frmKreiranjeZahvata.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmKreiranjeZahvata.setResizable(false);
-		frmKreiranjeZahvata.setTitle("Kreiranje zahvata");
+		frmKreiranjeZahvata.setTitle("Dodavanje zahvata");
 		frmKreiranjeZahvata.setBounds(100, 100, 358, 407);
 		frmKreiranjeZahvata.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmKreiranjeZahvata.setLocationRelativeTo(null);
@@ -73,39 +72,21 @@ public class KreiranjeZahvataGUI {
 		frmKreiranjeZahvata.getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(86, 11, 248, 20);
-		panel_1.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(89, 204, 86, 20);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblIme = new JLabel("Naziv:");
+		JLabel lblIme = new JLabel("Zahvat:");
 		lblIme.setBounds(10, 11, 86, 20);
 		panel_1.add(lblIme);
 		
 		JLabel lblPrezime = new JLabel("Cijena:");
-		lblPrezime.setBounds(10, 204, 86, 20);
+		lblPrezime.setBounds(189, 260, 86, 20);
 		panel_1.add(lblPrezime);
 		
-		JButton btnKreiraj = new JButton("Kreiraj");
+		JButton btnKreiraj = new JButton("Dodaj");
 		btnKreiraj.setBounds(225, 330, 109, 23);
 		panel_1.add(btnKreiraj);
 		
 		JButton btnOdustani = new JButton("Odustani");
 		btnOdustani.setBounds(106, 330, 109, 23);
 		panel_1.add(btnOdustani);
-		
-		JLabel lblOpis = new JLabel("Opis:");
-		lblOpis.setBounds(10, 235, 86, 20);
-		panel_1.add(lblOpis);
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(89, 235, 245, 78);
-		panel_1.add(textPane);
 		
 		JLabel lblNewLabel = new JLabel("Materijali:");
 		lblNewLabel.setBounds(10, 109, 65, 23);
@@ -121,19 +102,15 @@ public class KreiranjeZahvataGUI {
 				return values[index];
 			}
 		});
-		list.setBounds(89, 112, 245, 78);
+		list.setBounds(89, 112, 245, 137);
 		panel_1.add(list);
-		
-		JLabel lblBam = new JLabel("BAM");
-		lblBam.setBounds(185, 204, 86, 20);
-		panel_1.add(lblBam);
 		
 		JLabel lblNewLabel_1 = new JLabel("Materijal:");
 		lblNewLabel_1.setBounds(10, 42, 76, 20);
 		panel_1.add(lblNewLabel_1);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(86, 42, 112, 20);
+		comboBox.setBounds(89, 42, 109, 20);
 		panel_1.add(comboBox);
 		
 		JLabel lblKoliina = new JLabel("Koli\u010Dina:");
@@ -146,7 +123,18 @@ public class KreiranjeZahvataGUI {
 		textField_2.setColumns(10);
 		
 		JButton btnDodaj = new JButton("Dodaj");
-		btnDodaj.setBounds(86, 75, 89, 23);
+		btnDodaj.setBounds(89, 78, 89, 23);
 		panel_1.add(btnDodaj);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(87, 11, 247, 20);
+		panel_1.add(comboBox_1);
+		
+		textField = new JTextField();
+		textField.setEnabled(false);
+		textField.setEditable(false);
+		textField.setBounds(248, 260, 86, 20);
+		panel_1.add(textField);
+		textField.setColumns(10);
 	}
 }

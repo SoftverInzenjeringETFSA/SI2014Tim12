@@ -140,13 +140,21 @@ public class MainForma {
 		TP.addTab ("Pacijenti", null, p3, "Tab za manipulaciju podacima o pacijentima");
 		p3.setLayout(new MigLayout("", "[123px][][]", "[23px][][]"));
 		
-		JButton btnPacijenti = new JButton("Pacijenti");
+		JButton btnPacijenti = new JButton("Prikaz pacijenta");
 		btnPacijenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PacijentiGUI();
 			}
 		});
 		p3.add(btnPacijenti, "cell 0 0");
+		
+		JButton btnNewButton_2 = new JButton("Kreiraj novog pacijenta");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new KreiranjePacijentaGUI();
+			}
+		});
+		p3.add(btnNewButton_2, "cell 1 0");
 		JPanel p4 = new JPanel();
 		TP.addTab ("Posjete", null, p4, "Evidencija posjeta za pacijente");
 		p4.setLayout(new MigLayout("", "[][]", "[]"));
@@ -205,7 +213,7 @@ public class MainForma {
 		});
 		p6.add(btnPrikazMaterijala, "cell 1 0");
 		JPanel p7 = new JPanel();
-		TP.addTab ("Izvje�taji", null, p7, "Pregled izvje�taja");
+		TP.addTab ("Izvje\u0161taji", null, p7, "Pregled izvje�taja");
 		
 		JButton btnOPosjetama = new JButton("O posjetama i zahvatima");
 		btnOPosjetama.setBounds(10, 7, 338, 23);

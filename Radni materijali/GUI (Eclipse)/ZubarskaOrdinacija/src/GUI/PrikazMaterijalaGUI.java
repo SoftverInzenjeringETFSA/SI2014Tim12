@@ -29,7 +29,6 @@ public class PrikazMaterijalaGUI {
 	private JTable table;
 	private JTextField textField;
 	private JButton btnNewButton;
-	private JButton btnDodajKoliinu;
 
 	/**
 	 * Launch the application.
@@ -77,11 +76,12 @@ public class PrikazMaterijalaGUI {
 			new Object[][] {
 			},
 			new String[] {
-				"Ime materijala", "Jedini\u010Dna cijena", "Dostupna koli\u010Dina"
+				"ID", "Ime materijala", "Jedini\u010Dna cijena", "Mjerna jedinica"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(15);
-		table.getColumnModel().getColumn(0).setMinWidth(2);
+		table.getColumnModel().getColumn(0).setPreferredWidth(29);
+		table.getColumnModel().getColumn(1).setPreferredWidth(91);
+		table.getColumnModel().getColumn(1).setMinWidth(2);
 		scrollPane.setViewportView(table);
 		
 		JLabel lblPretraivanjePo = new JLabel("Pretra\u017Eivanje po imenu materijala:");
@@ -105,14 +105,5 @@ public class PrikazMaterijalaGUI {
 		JButton btnOdustani = new JButton("Odustani");
 		btnOdustani.setBounds(372, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
-		
-		btnDodajKoliinu = new JButton("Dodaj koli\u010Dinu");
-		btnDodajKoliinu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new KolicinaMaterijalaGUI();
-			}
-		});
-		btnDodajKoliinu.setBounds(109, 299, 121, 23);
-		frame.getContentPane().add(btnDodajKoliinu);
 	}
 }

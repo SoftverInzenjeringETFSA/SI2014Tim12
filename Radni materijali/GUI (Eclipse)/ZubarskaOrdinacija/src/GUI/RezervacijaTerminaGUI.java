@@ -79,7 +79,7 @@ public class RezervacijaTerminaGUI {
 		JButton btnNoviTermin = new JButton("Registruj novi termin");
 		btnNoviTermin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new NoviTermin();
+				
 			}
 		});
 		btnNoviTermin.setBounds(208, 394, 161, 25);

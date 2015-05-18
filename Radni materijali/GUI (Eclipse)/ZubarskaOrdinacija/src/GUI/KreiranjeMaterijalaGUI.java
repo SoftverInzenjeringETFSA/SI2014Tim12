@@ -101,6 +101,7 @@ public class KreiranjeMaterijalaGUI {
 		panel_1.add(btnOdustani);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"miligram", "gram", "kilogram", "komad", "mililitar", "litar"}));
 		comboBox.setBounds(141, 42, 167, 23);
 		panel_1.add(comboBox);
