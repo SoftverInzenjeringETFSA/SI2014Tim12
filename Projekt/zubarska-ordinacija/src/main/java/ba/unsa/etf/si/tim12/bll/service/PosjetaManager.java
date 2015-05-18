@@ -1,5 +1,7 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+import ba.unsa.etf.si.tim12.dal.domainmodel.Pacijent;
+import ba.unsa.etf.si.tim12.dal.domainmodel.Posjeta;
 
 import java.util.*;
 
@@ -17,7 +19,21 @@ public class PosjetaManager {
 	}
 	
 	public  void dodajNovuPosjetu(NovaPosjetaVM posjeta) {
-		//TODO: This
+     Transaction t = session.beginTransaction();
+		
+		Posjeta p = new Posjeta();
+		System.out.println(p.getId());
+		
+		p.setDoktor(posjeta.getDoktor());
+		p.setPacijentId(posjeta.getPacijentId());
+		p.setDijagnoza(posjeta.getDijagnoza());
+		p.setVrijeme(posjeta.getVrijeme());
+	
+		session.save(p);
+		
+		System.out.println(p.getId());
+		t.commit();
+		
 	}
 	
 	public  ArrayList<PosjetaVM> nadjiPoDijagnozi(String dijagnoza) {

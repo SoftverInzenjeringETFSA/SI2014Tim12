@@ -1,6 +1,9 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+
 import java.util.Scanner;
+
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
@@ -19,8 +22,17 @@ public class MaterijaliManager {
 	}
 	
 	public  boolean izbrisiMaterijal(long id) {
-		return true;
-		//TODO: THIS
+		Transaction t = session.beginTransaction();
+	
+		String hql ="delete Materijal where id=:id";
+		
+		        Query q = session.createQuery(hql);
+				q.setParameter("id", 1);
+		        int result = q.executeUpdate();
+
+		        t.commit();
+		        return true;
+
 		
 	}
 	

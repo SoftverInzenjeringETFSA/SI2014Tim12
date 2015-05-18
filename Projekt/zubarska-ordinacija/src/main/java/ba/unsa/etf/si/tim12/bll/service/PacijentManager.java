@@ -2,6 +2,7 @@ package ba.unsa.etf.si.tim12.bll.service;
 import ba.unsa.etf.si.tim12.PacijentNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Pacijent;
+import ba.unsa.etf.si.tim12.dal.domainmodel.TipZahvata;
 
 import java.util.*;
 
@@ -38,6 +39,16 @@ public class PacijentManager {
 	}
 	
 	public  boolean modificirajPacijenta(PacijentVM pacijent) {
+		
+		Transaction t = session.beginTransaction();
+		Pacijent p= (Pacijent) session.load(Pacijent.class, pacijent.getId());
+		p.setImeIPrezime(pacijent.getImePrezime());
+		p.setDatumRodjenja(pacijent.getDatumRodjenja());
+		p.setTelefon(pacijent.getBrojTelefona());
+		p.setOpis(pacijent.getOpis());
+	    
+		session.update(p);
+		t.commit();
 		return true;
 		
 	}
