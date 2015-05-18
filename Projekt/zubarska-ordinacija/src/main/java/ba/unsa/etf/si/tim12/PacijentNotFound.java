@@ -2,6 +2,11 @@ package ba.unsa.etf.si.tim12;
 
 public class PacijentNotFound extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5841301188054242661L;
+
 	public PacijentNotFound() {
 		super();
 		

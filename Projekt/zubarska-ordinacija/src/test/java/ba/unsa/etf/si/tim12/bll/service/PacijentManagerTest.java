@@ -97,7 +97,7 @@ public class PacijentManagerTest {
 			PacijentManager pManager = new PacijentManager(sess);
 			
 			long id = NadjiSlobodanID();
-			PrikazPacijentaVM vm = pManager.dajPacijenta(id);
+			pManager.dajPacijenta(id);
 			
 		} catch(PacijentNotFound e){ 
 			e.printStackTrace();

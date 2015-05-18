@@ -1,6 +1,11 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class ObavljeniZahvat implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1573668064870019191L;
+	
 	private Long id,zahvatId,posjetaId;
 	private double cijena;
 	

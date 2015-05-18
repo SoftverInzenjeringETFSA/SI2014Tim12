@@ -1,6 +1,11 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class Korisnik implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3168766088949070899L;
+	
 	private long id;
 	private String username,password;
 	

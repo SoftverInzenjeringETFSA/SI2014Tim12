@@ -29,6 +29,7 @@ public class KorisnikManager {
 		if(l.size() < 1)
 			return false;
 		
+		t.commit();
 		
 		return model.getPassword().equals((String) l.get(0));
 	}

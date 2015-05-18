@@ -7,7 +7,7 @@ public class Pacijent implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	//private static final long serialVersionUID = 580664400325378245L;
+	private static final long serialVersionUID = 580664400325378245L;
 	
 	private long id;
 	private String imeIPrezime,opis,telefon;

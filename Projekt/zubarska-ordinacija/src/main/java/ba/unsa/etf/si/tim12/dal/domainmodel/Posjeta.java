@@ -3,6 +3,11 @@ package ba.unsa.etf.si.tim12.dal.domainmodel;
 import java.util.Date;
 
 public class Posjeta implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1102038036090771019L;
+	
 	private long id,pacijentId;
 	private String doktor,dijagnoza;
 	private Date vrijeme;

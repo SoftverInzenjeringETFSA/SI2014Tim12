@@ -3,6 +3,10 @@ package ba.unsa.etf.si.tim12.dal.domainmodel;
 import java.util.Date;
 
 public class Termin implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6122454827324114980L;
 	private long id,pacijentId;
 	private String doktor;
 	private Date vrijeme;

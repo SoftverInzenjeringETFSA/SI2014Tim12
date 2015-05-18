@@ -1,6 +1,11 @@
 package ba.unsa.etf.si.tim12.dal.domainmodel;
 
 public class TipZahvata implements java.io.Serializable  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3761539667149704229L;
+	
 	private long id;
 	private String naziv,opis;
 	private double cijena;

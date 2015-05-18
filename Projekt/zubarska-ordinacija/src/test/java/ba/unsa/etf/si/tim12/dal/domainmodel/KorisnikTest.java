@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
