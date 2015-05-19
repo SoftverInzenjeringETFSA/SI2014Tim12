@@ -37,9 +37,11 @@ public class PacijentManager {
 		return true;
 	}
 	
+	
 	public  boolean modificirajPacijenta(PacijentVM pacijent) {
 		
 		Transaction t = session.beginTransaction();
+		//TODO: load promijeniti u get, ako je p null tj nije pronađen pacijent vrati false i prije tog t.rollback()
 		Pacijent p= (Pacijent) session.load(Pacijent.class, pacijent.getId());
 		p.setImeIPrezime(pacijent.getImePrezime());
 		p.setDatumRodjenja(pacijent.getDatumRodjenja());
