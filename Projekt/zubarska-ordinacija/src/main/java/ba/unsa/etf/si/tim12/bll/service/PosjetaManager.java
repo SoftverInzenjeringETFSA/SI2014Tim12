@@ -55,7 +55,9 @@ public class PosjetaManager {
 	}
 	
 	public  ArrayList<PosjetaVM> nadjiPoDijagnozi(String dijagnoza) {
+		dijagnoza = dijagnoza.trim();
 		dijagnoza = "%" + dijagnoza + "%";
+		dijagnoza = dijagnoza.toLowerCase();
 		Transaction t = session.beginTransaction();
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetaVM(p.id, p.pacijentId, "+
 				"p.doktor, p.dijagnoza, p.vrijeme) FROM Posjeta p WHERE p.dijagnoza like :dijagnoza";
