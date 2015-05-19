@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
+@SuppressWarnings("unchecked")
 public class PosjetaManager {
 	Session session;
 	
@@ -54,20 +55,16 @@ public class PosjetaManager {
 	}
 	
 	public  ArrayList<PosjetaVM> nadjiPoDijagnozi(String dijagnoza) {
+		dijagnoza = "%" + dijagnoza + "%";
 		Transaction t = session.beginTransaction();
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetaVM(p.id, p.pacijentId, "+
+				"p.doktor, p.dijagnoza, p.vrijeme) FROM Posjeta p WHERE p.dijagnoza like :dijagnoza";
+		Query query = session.createQuery(hql);
+		query.setString("dijagnoza", dijagnoza);
+		List<PosjetaVM> rezultati = query.list();
+		t.commit();
 		
-	     
-		String hql ="from Posjeta where dijagnoza=:dijagnoza";
-		Query q = session.createQuery(hql);
-		q.setString("dijagnoza", dijagnoza); 
-	  
-	    List<PosjetaVM> lista = q.list();
-	    
-	    ArrayList<PosjetaVM> lista1 = new ArrayList<PosjetaVM>(lista.size());
-	    lista1.addAll(lista);
-	    
-	    t.commit();
-		return lista1;
+		return new ArrayList<PosjetaVM>(rezultati);
 	}
 
 }

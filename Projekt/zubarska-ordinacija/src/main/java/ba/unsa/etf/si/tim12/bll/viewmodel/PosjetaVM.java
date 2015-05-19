@@ -9,6 +9,17 @@ public class PosjetaVM {
 	private String dijagnoza;
 	private Date vrijeme;
 	
+	public PosjetaVM() {
+		
+	}
+	public PosjetaVM(long id, long pacijentId, String doktor, String dijagnoza, Date vrijeme) {
+		this.id = id;
+		this.pacijenti = pacijentId;
+		this.doktor = doktor;
+		this.dijagnoza = dijagnoza;
+		this.vrijeme = new Date(vrijeme.getTime());
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -37,6 +48,6 @@ public class PosjetaVM {
 		return vrijeme;
 	}
 	public void setVrijeme(Date vrijeme) {
-		this.vrijeme = vrijeme;
+		this.vrijeme = new Date(vrijeme.getTime());
 	}
 }
