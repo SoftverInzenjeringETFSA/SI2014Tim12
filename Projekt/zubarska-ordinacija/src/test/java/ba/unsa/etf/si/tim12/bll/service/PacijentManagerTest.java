@@ -32,6 +32,7 @@ public class PacijentManagerTest {
 		Calendar c = new GregorianCalendar(1993,12,16);
 		pac.setDatumRodjenja(c.getTime());
 		pac.setTelefon("063/333-333");
+		pac.setOpis("lala");
 		
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = sess.beginTransaction();
@@ -128,6 +129,20 @@ public class PacijentManagerTest {
 	}
 	
 	@Test
+	public void nadjiPoIduTest() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		PacijentManager pm = new PacijentManager(sess);
+		ArrayList<PacijentVM> l = pm.nadjiPoIdu(pac.getId());
+		PacijentVM vm = new PacijentVM();
+		vm.setBrojTelefona(pac.getTelefon());
+		vm.setDatumRodjenja(pac.getDatumRodjenja());
+		vm.setId(pac.getId());
+		vm.setImePrezime(pac.getImeIPrezime());
+		vm.setOpis(pac.getOpis());
+		assertEquals(vm.getId(), l.get(0).getId());
+	}
+	
+	@Test
 	public void nadjiPoImenuTest() {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		PacijentManager pm = new PacijentManager(sess);
@@ -139,5 +154,19 @@ public class PacijentManagerTest {
 		vm.setImePrezime(pac.getImeIPrezime());
 		vm.setOpis(pac.getOpis());
 		assertEquals(vm.getImePrezime(), l.get(0).getImePrezime());
+	}
+	
+	@Test
+	public void nadjiPoOpisuTest() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		PacijentManager pm = new PacijentManager(sess);
+		ArrayList<PacijentVM> l = pm.nadjiPoOpisu(pac.getOpis());
+		PacijentVM vm = new PacijentVM();
+		vm.setBrojTelefona(pac.getTelefon());
+		vm.setDatumRodjenja(pac.getDatumRodjenja());
+		vm.setId(pac.getId());
+		vm.setImePrezime(pac.getImeIPrezime());
+		vm.setOpis(pac.getOpis());
+		assertEquals(vm.getOpis(), l.get(0).getOpis());		
 	}
 }
