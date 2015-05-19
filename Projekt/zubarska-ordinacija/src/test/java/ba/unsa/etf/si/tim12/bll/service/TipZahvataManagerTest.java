@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTipZahvataMaterijalVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTipZahvataVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Materijal;
+import ba.unsa.etf.si.tim12.dal.domainmodel.MaterijalTipZahvata;
 
 public class TipZahvataManagerTest {
 
@@ -73,6 +75,8 @@ public class TipZahvataManagerTest {
 	public void tearDown() throws Exception {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
+		Transaction t = sess.beginTransaction();
+				
 		String hql = "SELECT id FROM TipZahvata t " +
 				"WHERE t.naziv = :naziv";
 		Query q = sess.createQuery(hql);
@@ -100,6 +104,8 @@ public class TipZahvataManagerTest {
 			q.setLong("materijalId", m.getId());
 			q.executeUpdate();
 		}
+		
+		t.commit();
 		
 		sess.close();
 	}
@@ -136,9 +142,33 @@ public class TipZahvataManagerTest {
 				broja_zahvata + 1, dajBrojTipZahvata(sess));
 		assertEquals("Broj matrijalTipZahvata mora se uvecati",
 				broj_materijala + mvms.size(), dajBrojMaterijalaTipZahvata(sess));
+		MaterijalTipZahvata n = new MaterijalTipZahvata();
+		
+		String hql = "SELECT id FROM TipZahvata t WHERE t.naziv = :naziv";
+		Query q = sess.createQuery(hql);
+		q.setString("naziv", vm.getNaziv());
+		
+		Long id = (Long) q.uniqueResult();
+		assertNotNull("TipZahvata mora biti pronadjen",id);
+		
+		hql = "SELECT materijalId FROM MaterijalTipZahvata m " +
+				"WHERE m.tipZahvataId = :tipZahvataId";
+		q = sess.createQuery(hql);
+		q.setLong("tipZahvataId", id);
+			
+		ArrayList<Long> mvms_mids = new ArrayList<Long>();
+		List<Long> materijali = q.list();
+		
+		for (NoviTipZahvataMaterijalVM mvm : mvms) {
+			assertTrue("A", materijali.contains(mvm.getMaterijalId()));
+			mvms_mids.add(mvm.getMaterijalId());
+		}
+		
+		for (Long m_id : materijali) {
+			assertTrue("B", mvms_mids.contains(m_id));
+		}
 		
 		sess.close();
-		
 	}
 	
 	@Test
@@ -155,7 +185,7 @@ public class TipZahvataManagerTest {
 		
 		vm.setMaterijali(mvms);
 		NoviTipZahvataMaterijalVM temp = new NoviTipZahvataMaterijalVM();
-		temp.setMaterijalId(id);;
+		temp.setMaterijalId(id);
 		temp.setKolicina(3.33);
 		vm.getMaterijali().add(temp);
 		
