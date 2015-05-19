@@ -84,7 +84,7 @@ public class PacijentManager {
 	}	
 	
 	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
-		String id = "'%str(" + pacijentId + ")%";
+		String id = "%" + pacijentId + "%";
 		
 		Transaction t = session.beginTransaction();
 		
