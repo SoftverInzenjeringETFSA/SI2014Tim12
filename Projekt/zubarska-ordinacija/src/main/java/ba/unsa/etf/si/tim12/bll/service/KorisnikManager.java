@@ -26,7 +26,7 @@ public class KorisnikManager {
 		q.setParameter("username", model.getUsername());
 		List l = q.list();
 		
-		if(l.size() < 1)
+		if(l.isEmpty())
 			return false;
 		
 		t.commit();

@@ -33,9 +33,7 @@ public class PacijentManager {
 		System.out.println(p.getId());
 		t.commit();
 		
-			return true;
-		
-	
+		return true;
 	}
 	
 	public  boolean modificirajPacijenta(PacijentVM pacijent) {
@@ -68,7 +66,7 @@ public class PacijentManager {
 		t.commit();
 		
 		//TODO ili null vratiti umjesto da se izuzetak baci?
-		if(l.size() < 1)
+		if(l.isEmpty())
 			throw new PacijentNotFound("Pacijent s id-om: " + id + " nije pronadjen.");
 		
 		PrikazPacijentaVM vm = (PrikazPacijentaVM) l.get(0);

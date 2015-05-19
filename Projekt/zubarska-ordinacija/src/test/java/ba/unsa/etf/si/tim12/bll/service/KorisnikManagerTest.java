@@ -1,11 +1,16 @@
 package ba.unsa.etf.si.tim12.bll.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Korisnik;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.jdbc.Work;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +25,7 @@ public class KorisnikManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		korisnik = new Korisnik();
-		korisnik.setUsername("testUser1");
+		korisnik.setUsername("testUser" + NadjiSlobodanID());
 		korisnik.setPassword("testPassword123");
 		
 		Session sess = HibernateUtil.getSessionFactory().openSession();
@@ -28,7 +33,7 @@ public class KorisnikManagerTest {
 		Transaction t = sess.beginTransaction();
 		sess.save(korisnik);
 		t.commit();
-		
+
 		sess.close();
 	}
 
@@ -63,7 +68,7 @@ public class KorisnikManagerTest {
 			
 		} catch(Exception e){
 			e.printStackTrace();
-			//u GUIu ne bi proslijedili nego bi nešto uradili s njim
+			//u GUIu ne bi proslijedili nego bi neï¿½to uradili s njim
 			throw e;
 		} finally {
 			if(sess != null)
@@ -92,7 +97,7 @@ public class KorisnikManagerTest {
 			
 		} catch(Exception e){
 			e.printStackTrace();
-			//u GUIu ne bi proslijedili nego bi nešto uradili s njim
+			//u GUIu ne bi proslijedili nego bi neï¿½to uradili s njim
 			throw e;
 		} finally {
 			if(sess != null)
@@ -121,7 +126,7 @@ public class KorisnikManagerTest {
 			
 		} catch(Exception e){
 			e.printStackTrace();
-			//u GUIu ne bi proslijedili nego bi nešto uradili s njim
+			//u GUIu ne bi proslijedili nego bi neï¿½to uradili s njim
 			throw e;
 		} finally {
 			if(sess != null)
@@ -130,5 +135,17 @@ public class KorisnikManagerTest {
 		
 	}
 	
-
+	private long NadjiSlobodanID() {
+	
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		Query q = sess.createQuery("SELECT MAX(id) FROM Korisnik");
+		Long max_id = (Long) q.uniqueResult();
+	
+		sess.close();
+		if(max_id == null)
+			return 1;
+	
+		return max_id + 1;
+	}
 }
