@@ -40,7 +40,7 @@ public class TipZahvataTest {
 			assertEquals("Id tipa zahvata mora biti jednak novom id-u", novi_id, tz.getId());
 			t.commit();
 			
-			TipZahvata tz2 = (TipZahvata) session.get(TipZahvata.class, tz2.getId());
+			TipZahvata tz2 = (TipZahvata) session.get(TipZahvata.class, tz.getId());
 
 			assertEquals("Idevi moraju biti jednaki", tz.getId(), tz2.getId());
 			assertEquals("Imena moraju biti jednaki", tz.getNaziv(), tz2.getNaziv());
@@ -55,7 +55,6 @@ public class TipZahvataTest {
 				assertEquals("", 40.56, tz.getCijena(), 0.00001);
 			t.commit();
 			
-           t = session.beginTransaction();
            
            tz.setOpis("novi");
            t = session.beginTransaction();
