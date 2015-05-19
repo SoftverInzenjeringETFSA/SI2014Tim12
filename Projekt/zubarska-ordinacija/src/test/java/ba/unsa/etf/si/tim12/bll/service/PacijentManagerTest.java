@@ -1,11 +1,14 @@
 package ba.unsa.etf.si.tim12.bll.service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ba.unsa.etf.si.tim12.PacijentNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
@@ -123,5 +126,18 @@ public class PacijentManagerTest {
 		
 		return max_id + 1;
 	}
-
+	
+	@Test
+	public void nadjiPoImenuTest() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		PacijentManager pm = new PacijentManager(sess);
+		ArrayList<PacijentVM> l = pm.nadjiPoImenu(pac.getImeIPrezime());
+		PacijentVM vm = new PacijentVM();
+		vm.setBrojTelefona(pac.getTelefon());
+		vm.setDatumRodjenja(pac.getDatumRodjenja());
+		vm.setId(pac.getId());
+		vm.setImePrezime(pac.getImeIPrezime());
+		vm.setOpis(pac.getOpis());
+		assertEquals(vm.getImePrezime(), l.get(0).getImePrezime());
+	}
 }
