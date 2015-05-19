@@ -79,8 +79,8 @@ public class Posjete {
 		dlgPosjeteRegistracija.getContentPane().add(lblPacijent);
 		
 		JComboBox comboBoxPacijent = new JComboBox();
-		lblPacijent.setLabelFor(comboBoxPacijent);
 		comboBoxPacijent.setEditable(true);
+		lblPacijent.setLabelFor(comboBoxPacijent);
 		comboBoxPacijent.setBounds(138, 58, 231, 22);
 		dlgPosjeteRegistracija.getContentPane().add(comboBoxPacijent);
 		

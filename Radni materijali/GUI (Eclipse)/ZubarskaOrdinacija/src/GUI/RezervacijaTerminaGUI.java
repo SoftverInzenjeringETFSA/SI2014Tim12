@@ -99,6 +99,7 @@ public class RezervacijaTerminaGUI {
 		textField.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setEditable(true);
 		comboBox.setBounds(124, 18, 245, 25);
 		dlgR.getContentPane().add(comboBox);
 		

@@ -127,6 +127,7 @@ public class DodavanjeZahvataGUI {
 		panel_1.add(btnDodaj);
 		
 		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setEditable(true);
 		comboBox_1.setBounds(87, 11, 247, 20);
 		panel_1.add(comboBox_1);
 		
