@@ -1,11 +1,24 @@
 package ba.unsa.etf.si.tim12.bll.viewmodel;
 
+import java.util.Date;
+
 public class MaterijalVM {
 	private long id;
 	private String naziv;
 	private String mjernaJedinica;
 	private double cijena;
 	
+	public MaterijalVM(long id, String naziv, String mjernaJedinica,double cijena) {
+		this.id = id;
+		this.naziv = naziv;
+		this.mjernaJedinica = mjernaJedinica;
+		this.cijena = cijena;
+	
+	}
+	public MaterijalVM()
+	{
+		
+	}
 	public long getId() {
 		return id;
 	}

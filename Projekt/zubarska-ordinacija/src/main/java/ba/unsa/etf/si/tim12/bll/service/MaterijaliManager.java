@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import java.util.List;
+
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 
 import java.util.ArrayList;
@@ -17,19 +18,17 @@ public class MaterijaliManager {
 		
 	}
 	
-	public List< MaterijalVM> nadjiPoImenu(String ime) {
+	public ArrayList< MaterijalVM> nadjiPoImenu(String ime) {
         Transaction t = session.beginTransaction();
         String naziv="%"+ime+"%";
                 	
-		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalIVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM Materijal where p.naziv LIKE :naziv";
+        String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM Materijal p WHERE p.naziv LIKE :naziv";
 		Query q = session.createQuery(hql);
 		
-		q.setString("naziv", ime);
+		q.setString("naziv", naziv);
 		
-		List<MaterijalVM> nesto = q.list();
+		List<MaterijalVM> nesto =  (List<MaterijalVM>) q.list();
 		ArrayList<MaterijalVM> materijali = new ArrayList<MaterijalVM>(nesto);
-	
-		
 		
 		if (materijali.isEmpty()) {
 	         throw new RuntimeException("Ne postoji materijal sa nazivom :" + ime);
@@ -37,6 +36,7 @@ public class MaterijaliManager {
 				
 		t.commit();	
 		return materijali;
+	
 		
 	}
 	
