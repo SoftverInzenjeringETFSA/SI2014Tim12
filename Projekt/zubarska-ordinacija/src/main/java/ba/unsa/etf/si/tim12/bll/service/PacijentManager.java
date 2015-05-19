@@ -84,26 +84,35 @@ public class PacijentManager {
 	}	
 	
 	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
+		String id = "'%str(" + pacijentId + ")%";
+		
 		Transaction t = session.beginTransaction();
+		
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
-				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.id = :id";
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE str(p.id) like :id";
 		Query query = session.createQuery(hql);
-		query.setLong("id", pacijentId);
+		query.setString("id", id);
 		List<PacijentVM> rezultati = (List<PacijentVM>) query.list();
+		
 		t.commit();
+		
 		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
 		return nadjeniPacijenti;
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoImenu(String pacijentIme) {
 		pacijentIme = "%" + pacijentIme + "%";
+		
 		Transaction t = session.beginTransaction();
+		
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
-				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime like :imePrezime";
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime like :imePrezime";	
 		Query query = session.createQuery(hql);
 		query.setString("imePrezime", pacijentIme);
 		List<PacijentVM> rezultati = query.list();
+		
 		t.commit();
+		
 		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
 		return nadjeniPacijenti;
 	}
@@ -111,12 +120,15 @@ public class PacijentManager {
 	public  ArrayList<PacijentVM> nadjiPoOpisu(String opis) {
 		opis = "%" + opis + "%";
 		Transaction t = session.beginTransaction();
+		
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
 				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.opis like :opis";
 		Query query = session.createQuery(hql);
 		query.setString("opis", opis);
 		List<PacijentVM> rezultati = query.list();
+		
 		t.commit();
+		
 		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
 		return nadjeniPacijenti;
 	}

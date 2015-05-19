@@ -133,43 +133,102 @@ public class PacijentManagerTest {
 	
 	@Test
 	public void nadjiPoIduTest() {
+		//Pronalazenje cijelog ida
+		nadjiPoIduPomocna(pac.getId(), "Mora se cijeli ID poklapati.");
+		
+		//TODO: Napraviti test da provjerava dio ID-a
+	}
+	
+	private void nadjiPoIduPomocna(long id, String message){
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		PacijentManager pm = new PacijentManager(sess);
 		ArrayList<PacijentVM> l = pm.nadjiPoIdu(pac.getId());
-		PacijentVM vm = new PacijentVM();
-		vm.setBrojTelefona(pac.getTelefon());
-		vm.setDatumRodjenja(pac.getDatumRodjenja());
-		vm.setId(pac.getId());
-		vm.setImePrezime(pac.getImeIPrezime());
-		vm.setOpis(pac.getOpis());
-		assertEquals(vm.getId(), l.get(0).getId());
+		
+		//Trazimo da li je među ovim pacijenitima pronasao i naseg pacijenta
+		boolean any = false;
+		for (PacijentVM pacijentVM : l) {
+			if(pacijentVM.getId() == pac.getId())
+				any = true;
+		}
+		
+		assertTrue(message, any);
+		
+		sess.close();
+		
 	}
 	
 	@Test
 	public void nadjiPoImenuTest() {
+		//Pronalazenje cijelog imena
+		nadjiPoImenuPomocna(pac.getImeIPrezime(), "Mora se cijelo ime poklapati.");
+		
+		//Pronalazenje dijela (pola)imena
+		String dioImena = pac.getImeIPrezime();
+		dioImena = dioImena.substring(1, dioImena.length()/2);
+		nadjiPoImenuPomocna(dioImena, "Mora se dio imena poklapati");
+		
+		//Pronalazenje cijelog imena gdje ne zavisi od velicine slova
+		nadjiPoImenuPomocna(pac.getImeIPrezime().toLowerCase(), "Ne smije zavisiti od velicine slova");
+		nadjiPoImenuPomocna(pac.getImeIPrezime().toUpperCase() , "Ne smije zavisiti od velicine slova");
+		
+		//Pronalazenje dijela (pola)imena gdje ne zavisi o velicine slova
+		nadjiPoImenuPomocna(dioImena.toLowerCase(), "Mora se dio imena poklapati i ne smije zavisiti od velicine slova");
+		nadjiPoImenuPomocna(dioImena.toUpperCase(), "Mora se dio imena poklapati i ne smije zavisiti od velicine slova");		
+	}
+
+	private void nadjiPoImenuPomocna(String ime, String message) {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
 		PacijentManager pm = new PacijentManager(sess);
-		ArrayList<PacijentVM> l = pm.nadjiPoImenu(pac.getImeIPrezime());
-		PacijentVM vm = new PacijentVM();
-		vm.setBrojTelefona(pac.getTelefon());
-		vm.setDatumRodjenja(pac.getDatumRodjenja());
-		vm.setId(pac.getId());
-		vm.setImePrezime(pac.getImeIPrezime());
-		vm.setOpis(pac.getOpis());
-		assertEquals(vm.getImePrezime(), l.get(0).getImePrezime());
+		
+		ArrayList<PacijentVM> l = pm.nadjiPoImenu(ime);
+	
+		//Trazimo da li je među ovim pacijenitima pronasao i naseg pacijenta
+		boolean any = false;
+		for (PacijentVM pacijentVM : l) {
+			if(pacijentVM.getId() == pac.getId())
+				any = true;
+		}
+		
+		assertTrue(message, any);
+		
+		sess.close();
 	}
 	
 	@Test
 	public void nadjiPoOpisuTest() {
+		//Pronalazenje cijelog opisa
+		nadjiPoOpisuPomocna(pac.getOpis(), "Mora se cijeli opis poklapati.");
+		
+		//Pronalazenje dijela (pola)opiwq
+		String dioOpisa = pac.getOpis();
+		dioOpisa = dioOpisa.substring(1, dioOpisa.length()/2);
+		nadjiPoOpisuPomocna(dioOpisa, "Mora se dio opisa poklapati");
+		
+		//Pronalazenje cijelog opisa gdje ne zavisi od velicine slova
+		nadjiPoOpisuPomocna(pac.getOpis().toLowerCase(), "Ne smije zavisiti od velicine slova");
+		nadjiPoOpisuPomocna(pac.getOpis().toUpperCase() , "Ne smije zavisiti od velicine slova");
+		
+		//Pronalazenje dijela (pola)opisa gdje ne zavisi o velicine slova
+		nadjiPoOpisuPomocna(dioOpisa.toLowerCase(), "Mora se dio opisa poklapati i ne smije zavisiti od velicine slova");
+		nadjiPoOpisuPomocna(dioOpisa.toUpperCase(), "Mora se dio opisa poklapati i ne smije zavisiti od velicine slova");
+	}
+
+	private void nadjiPoOpisuPomocna(String opis, String message) {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
 		PacijentManager pm = new PacijentManager(sess);
-		ArrayList<PacijentVM> l = pm.nadjiPoOpisu(pac.getOpis());
-		PacijentVM vm = new PacijentVM();
-		vm.setBrojTelefona(pac.getTelefon());
-		vm.setDatumRodjenja(pac.getDatumRodjenja());
-		vm.setId(pac.getId());
-		vm.setImePrezime(pac.getImeIPrezime());
-		vm.setOpis(pac.getOpis());
-		assertEquals(vm.getOpis(), l.get(0).getOpis());		
+		ArrayList<PacijentVM> l = pm.nadjiPoOpisu(opis);
+		
+		//Trazimo da li je među ovim pacijenitima pronasao i naseg pacijenta
+		boolean any = false;
+		for (PacijentVM pacijentVM : l) {
+			if(pacijentVM.getId() == pac.getId())
+				any = true;
+		}
+		
+		assertTrue(message, any);
+		
+		sess.close();
 	}
 }
