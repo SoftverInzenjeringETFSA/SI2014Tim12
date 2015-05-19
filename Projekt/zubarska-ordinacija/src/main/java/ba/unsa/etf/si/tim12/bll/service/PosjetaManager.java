@@ -11,11 +11,26 @@ import org.hibernate.Session;
 public class PosjetaManager {
 	Session session;
 	
-	public PosjetaManager(Session session) {}
+	public PosjetaManager(Session session) 
+	{
+		this.session = session;
+	}
 	
 	public  ArrayList<PosjetaVM> nadjiPoPacijentu(long idpacijenta) {
-		return new ArrayList<PosjetaVM>();
-		//TODO: This
+		Transaction t = session.beginTransaction();
+		
+	     
+		String hql ="from Posjeta where pacijentId=:idpacijenta";
+		Query q = session.createQuery(hql);
+		q.setLong("pacijentId", idpacijenta); 
+	  
+	    List<PosjetaVM> lista = q.list();
+	    
+	    ArrayList<PosjetaVM> lista1 = new ArrayList<PosjetaVM>(lista.size());
+	    lista1.addAll(lista);
+	    
+	    t.commit();
+		return lista1;
 	}
 	
 	public  void dodajNovuPosjetu(NovaPosjetaVM posjeta) {
@@ -37,8 +52,20 @@ public class PosjetaManager {
 	}
 	
 	public  ArrayList<PosjetaVM> nadjiPoDijagnozi(String dijagnoza) {
-		return new ArrayList<PosjetaVM>();
-		//TODO: This
+		Transaction t = session.beginTransaction();
+		
+	     
+		String hql ="from Posjeta where dijagnoza=:dijagnoza";
+		Query q = session.createQuery(hql);
+		q.setString("dijagnoza", dijagnoza); 
+	  
+	    List<PosjetaVM> lista = q.list();
+	    
+	    ArrayList<PosjetaVM> lista1 = new ArrayList<PosjetaVM>(lista.size());
+	    lista1.addAll(lista);
+	    
+	    t.commit();
+		return lista1;
 	}
 
 }

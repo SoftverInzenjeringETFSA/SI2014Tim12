@@ -34,9 +34,27 @@ public class KorisnikManager {
 		return model.getPassword().equals((String) l.get(0));
 	}
 	
+	
 	public  boolean promjeniPassword(PromjenaPasswordaVM model) {
-		return true;
-		//TODO: THIS}
+       Transaction t = session.beginTransaction();
+		 
+		String hql = "SELECT k.password FROM Korisnik k " +
+					"WHERE k.username = :username";
+		Query q = session.createQuery(hql);
+		//q.setParameter("username", model.getUsername());
+		List l = q.list();
+		
+		if(l.size() < 1)
+			return false;
+		
+		//ovdje ne znam odakle da uzmem stringove za novi pass i ponovonovi pass 
+		//pa sam za sad ovako ostavio
+		model.setNoviPass("nekistring"); 
+		model.setPonovoNoviPass("ponovnekistring");
+		
+		t.commit();
+		
+		return model.getNoviPass().equals(model.getPonovoNoviPass());	
 		
 	}
 

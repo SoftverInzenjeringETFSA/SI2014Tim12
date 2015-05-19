@@ -15,7 +15,10 @@ import java.util.*;
 public class ObavljeniZahvatManager {
 	Session session;
 	
-	public ObavljeniZahvatManager(Session session) {}
+	public ObavljeniZahvatManager(Session session)
+	{
+		this.session = session;
+	}
 	
 	public  boolean dodajNoviZahvat(NoviObavljeniZahvatVM zahvat) {
      Transaction t = session.beginTransaction();
@@ -34,8 +37,20 @@ public class ObavljeniZahvatManager {
 	}
 	
 	public ArrayList<TipZahvataVM> nadjiSvePoTipuZahvata(long idTipa) {
-		return new ArrayList<TipZahvataVM>();
-		//TODO: THIS
+		Transaction t = session.beginTransaction();
+		
+		//ne vidim u bazi kolonu idTipa u tabeli TipZahvata
+		String hql ="from ObavljeniZahvat where idTipa=:idTipa";
+		Query q = session.createQuery(hql);
+		q.setLong("tipZahvataId", idTipa); 
+	  
+	    List<TipZahvataVM> lista = q.list();
+	    
+	    ArrayList<TipZahvataVM> lista1 = new ArrayList<TipZahvataVM>(lista.size());
+	    lista1.addAll(lista);
+	    
+	    t.commit();
+		return lista1;
 		
 	}
 

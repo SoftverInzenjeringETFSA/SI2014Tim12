@@ -81,18 +81,52 @@ public class PacijentManager {
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
-		return new ArrayList<PacijentVM>();
-		//TODO: This
+		Transaction t = session.beginTransaction();
+		
+        //ne vidim u bazi pacijentId kolonu :)
+		String hql ="from Pacijent where pacijentId=:pacijentId";
+		Query q = session.createQuery(hql);
+		q.setLong("pacijentOd", pacijentId); 
+	  
+	    List<PacijentVM> lista = q.list();
+	    
+	    ArrayList<PacijentVM> lista1 = new ArrayList<PacijentVM>(lista.size());
+	    lista1.addAll(lista);
+	    
+	    t.commit();
+		return lista1;
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoImenu(String pacijentIme) {
-		return new ArrayList<PacijentVM>();
-		//TODO: This
+		Transaction t = session.beginTransaction();
+		
+		String hql ="from Pacijent where imeIPrezime=:pacijentIme";
+		Query q = session.createQuery(hql);
+		q.setString("imeIPrezime", pacijentIme); 
+	  
+	    List<PacijentVM> lista = q.list();
+	    
+	    ArrayList<PacijentVM> lista1 = new ArrayList<PacijentVM>(lista.size());
+	    lista1.addAll(lista);
+	    
+	    t.commit();
+		return lista1;
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoOpisu(String opis) {
-		return new ArrayList<PacijentVM>();
-		//TODO: This
+		Transaction t = session.beginTransaction();
+		
+		String hql ="from Pacijent where opis=:opis";
+		Query q = session.createQuery(hql);
+		q.setString("opis", opis); 
+	  
+	    List<PacijentVM> lista = q.list();
+	    
+	    ArrayList<PacijentVM> lista1 = new ArrayList<PacijentVM>(lista.size());
+	    lista1.addAll(lista);
+	    
+	    t.commit();
+		return lista1;
 	}
 
 }

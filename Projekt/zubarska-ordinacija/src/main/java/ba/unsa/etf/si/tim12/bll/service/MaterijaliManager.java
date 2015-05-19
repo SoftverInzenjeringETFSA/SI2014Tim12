@@ -11,13 +11,25 @@ public class MaterijaliManager {
 	Session session;
 	
 	public MaterijaliManager(Session session) {
-		
+		this.session = session;	
 		
 	}
 	
 	public  MaterijalVM nadjiPoImenu(String ime) {
-		return new MaterijalVM();
-		//TODO: THIS
+        Transaction t = session.beginTransaction();
+        
+		String hql ="from Materijal where naziv=:ime";
+		Query q = session.createQuery(hql);
+		q.setString("naziv", ime);
+		
+		MaterijalVM materijal = (MaterijalVM)q.uniqueResult();
+		
+		if (materijal == null) {
+	         throw new RuntimeException("Ne postoji materijal sa nazivom :" + ime);
+	    }
+				
+		t.commit();	
+		return materijal;
 		
 	}
 	
@@ -36,12 +48,29 @@ public class MaterijaliManager {
 		
 	}
 	
+	
+	//povratni tip je MaterijalVM, znaci jedna instanca, a nekako mi logicno
+	//da jedan materijal moze biti sadrzan u vise zahvata, ne znam kako je u SRS
 	public  MaterijalVM nadjiPoTipuZahvata(long tipZahvataId) {
-		return new MaterijalVM();
-		//TODO: THIS
+		Transaction t = session.beginTransaction();
+        
+		String hql ="from MaterijalTipZahvata where tipZahvataId=:tipZahvataId";
+		Query q = session.createQuery(hql);
+		q.setLong("tipZahvataId", tipZahvataId);
+		
+		MaterijalVM materijal = (MaterijalVM)q.uniqueResult();
+		
+		if (materijal == null) {
+	         throw new RuntimeException("Ne postoji materijal sa tipom zahvata :" + tipZahvataId);
+	    }			
+		t.commit();	
+		return materijal;	
 		
 	}
 	
+	
+	//nisam uspio povezati odakle da kupim iz baze podatke xD gotovo isti kod bi trebao biti ovdje
+	//kao u prethodnoj metodi
 	public  MaterijalVM nadjiPoObavljenomZahvatu(long obavljeniZahvatId) {
 		return new MaterijalVM();
 		//TODO: THIS
