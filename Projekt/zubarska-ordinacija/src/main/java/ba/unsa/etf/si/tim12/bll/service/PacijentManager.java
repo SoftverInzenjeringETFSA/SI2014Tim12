@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
+@SuppressWarnings("unchecked")
 public class PacijentManager {
 	private Session session;
 	
@@ -78,10 +79,10 @@ public class PacijentManager {
 		vm.setPosjete(poManager.nadjiPoPacijentu(vm.getId()));
 		
 		return vm;
-	}
+	}	
 	
 	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
-		Transaction t = session.beginTransaction();
+/*		Transaction t = session.beginTransaction();
 		
         //ne vidim u bazi pacijentId kolonu :)
 		String hql ="from Pacijent where pacijentId=:pacijentId";
@@ -94,11 +95,21 @@ public class PacijentManager {
 	    lista1.addAll(lista);
 	    
 	    t.commit();
-		return lista1;
+		return lista1;*/
+		
+		Transaction t = session.beginTransaction();
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imePrezime, "+
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.id = :id";
+		Query query = session.createQuery(hql);
+		query.setLong("id", pacijentId);
+		List<PacijentVM> rezultati = (List<PacijentVM>) query.list();
+		t.commit();
+		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
+		return nadjeniPacijenti;
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoImenu(String pacijentIme) {
-		Transaction t = session.beginTransaction();
+/*		Transaction t = session.beginTransaction();
 		
 		String hql ="from Pacijent where imeIPrezime=:pacijentIme";
 		Query q = session.createQuery(hql);
@@ -110,13 +121,24 @@ public class PacijentManager {
 	    lista1.addAll(lista);
 	    
 	    t.commit();
-		return lista1;
+		return lista1;*/
+		
+		Transaction t = session.beginTransaction();
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime = :imePrezime";
+		Query query = session.createQuery(hql);
+		query.setString("imePrezime", pacijentIme);
+		List<PacijentVM> rezultati = query.list();
+		t.commit();
+		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
+		return nadjeniPacijenti;
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoOpisu(String opis) {
 		Transaction t = session.beginTransaction();
 		
-		String hql ="from Pacijent where opis=:opis";
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.opis = :opis";
 		Query q = session.createQuery(hql);
 		q.setString("opis", opis); 
 	  
