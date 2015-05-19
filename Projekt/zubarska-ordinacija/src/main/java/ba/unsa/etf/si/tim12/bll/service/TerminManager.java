@@ -29,8 +29,8 @@ public class TerminManager {
 		//već samo član konvertirati
 	    List<TerminVM> lista = q.list();
 	    
-	    ArrayList<TerminVM> lista1 = new ArrayList<TerminVM>(lista.size());
-	    lista1.addAll(lista);
+	    
+	    ArrayList<TerminVM> lista1 = new ArrayList<TerminVM>(lista);
 	    
 	    t.commit();
 		return lista1;
@@ -54,6 +54,7 @@ Transaction t = session.beginTransaction();
 		return lista1;
 	}
 	
+	//TODO: 
 	//Vjerovatno nije ovako jednostavno xD, za sad se samo brise termin iz baze
 	public  void odkaziTermin(long terminId) 
 	{

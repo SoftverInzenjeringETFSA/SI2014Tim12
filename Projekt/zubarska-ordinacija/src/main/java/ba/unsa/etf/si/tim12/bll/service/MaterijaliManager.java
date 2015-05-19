@@ -18,6 +18,7 @@ public class MaterijaliManager {
 	public  MaterijalVM nadjiPoImenu(String ime) {
         Transaction t = session.beginTransaction();
         
+        //TODO: I ovo neisrpavno
 		String hql ="from Materijal where naziv=:ime";
 		Query q = session.createQuery(hql);
 		q.setString("naziv", ime);
@@ -54,6 +55,7 @@ public class MaterijaliManager {
 	public  MaterijalVM nadjiPoTipuZahvata(long tipZahvataId) {
 		Transaction t = session.beginTransaction();
         
+		//TODO: I ovo ne valja jer dohvatamo ViewModele
 		String hql ="from MaterijalTipZahvata where tipZahvataId=:tipZahvataId";
 		Query q = session.createQuery(hql);
 		q.setLong("tipZahvataId", tipZahvataId);

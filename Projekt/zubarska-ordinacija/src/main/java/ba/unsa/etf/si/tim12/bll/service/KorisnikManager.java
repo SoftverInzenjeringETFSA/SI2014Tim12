@@ -24,7 +24,7 @@ public class KorisnikManager {
 					"WHERE k.username = :username";
 		Query q = session.createQuery(hql);
 		q.setParameter("username", model.getUsername());
-		List l = q.list();
+		List<String> l = q.list();
 		
 		if(l.isEmpty())
 			return false;
@@ -36,9 +36,12 @@ public class KorisnikManager {
 	
 	
 	public  boolean promjeniPassword(PromjenaPasswordaVM model) {
-       Transaction t = session.beginTransaction();
-		 
-		String hql = "SELECT k.password FROM Korisnik k " +
+		Transaction t = session.beginTransaction();
+		
+		//TODO: Smisliti kako u formama pratiti logiranog Usera 
+		//TODO: provjeriti da li su model.noviPass i model.ponovljeniNoviPass jednaki, ako nisu vrati false
+	
+	/*	String hql = "SELECT k.password FROM Korisnik k " +
 					"WHERE k.username = :username";
 		Query q = session.createQuery(hql);
 		//q.setParameter("username", model.getUsername());
@@ -52,10 +55,9 @@ public class KorisnikManager {
 		model.setNoviPass("nekistring"); 
 		model.setPonovoNoviPass("ponovnekistring");
 		
-		t.commit();
+		t.commit();*/
 		
-		return model.getNoviPass().equals(model.getPonovoNoviPass());	
-		
+		return true;	
 	}
 
 }

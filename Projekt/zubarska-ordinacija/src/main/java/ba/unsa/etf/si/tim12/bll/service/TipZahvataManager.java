@@ -53,9 +53,10 @@ public class TipZahvataManager {
 		t.commit();
 		
 		return true;
-		//TODO: This
 	}
 	
+	
+	//TODO: Ovdje nije cijena updatovana
 	public  void promjeniCijenuZahvata(long id, double cijena) {
 		Transaction t = session.beginTransaction();
 		TipZahvata zahvat= (TipZahvata) session.load(TipZahvata.class, id);		zahvat.setCijena(cijena);

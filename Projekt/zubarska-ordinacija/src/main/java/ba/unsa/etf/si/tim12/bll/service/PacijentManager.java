@@ -84,6 +84,9 @@ public class PacijentManager {
 	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
 /*		Transaction t = session.beginTransaction();
 		
+		//Kada uzimate ViewModele objasnio sam već  Terminima ili Posjetama kako se radi
+		//
+		//TODO: To je ID kolonona
         //ne vidim u bazi pacijentId kolonu :)
 		String hql ="from Pacijent where pacijentId=:pacijentId";
 		Query q = session.createQuery(hql);
