@@ -5,6 +5,7 @@ import ba.unsa.etf.si.tim12.dal.domainmodel.Posjeta;
 
 import java.util.*;
 
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
@@ -19,7 +20,8 @@ public class PosjetaManager {
 	public  ArrayList<PosjetaVM> nadjiPoPacijentu(long idpacijenta) {
 		Transaction t = session.beginTransaction();
 		
-	     
+		//TODO: ovdje trebe Select new TerminVM(...) tako da neće ni biti potrebe
+		//za konverzijom
 		String hql ="from Posjeta where pacijentId=:idpacijenta";
 		Query q = session.createQuery(hql);
 		q.setLong("pacijentId", idpacijenta); 
