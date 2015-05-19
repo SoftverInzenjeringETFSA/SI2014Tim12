@@ -121,9 +121,12 @@ public class PacijentManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		Query q = sess.createQuery("SELECT MAX(id) FROM Pacijent");
-		long max_id = (Long) q.uniqueResult();
+		Long max_id = (Long) q.uniqueResult();
 		
 		sess.close();
+		
+		if(max_id == null)
+			return 1;
 		
 		return max_id + 1;
 	}

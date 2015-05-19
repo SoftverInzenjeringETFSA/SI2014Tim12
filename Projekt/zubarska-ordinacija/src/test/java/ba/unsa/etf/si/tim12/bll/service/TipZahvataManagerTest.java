@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class TipZahvataManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		vm = new NoviTipZahvataVM();
-		vm.setNaziv("testTipZahvat1");
+		vm.setNaziv("testTipZahvat" + NadjiSlobodanID());
 		vm.setCijena(3.33);
 		
 		mvms = new ArrayList<NoviTipZahvataMaterijalVM>();
@@ -213,7 +215,7 @@ public class TipZahvataManagerTest {
 		return max_id + 1;
 	}
 	
-	public long dajBrojMaterijalaTipZahvata(Session session){
+	private long dajBrojMaterijalaTipZahvata(Session session){
 		String hqlImaLi = "SELECT COUNT(*) FROM MaterijalTipZahvata";
 		Query imaLi = session.createQuery(hqlImaLi); 
 		long broj = (Long) imaLi.uniqueResult();
@@ -221,11 +223,25 @@ public class TipZahvataManagerTest {
 		return broj;
 	}
 	
-	public long dajBrojTipZahvata(Session session){
+	private long dajBrojTipZahvata(Session session){
 		String hqlImaLi = "SELECT COUNT(*) FROM TipZahvata";
 		Query imaLi = session.createQuery(hqlImaLi); 
 		long broj = (Long) imaLi.uniqueResult();
 		
 		return broj;
+	}
+	
+	private long NadjiSlobodanID() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		Query q = sess.createQuery("SELECT MAX(id) FROM TipZahvata");
+		Long max_id = (Long) q.uniqueResult();
+		
+		sess.close();
+		
+		if(max_id == null)
+			return 1;
+		
+		return max_id + 1;
 	}
 }
