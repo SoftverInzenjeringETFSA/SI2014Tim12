@@ -132,8 +132,6 @@ public class DodavanjeZahvataGUI {
 		panel_1.add(comboBox_1);
 		
 		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setEditable(false);
 		textField.setBounds(248, 260, 86, 20);
 		panel_1.add(textField);
 		textField.setColumns(10);

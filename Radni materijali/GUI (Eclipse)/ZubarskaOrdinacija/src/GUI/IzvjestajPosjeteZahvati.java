@@ -83,7 +83,7 @@ public class IzvjestajPosjeteZahvati {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Ime", "Prezime", "Zahvat", "Vrijeme posjete", "Cijena"
+				"ID", "Ime i prezime", "Zahvat", "Vrijeme posjete", "Cijena"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);

@@ -118,7 +118,7 @@ public class PrikazTerminaGUI {
 		JButton btnDodajPosjetu = new JButton("Dodaj posjetu");
 		btnDodajPosjetu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new PosjeteIzTerminaGUI();
+				new Posjete();
 			}
 		});
 		btnDodajPosjetu.setBounds(210, 291, 140, 23);
