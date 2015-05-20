@@ -1,10 +1,10 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import java.util.List;
 
+import ba.unsa.etf.si.tim12.MaterijalNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -18,20 +18,20 @@ public class MaterijaliManager {
 		
 	}
 	
-	public ArrayList< MaterijalVM> nadjiPoImenu(String ime) {
+	public ArrayList< MaterijalVM> nadjiPoImenu(String ime)throws MaterijalNotFound {
         Transaction t = session.beginTransaction();
         String naziv="%"+ime+"%";
                 	
         String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM Materijal p WHERE p.naziv LIKE :naziv";
 		Query q = session.createQuery(hql);
 		
-		q.setString("naziv", naziv);
+		q.setString("naziv",naziv);
 		
 		List<MaterijalVM> nesto =  (List<MaterijalVM>) q.list();
 		ArrayList<MaterijalVM> materijali = new ArrayList<MaterijalVM>(nesto);
 		
 		if (materijali.isEmpty()) {
-	         throw new RuntimeException("Ne postoji materijal sa nazivom :" + ime);
+	         throw new MaterijalNotFound("Ne postoji materijal sa nazivom :" + ime);
 	    }
 				
 		t.commit();	
@@ -43,14 +43,15 @@ public class MaterijaliManager {
 	public  boolean izbrisiMaterijal(long id) {
 		Transaction t = session.beginTransaction();
 	
-		String hql ="DELETE new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalIVM where id= :id";
+		 String hql = "DELETE Materijal WHERE id = :id";
 		
 		        Query q = session.createQuery(hql);
-				q.setParameter("id", id);
+				q.setParameter("id",id);
 
 		        int result = q.executeUpdate();
 		        if (result == 0) {
-			         throw new RuntimeException("Ne postoji materijal sa takvim ID-om!");
+		        	return false;
+			       //  throw new RuntimeException("Ne postoji materijal sa takvim ID-om!");
 			    }	
 		        t.commit();
 		        return true;
@@ -59,14 +60,12 @@ public class MaterijaliManager {
 	
 	
 	
-	public List< MaterijalVM> nadjiPoTipuZahvata(long tipZahvataId) {
+	public ArrayList< MaterijalVM> nadjiPoTipuZahvata(long tipZahvataId) {
 		Transaction t = session.beginTransaction();
-        
-		//nisam siguran
-		String hql ="SELECT new ba.unsa.etf.si.tim12.bll.viewmodel.UtroseniMaterijal(materijalId, obavljeniZahvatId) FROM UtroseniMaterijal INNER JOIN ObavljeniZahvat ON UtroseniMaterijal.obavljeniZahvatId = ObavljeniZahvat.zahvatId WHERE UtroseniMaterijal.obavljeniZahvatId= :tipZahvataId";
+		
+		String hql ="Select new ba.unsa.etf.si.tim12.dal.domainmodel.UtroseniMaterijal(u.materijalId) FROM  UtroseniMaterijal u INNER JOIN ba.unsa.etf.si.tim12.dal.domainmodel.ObavljeniZahvat o ON u.obavljeniZahvatId = o.zahvatId WHERE u.obavljeniZahvatId= :tipZahvataId";
 		Query q = session.createQuery(hql);
 		q.setLong("tipZahvataId", tipZahvataId);
-		
 		List<MaterijalVM> nesto = q.list();
 		ArrayList<MaterijalVM> materijali = new ArrayList<MaterijalVM>(nesto);
 	
@@ -82,7 +81,7 @@ public class MaterijaliManager {
 	
 	
 	
-	public  List< MaterijalVM> nadjiPoObavljenomZahvatu(long obavljeniZahvatId) {
+	public  ArrayList< MaterijalVM> nadjiPoObavljenomZahvatu(long obavljeniZahvatId) {
 Transaction t = session.beginTransaction();
         
 		//nisam siguran
