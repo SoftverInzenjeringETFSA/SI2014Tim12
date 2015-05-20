@@ -20,9 +20,9 @@ public class TerminManager {
 		
 	    //TODO: ovdje trebe Select new TerminVM(...) tako da neće ni biti potrebe
 		//za konverzijom
-		String hql ="from Termin where pacijentId=:idpacijenta";
+		String hql ="from Termin where pacijentId = :idpacijenta";
 		Query q = session.createQuery(hql);
-		q.setLong("pacijentId", idpacijenta); 
+		q.setLong("idpacijenta", idpacijenta); 
 	  
 		//TODO: Ovdje treb konverziju napraviti i provjeriti može li ti opće
 		//Po mom mišljenju ne bi smjelo cijelu listu u drugu listu pretvoriti

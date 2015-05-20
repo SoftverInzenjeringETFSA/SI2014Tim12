@@ -25,7 +25,7 @@ public class PosjetaManager {
 		//za konverzijom
 		String hql ="from Posjeta where pacijentId=:idpacijenta";
 		Query q = session.createQuery(hql);
-		q.setLong("pacijentId", idpacijenta); 
+		q.setLong("idpacijenta", idpacijenta); 
 	  
 	    List<PosjetaVM> lista = q.list();
 	    
