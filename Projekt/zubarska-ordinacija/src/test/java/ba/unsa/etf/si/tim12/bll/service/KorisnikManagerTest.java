@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PromjenaPasswordaVM;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Korisnik;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 
@@ -21,14 +22,17 @@ import org.junit.Test;
 public class KorisnikManagerTest {
 
 	private Korisnik korisnik;
-	
+	String korisnikPass;
 	@Before
 	public void setUp() throws Exception {
 		korisnik = new Korisnik();
 		korisnik.setUsername("testUser" + NadjiSlobodanID());
-		korisnik.setPassword("testPassword123");
+		korisnikPass = "testPassword123";
 		
 		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		KorisnikManager kManager = new KorisnikManager(sess);
+		korisnik.setPassword(kManager.HashPassword(korisnikPass));
 		
 		Transaction t = sess.beginTransaction();
 		sess.save(korisnik);
@@ -54,7 +58,7 @@ public class KorisnikManagerTest {
 		
 		LoginVM vm = new LoginVM();
 		vm.setUsername(korisnik.getUsername());
-		vm.setPassword(korisnik.getPassword());
+		vm.setPassword(korisnikPass);
 		
 		
 		try{
@@ -134,6 +138,95 @@ public class KorisnikManagerTest {
 		}
 		
 	}
+	
+	@Test
+	public void promijeniPasswordNeispravanPonovljeniPassword() throws Exception{
+		
+		PromjenaPasswordaVM model = new PromjenaPasswordaVM();
+		model.setUsername(korisnik.getUsername());
+		model.setStariPass(korisnik.getPassword());
+		model.setNoviPass("noviPassword");
+		model.setPonovoNoviPass(model.getNoviPass() + "greska");
+		
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		KorisnikManager kManager = new KorisnikManager(sess);
+		boolean rezultat = kManager.promjeniPassword(model);
+		assertFalse(rezultat);
+		
+		sess.close();
+	}
+	
+	@Test
+	public void promijeniPasswordNeispravanStariPassword() throws Exception{
+		
+		PromjenaPasswordaVM model = new PromjenaPasswordaVM();
+		model.setUsername(korisnik.getUsername());
+		model.setStariPass(korisnik.getPassword() + "greska");
+		model.setNoviPass("noviPassword");
+		model.setPonovoNoviPass(model.getNoviPass());
+		
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		KorisnikManager kManager = new KorisnikManager(sess);
+		boolean rezultat = kManager.promjeniPassword(model);
+		assertFalse(rezultat);
+		
+		sess.close();
+	}
+	
+	@Test
+	public void promijeniPasswordNeispravanUserName() throws Exception{
+		
+		PromjenaPasswordaVM model = new PromjenaPasswordaVM();
+		model.setUsername(korisnik.getUsername() + "greska");
+		model.setStariPass(korisnik.getPassword());
+		model.setNoviPass("noviPassword");
+		model.setPonovoNoviPass(model.getNoviPass());
+		
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		KorisnikManager kManager = new KorisnikManager(sess);
+		boolean rezultat = kManager.promjeniPassword(model);
+		assertFalse(rezultat);
+		
+		sess.close();
+	}
+	
+	@Test
+	public void promijeniPasswordIspravanMode() throws Exception{
+		
+		PromjenaPasswordaVM model = new PromjenaPasswordaVM();
+		model.setUsername(korisnik.getUsername());
+		model.setStariPass(korisnikPass);
+		model.setNoviPass("noviPassword");
+		model.setPonovoNoviPass(model.getNoviPass());
+		
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		KorisnikManager kManager = new KorisnikManager(sess);
+		boolean rezultat = kManager.promjeniPassword(model);
+		assertTrue(rezultat);
+		
+		Transaction t = sess.beginTransaction();
+		
+		String hql = "FROM Korisnik WHERE username = :username"; 
+		Query q =  sess.createQuery(hql);
+		q.setParameter("username", korisnik.getUsername());
+		
+		Korisnik k = (Korisnik) q.uniqueResult();
+		
+		t.commit();
+		
+		if(k == null){
+			fail("Nema korisnika s usernameom. ");
+		}
+		
+		assertEquals("Password nije promijenjen", kManager.HashPassword(model.getNoviPass()), k.getPassword());
+		
+		sess.close();
+	}
+	
 	
 	private long NadjiSlobodanID() {
 	
