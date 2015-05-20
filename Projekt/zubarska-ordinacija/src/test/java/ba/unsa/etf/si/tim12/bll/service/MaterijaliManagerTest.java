@@ -125,8 +125,8 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			u.setMaterijalId(5);
 			u.setObavljeniZahvatId(6);
 			ObavljeniZahvat o = new ObavljeniZahvat();
-			o.setId(6);
-			o.setZahvatId(7);
+			o.setId(6L);
+			o.setZahvatId(7L);
 			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(7);
 
 			MaterijalVM m = new MaterijalVM();
