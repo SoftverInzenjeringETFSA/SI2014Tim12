@@ -37,7 +37,7 @@ public class TerminManager {
 	}
 	
 	public  ArrayList<TerminVM> nadjiPoVremenu(Date vrijemePoc, Date vrijemeKraj) {
-Transaction t = session.beginTransaction();
+		Transaction t = session.beginTransaction();
 		
 	    //nisam nasao u tabeli u bazi da ima i kraj termina
 		//ovo poredjenje u sljedecoj liniji vjerovatno ne treba ovako, posto je datum
@@ -56,7 +56,7 @@ Transaction t = session.beginTransaction();
 	
 	//TODO: 
 	//Vjerovatno nije ovako jednostavno xD, za sad se samo brise termin iz baze
-	public  void odkaziTermin(long terminId) 
+	public  void otkaziTermin(long terminId) 
 	{
 		Transaction t = session.beginTransaction();
 		

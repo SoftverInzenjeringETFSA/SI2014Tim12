@@ -37,7 +37,7 @@ public class PosjetaManager {
 	}
 	
 	public  void dodajNovuPosjetu(NovaPosjetaVM posjeta) {
-     Transaction t = session.beginTransaction();
+		Transaction t = session.beginTransaction();
 		
 		Posjeta p = new Posjeta();
 		System.out.println(p.getId());
