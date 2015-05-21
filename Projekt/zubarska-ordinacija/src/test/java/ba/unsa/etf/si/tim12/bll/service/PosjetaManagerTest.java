@@ -28,10 +28,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author Sumejja
- *
- */
+
 public class PosjetaManagerTest {
 	
 	String dijagnoza = "Paradentoza";
