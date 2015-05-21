@@ -23,3 +23,4 @@ $RECYCLE.BIN/
 *.bak~1
 *.vpp.bak
 *.bak
+Projekt/zubarska-ordinacija/src/main/resources/hibernate.cfg.xml
