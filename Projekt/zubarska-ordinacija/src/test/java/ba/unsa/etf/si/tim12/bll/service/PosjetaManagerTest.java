@@ -28,7 +28,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-<<<<<<< HEAD
 
 
 /**
@@ -240,6 +239,28 @@ public class PosjetaManagerTest {
 		}
 	}
 	
+	@Test
+	public void testNadjiPoDijagnoziNePostojiPosjeta() throws Exception {
+
+		Session sess = null;
+		try{
+		sess = HibernateUtil.getSessionFactory().openSession();
+		PosjetaManager pm = new PosjetaManager(sess);
+		
+		ArrayList<PosjetaVM> l = pm.nadjiPoDijagnozi("lalala12345");
+		assertTrue(l.isEmpty());
+		
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally
+		{
+			if(sess != null)
+				sess.close();
+		}
+	}
 	private long NadjiSlobodanIDPosjete() {
 		
 		Session sess = HibernateUtil.getSessionFactory().openSession();
