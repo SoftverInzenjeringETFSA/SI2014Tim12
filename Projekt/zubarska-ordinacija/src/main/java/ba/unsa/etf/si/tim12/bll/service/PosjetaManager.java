@@ -20,11 +20,12 @@ public class PosjetaManager {
 	public  ArrayList<PosjetaVM> nadjiPoPacijentu(long idpacijenta) {
 		Transaction t = session.beginTransaction();
 		
-		//TODO: ovdje trebe Select new TerminVM(...) tako da neće ni biti potrebe
-		//za konverzijom
-		String hql ="from Posjeta where pacijentId=:idpacijenta";
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetaVM(p.id, p.pacijentId, "
+				+ "p.doktor, p.dijagnoza, p.vrijeme) "
+				+ "from Posjeta p where p.pacijentId=:idpacijenta";
+		
 		Query q = session.createQuery(hql);
-		q.setLong("pacijentId", idpacijenta); 
+		q.setLong("idpacijenta", idpacijenta); 
 	  
 	    List<PosjetaVM> lista = q.list();
 	    

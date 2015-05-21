@@ -9,6 +9,20 @@ public class PosjetaVM {
 	private String dijagnoza;
 	private Date vrijeme;
 	
+	public PosjetaVM(long id, long pacijenti, String doktor, String dijagnoza, Date vrijeme)
+	{
+		setId(id);
+		setPacijenti(pacijenti);
+		setDoktor(doktor);
+		setDijagnoza(dijagnoza);
+		setVrijeme(vrijeme);
+	}
+	
+	public PosjetaVM()
+	{
+		
+	}
+	
 	public long getId() {
 		return id;
 	}
