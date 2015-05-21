@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Sumejja
+ * @author Sumejja, Emina
  *
  */
 public class PosjetaManagerTest {
@@ -203,10 +203,12 @@ public class PosjetaManagerTest {
 	/**
 	 * Test method for {@link ba.unsa.etf.si.tim12.bll.service.PosjetaManager#dodajNovuPosjetu(ba.unsa.etf.si.tim12.bll.viewmodel.NovaPosjetaVM)}.
 	 */
-	@Test
+	
+	/*TODO Uraditi ovo
+	 * @Test
 	public void testDodajNovuPosjetu() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 	/**
 	 * Test method for {@link ba.unsa.etf.si.tim12.bll.service.PosjetaManager#nadjiPoDijagnozi(java.lang.String)}.
@@ -248,6 +250,7 @@ public class PosjetaManagerTest {
 	
 		return max_id + 1;
 	}
+	
     private long NadjiSlobodanIDPacijenta() {
 		
 		Session sess = HibernateUtil.getSessionFactory().openSession();
