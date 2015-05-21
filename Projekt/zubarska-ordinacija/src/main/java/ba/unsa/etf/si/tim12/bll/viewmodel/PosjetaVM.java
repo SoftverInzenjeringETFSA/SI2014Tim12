@@ -18,11 +18,11 @@ public class PosjetaVM {
 		setVrijeme(vrijeme);
 	}
 	
-	public PosjetaVM()
-	{
+	
+	public PosjetaVM() {
 		
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -51,6 +51,6 @@ public class PosjetaVM {
 		return vrijeme;
 	}
 	public void setVrijeme(Date vrijeme) {
-		this.vrijeme = vrijeme;
+		this.vrijeme = new Date(vrijeme.getTime());
 	}
 }
