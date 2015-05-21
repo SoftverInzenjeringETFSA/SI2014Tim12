@@ -6,8 +6,11 @@ public class MaterijalTipZahvata implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 6994755061773120659L;
 	
-	private long materijalId,tipZahvataId;
+	private long id;
+	private long materijalId;
+	private long tipZahvataId;
 	private double kolicina;
+	
 	
 	public long getMaterijalId() {
 		return materijalId;
@@ -26,6 +29,12 @@ public class MaterijalTipZahvata implements java.io.Serializable {
 	}
 	public void setKolicina(double kolicina) {
 		this.kolicina = kolicina;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

@@ -37,10 +37,15 @@ public class PacijentManager {
 		return true;
 	}
 	
+	
 	public  boolean modificirajPacijenta(PacijentVM pacijent) {
 		
 		Transaction t = session.beginTransaction();
-		Pacijent p= (Pacijent) session.load(Pacijent.class, pacijent.getId());
+		Pacijent p = (Pacijent) session.get(Pacijent.class, pacijent.getId());
+		if(p == null) {
+			t.rollback();
+			return false;
+		}
 		p.setImeIPrezime(pacijent.getImePrezime());
 		p.setDatumRodjenja(pacijent.getDatumRodjenja());
 		p.setTelefon(pacijent.getBrojTelefona());
@@ -82,53 +87,29 @@ public class PacijentManager {
 	}	
 	
 	public  ArrayList<PacijentVM> nadjiPoIdu(long pacijentId) {
-/*		Transaction t = session.beginTransaction();
-		
-		//Kada uzimate ViewModele objasnio sam već  Terminima ili Posjetama kako se radi
-		//
-		//TODO: To je ID kolonona
-        //ne vidim u bazi pacijentId kolonu :)
-		String hql ="from Pacijent where pacijentId=:pacijentId";
-		Query q = session.createQuery(hql);
-		q.setLong("pacijentOd", pacijentId); 
-	  
-	    List<PacijentVM> lista = q.list();
-	    
-	    ArrayList<PacijentVM> lista1 = new ArrayList<PacijentVM>(lista.size());
-	    lista1.addAll(lista);
-	    
-	    t.commit();
-		return lista1;*/
+		String id = "%" + Long.toString(pacijentId) + "%";
 		
 		Transaction t = session.beginTransaction();
-		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imePrezime, "+
-				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.id = :id";
+		
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE str(p.id) like :id";
 		Query query = session.createQuery(hql);
-		query.setLong("id", pacijentId);
+		query.setString("id", id);
 		List<PacijentVM> rezultati = (List<PacijentVM>) query.list();
+		
 		t.commit();
+		
 		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
 		return nadjeniPacijenti;
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoImenu(String pacijentIme) {
-/*		Transaction t = session.beginTransaction();
-		
-		String hql ="from Pacijent where imeIPrezime=:pacijentIme";
-		Query q = session.createQuery(hql);
-		q.setString("imeIPrezime", pacijentIme); 
-	  
-	    List<PacijentVM> lista = q.list();
-	    
-	    ArrayList<PacijentVM> lista1 = new ArrayList<PacijentVM>(lista.size());
-	    lista1.addAll(lista);
-	    
-	    t.commit();
-		return lista1;*/
-		
+		pacijentIme = pacijentIme.trim();
+		pacijentIme = pacijentIme.toLowerCase();
+		pacijentIme = "%" + pacijentIme + "%";
 		Transaction t = session.beginTransaction();
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
-				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime = :imePrezime";
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime like :imePrezime";
 		Query query = session.createQuery(hql);
 		query.setString("imePrezime", pacijentIme);
 		List<PacijentVM> rezultati = query.list();
@@ -138,20 +119,17 @@ public class PacijentManager {
 	}
 	
 	public  ArrayList<PacijentVM> nadjiPoOpisu(String opis) {
+		opis = opis.trim().toLowerCase();
+		opis = "%" + opis + "%";
 		Transaction t = session.beginTransaction();
-		
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
-				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.opis = :opis";
-		Query q = session.createQuery(hql);
-		q.setString("opis", opis); 
-	  
-	    List<PacijentVM> lista = q.list();
-	    
-	    ArrayList<PacijentVM> lista1 = new ArrayList<PacijentVM>(lista.size());
-	    lista1.addAll(lista);
-	    
-	    t.commit();
-		return lista1;
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.opis like :opis";
+		Query query = session.createQuery(hql);
+		query.setString("opis", opis);
+		List<PacijentVM> rezultati = query.list();
+		t.commit();
+		ArrayList<PacijentVM> nadjeniPacijenti = new ArrayList<PacijentVM>(rezultati);
+		return nadjeniPacijenti;
 	}
 
 }

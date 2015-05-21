@@ -9,7 +9,14 @@ public class Materijal implements java.io.Serializable {
 	private long id;
 	private String naziv,mjernaJedinica;
 	private double cijena;
+	public Materijal(long id, String naziv, String mjernaJedinica,double cijena) {
+		this.id = id;
+		this.naziv = naziv;
+		this.mjernaJedinica = mjernaJedinica;
+		this.cijena = cijena;
 	
+	}
+	public Materijal(){}
 	public long getId() {
 		return id;
 	}

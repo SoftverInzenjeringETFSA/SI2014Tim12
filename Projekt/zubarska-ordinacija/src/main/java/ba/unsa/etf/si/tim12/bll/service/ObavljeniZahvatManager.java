@@ -4,6 +4,8 @@ import ba.unsa.etf.si.tim12.dal.domainmodel.MaterijalTipZahvata;
 import ba.unsa.etf.si.tim12.dal.domainmodel.TipZahvata;
 import ba.unsa.etf.si.tim12.dal.domainmodel.ObavljeniZahvat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.hibernate.Query;
@@ -11,7 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.Session;
 
 import java.util.*;
-
+@SuppressWarnings("unchecked")
 public class ObavljeniZahvatManager {
 	Session session;
 	
@@ -37,21 +39,16 @@ public class ObavljeniZahvatManager {
 	}
 	
 	public ArrayList<TipZahvataVM> nadjiSvePoTipuZahvata(long idTipa) {
+		String id = "%" + Long.toString(idTipa) + "%";
 		Transaction t = session.beginTransaction();
 		
-		//ne vidim u bazi kolonu idTipa u tabeli TipZahvata
-		String hql ="from ObavljeniZahvat where idTipa=:idTipa";
+		String hql ="select new ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM(id, naziv, cijena)" +
+				"from TipZahvata where str(id) = :id";
 		Query q = session.createQuery(hql);
-		q.setLong("tipZahvataId", idTipa); 
-	  
-	    List<TipZahvataVM> lista = q.list();
-	    
-	    ArrayList<TipZahvataVM> lista1 = new ArrayList<TipZahvataVM>(lista.size());
-	    lista1.addAll(lista);
-	    
-	    t.commit();
-		return lista1;
-		
+		q.setString("id", id);	    
+		List<TipZahvataVM> rez = q.list();
+	    t.commit();	    
+		return new ArrayList<TipZahvataVM>(rez);
 	}
 
 }

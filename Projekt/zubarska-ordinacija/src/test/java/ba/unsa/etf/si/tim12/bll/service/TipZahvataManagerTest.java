@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +18,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTipZahvataMaterijalVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTipZahvataVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Materijal;
+import ba.unsa.etf.si.tim12.dal.domainmodel.MaterijalTipZahvata;
 
 public class TipZahvataManagerTest {
 
@@ -25,7 +29,7 @@ public class TipZahvataManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		vm = new NoviTipZahvataVM();
-		vm.setNaziv("testTipZahvat1");
+		vm.setNaziv("testTipZahvat" + NadjiSlobodanID());
 		vm.setCijena(3.33);
 		
 		mvms = new ArrayList<NoviTipZahvataMaterijalVM>();
@@ -73,6 +77,8 @@ public class TipZahvataManagerTest {
 	public void tearDown() throws Exception {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
+		Transaction t = sess.beginTransaction();
+				
 		String hql = "SELECT id FROM TipZahvata t " +
 				"WHERE t.naziv = :naziv";
 		Query q = sess.createQuery(hql);
@@ -100,6 +106,8 @@ public class TipZahvataManagerTest {
 			q.setLong("materijalId", m.getId());
 			q.executeUpdate();
 		}
+		
+		t.commit();
 		
 		sess.close();
 	}
@@ -136,9 +144,33 @@ public class TipZahvataManagerTest {
 				broja_zahvata + 1, dajBrojTipZahvata(sess));
 		assertEquals("Broj matrijalTipZahvata mora se uvecati",
 				broj_materijala + mvms.size(), dajBrojMaterijalaTipZahvata(sess));
+		MaterijalTipZahvata n = new MaterijalTipZahvata();
+		
+		String hql = "SELECT id FROM TipZahvata t WHERE t.naziv = :naziv";
+		Query q = sess.createQuery(hql);
+		q.setString("naziv", vm.getNaziv());
+		
+		Long id = (Long) q.uniqueResult();
+		assertNotNull("TipZahvata mora biti pronadjen",id);
+		
+		hql = "SELECT materijalId FROM MaterijalTipZahvata m " +
+				"WHERE m.tipZahvataId = :tipZahvataId";
+		q = sess.createQuery(hql);
+		q.setLong("tipZahvataId", id);
+			
+		ArrayList<Long> mvms_mids = new ArrayList<Long>();
+		List<Long> materijali = q.list();
+		
+		for (NoviTipZahvataMaterijalVM mvm : mvms) {
+			assertTrue("A", materijali.contains(mvm.getMaterijalId()));
+			mvms_mids.add(mvm.getMaterijalId());
+		}
+		
+		for (Long m_id : materijali) {
+			assertTrue("B", mvms_mids.contains(m_id));
+		}
 		
 		sess.close();
-		
 	}
 	
 	@Test
@@ -155,7 +187,7 @@ public class TipZahvataManagerTest {
 		
 		vm.setMaterijali(mvms);
 		NoviTipZahvataMaterijalVM temp = new NoviTipZahvataMaterijalVM();
-		temp.setMaterijalId(id);;
+		temp.setMaterijalId(id);
 		temp.setKolicina(3.33);
 		vm.getMaterijali().add(temp);
 		
@@ -183,7 +215,7 @@ public class TipZahvataManagerTest {
 		return max_id + 1;
 	}
 	
-	public long dajBrojMaterijalaTipZahvata(Session session){
+	private long dajBrojMaterijalaTipZahvata(Session session){
 		String hqlImaLi = "SELECT COUNT(*) FROM MaterijalTipZahvata";
 		Query imaLi = session.createQuery(hqlImaLi); 
 		long broj = (Long) imaLi.uniqueResult();
@@ -191,11 +223,25 @@ public class TipZahvataManagerTest {
 		return broj;
 	}
 	
-	public long dajBrojTipZahvata(Session session){
+	private long dajBrojTipZahvata(Session session){
 		String hqlImaLi = "SELECT COUNT(*) FROM TipZahvata";
 		Query imaLi = session.createQuery(hqlImaLi); 
 		long broj = (Long) imaLi.uniqueResult();
 		
 		return broj;
+	}
+	
+	private long NadjiSlobodanID() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		Query q = sess.createQuery("SELECT MAX(id) FROM TipZahvata");
+		Long max_id = (Long) q.uniqueResult();
+		
+		sess.close();
+		
+		if(max_id == null)
+			return 1;
+		
+		return max_id + 1;
 	}
 }

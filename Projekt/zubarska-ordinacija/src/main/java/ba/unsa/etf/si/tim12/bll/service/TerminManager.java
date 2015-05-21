@@ -20,9 +20,9 @@ public class TerminManager {
 		
 	    //TODO: ovdje trebe Select new TerminVM(...) tako da neće ni biti potrebe
 		//za konverzijom
-		String hql ="from Termin where pacijentId=:idpacijenta";
+		String hql ="from Termin where pacijentId = :idpacijenta";
 		Query q = session.createQuery(hql);
-		q.setLong("pacijentId", idpacijenta); 
+		q.setLong("idpacijenta", idpacijenta); 
 	  
 		//TODO: Ovdje treb konverziju napraviti i provjeriti može li ti opće
 		//Po mom mišljenju ne bi smjelo cijelu listu u drugu listu pretvoriti
@@ -37,7 +37,7 @@ public class TerminManager {
 	}
 	
 	public  ArrayList<TerminVM> nadjiPoVremenu(Date vrijemePoc, Date vrijemeKraj) {
-Transaction t = session.beginTransaction();
+		Transaction t = session.beginTransaction();
 		
 	    //nisam nasao u tabeli u bazi da ima i kraj termina
 		//ovo poredjenje u sljedecoj liniji vjerovatno ne treba ovako, posto je datum
@@ -56,7 +56,7 @@ Transaction t = session.beginTransaction();
 	
 	//TODO: 
 	//Vjerovatno nije ovako jednostavno xD, za sad se samo brise termin iz baze
-	public  void odkaziTermin(long terminId) 
+	public  void otkaziTermin(long terminId) 
 	{
 		Transaction t = session.beginTransaction();
 		

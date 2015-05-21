@@ -1,11 +1,14 @@
 package ba.unsa.etf.si.tim12.bll.service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ba.unsa.etf.si.tim12.PacijentNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
@@ -29,6 +32,7 @@ public class PacijentManagerTest {
 		Calendar c = new GregorianCalendar(1993,12,16);
 		pac.setDatumRodjenja(c.getTime());
 		pac.setTelefon("063/333-333");
+		pac.setOpis("lala");
 		
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = sess.beginTransaction();
@@ -117,11 +121,114 @@ public class PacijentManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		Query q = sess.createQuery("SELECT MAX(id) FROM Pacijent");
-		long max_id = (Long) q.uniqueResult();
+		Long max_id = (Long) q.uniqueResult();
 		
 		sess.close();
 		
+		if(max_id == null)
+			return 1;
+		
 		return max_id + 1;
 	}
+	
+	@Test
+	public void nadjiPoIduTest() {
+		//Pronalazenje cijelog ida
+		nadjiPoIduPomocna(pac.getId(), "Mora se cijeli ID poklapati.");
+		
+		//TODO: Napraviti test da provjerava dio ID-a
+	}
+	
+	private void nadjiPoIduPomocna(long id, String message){
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		PacijentManager pm = new PacijentManager(sess);
+		ArrayList<PacijentVM> l = pm.nadjiPoIdu(pac.getId());
+		
+		//Trazimo da li je među ovim pacijenitima pronasao i naseg pacijenta
+		boolean any = false;
+		for (PacijentVM pacijentVM : l) {
+			if(pacijentVM.getId() == pac.getId())
+				any = true;
+		}
+		
+		assertTrue(message, any);
+		
+		sess.close();
+		
+	}
+	
+	@Test
+	public void nadjiPoImenuTest() {
+		//Pronalazenje cijelog imena
+		nadjiPoImenuPomocna(pac.getImeIPrezime(), "Mora se cijelo ime poklapati.");
+		
+		//Pronalazenje dijela (pola)imena
+		String dioImena = pac.getImeIPrezime();
+		dioImena = dioImena.substring(1, dioImena.length()/2);
+		nadjiPoImenuPomocna(dioImena, "Mora se dio imena poklapati");
+		
+		//Pronalazenje cijelog imena gdje ne zavisi od velicine slova
+		nadjiPoImenuPomocna(pac.getImeIPrezime().toLowerCase(), "Ne smije zavisiti od velicine slova");
+		nadjiPoImenuPomocna(pac.getImeIPrezime().toUpperCase() , "Ne smije zavisiti od velicine slova");
+		
+		//Pronalazenje dijela (pola)imena gdje ne zavisi o velicine slova
+		nadjiPoImenuPomocna(dioImena.toLowerCase(), "Mora se dio imena poklapati i ne smije zavisiti od velicine slova");
+		nadjiPoImenuPomocna(dioImena.toUpperCase(), "Mora se dio imena poklapati i ne smije zavisiti od velicine slova");		
+	}
 
+	private void nadjiPoImenuPomocna(String ime, String message) {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		PacijentManager pm = new PacijentManager(sess);
+		
+		ArrayList<PacijentVM> l = pm.nadjiPoImenu(ime);
+	
+		//Trazimo da li je među ovim pacijenitima pronasao i naseg pacijenta
+		boolean any = false;
+		for (PacijentVM pacijentVM : l) {
+			if(pacijentVM.getId() == pac.getId())
+				any = true;
+		}
+		
+		assertTrue(message, any);
+		
+		sess.close();
+	}
+	
+	@Test
+	public void nadjiPoOpisuTest() {
+		//Pronalazenje cijelog opisa
+		nadjiPoOpisuPomocna(pac.getOpis(), "Mora se cijeli opis poklapati.");
+		
+		//Pronalazenje dijela (pola)opiwq
+		String dioOpisa = pac.getOpis();
+		dioOpisa = dioOpisa.substring(1, dioOpisa.length()/2);
+		nadjiPoOpisuPomocna(dioOpisa, "Mora se dio opisa poklapati");
+		
+		//Pronalazenje cijelog opisa gdje ne zavisi od velicine slova
+		nadjiPoOpisuPomocna(pac.getOpis().toLowerCase(), "Ne smije zavisiti od velicine slova");
+		nadjiPoOpisuPomocna(pac.getOpis().toUpperCase() , "Ne smije zavisiti od velicine slova");
+		
+		//Pronalazenje dijela (pola)opisa gdje ne zavisi o velicine slova
+		nadjiPoOpisuPomocna(dioOpisa.toLowerCase(), "Mora se dio opisa poklapati i ne smije zavisiti od velicine slova");
+		nadjiPoOpisuPomocna(dioOpisa.toUpperCase(), "Mora se dio opisa poklapati i ne smije zavisiti od velicine slova");
+	}
+
+	private void nadjiPoOpisuPomocna(String opis, String message) {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		PacijentManager pm = new PacijentManager(sess);
+		ArrayList<PacijentVM> l = pm.nadjiPoOpisu(opis);
+		
+		//Trazimo da li je među ovim pacijenitima pronasao i naseg pacijenta
+		boolean any = false;
+		for (PacijentVM pacijentVM : l) {
+			if(pacijentVM.getId() == pac.getId())
+				any = true;
+		}
+		
+		assertTrue(message, any);
+		
+		sess.close();
+	}
 }

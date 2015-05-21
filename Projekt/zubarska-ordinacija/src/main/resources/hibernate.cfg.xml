@@ -4,9 +4,8 @@
 <hibernate-configuration>
  <session-factory name="">
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">2014SIEtf</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/tim12</property>
-  <property name="hibernate.connection.username">EtfSI2014</property>
+  <property name="hibernate.connection.username">root</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">create-drop</property>
   <mapping resource="Korisnik.hbm.xml"/>

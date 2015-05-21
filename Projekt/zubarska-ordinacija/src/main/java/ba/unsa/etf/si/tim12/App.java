@@ -13,7 +13,7 @@ import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
 public class App 
 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Materijal m = new Materijal();
 		m.setNaziv("tufer2");
@@ -40,6 +40,8 @@ public class App
 			// TODO Auto-generated catch block
 			System.out.println("Greska: " + e.getMessage());
 			e.printStackTrace();
+			
+			throw e;
 		} 
 		
 		

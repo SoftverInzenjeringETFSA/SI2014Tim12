@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.viewmodel;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class PacijentVM {
@@ -9,6 +10,16 @@ public class PacijentVM {
 	private String brojTelefona;
 	private String opis;
 	
+	public PacijentVM(long id, String imePrezime, Date datumRodjenja, String brojTelefona, String opis) {
+		this.id = id;
+		this.imePrezime = imePrezime;
+		this.datumRodjenja = new Date(datumRodjenja.getTime());
+		this.brojTelefona = brojTelefona;
+		this.opis = opis;
+	}
+	public PacijentVM() {
+		
+	}
 	public long getId() {
 		return id;
 	}
@@ -25,7 +36,7 @@ public class PacijentVM {
 		return datumRodjenja;
 	}
 	public void setDatumRodjenja(Date datumRodjenja) {
-		this.datumRodjenja = datumRodjenja;
+		this.datumRodjenja = new Date(datumRodjenja.getTime());
 	}
 	public String getBrojTelefona() {
 		return brojTelefona;
