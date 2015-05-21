@@ -5,6 +5,12 @@ public class TipZahvataVM {
 	private String naziv;
 	private double cijena;
 	
+	public TipZahvataVM() {}
+	public TipZahvataVM(long id, String naziv, double cijena) {
+		this.id = id;
+		this.naziv = naziv;
+		this.cijena = cijena;
+	}
 	public long getId() {
 		return id;
 	}
