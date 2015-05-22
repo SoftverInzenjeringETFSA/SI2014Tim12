@@ -25,11 +25,7 @@ public class TerminManager {
 		Query q = session.createQuery(hql);
 		q.setLong("idpacijenta", idpacijenta); 
 	  
-		//TODO: Ovdje treb konverziju napraviti i provjeriti može li ti opće
-		//Po mom mišljenju ne bi smjelo cijelu listu u drugu listu pretvoriti
-		//već samo član konvertirati
 	    List<TerminVM> lista = q.list();
-	    
 	    
 	    ArrayList<TerminVM> lista1 = new ArrayList<TerminVM>(lista);
 	    
@@ -56,7 +52,7 @@ public class TerminManager {
 	}
 	
 
-public void otkaziTermin(long terminId)
+	public void otkaziTermin(long terminId)
 	{			
 		Termin t = (Termin)session.get(Termin.class, terminId);
 		t.setOtkazano(false);

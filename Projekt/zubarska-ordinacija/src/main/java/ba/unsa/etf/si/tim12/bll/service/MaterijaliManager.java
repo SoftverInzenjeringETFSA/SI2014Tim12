@@ -1,7 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import java.util.List;
 
-import ba.unsa.etf.si.tim12.MaterijalNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 
 import java.util.ArrayList;
