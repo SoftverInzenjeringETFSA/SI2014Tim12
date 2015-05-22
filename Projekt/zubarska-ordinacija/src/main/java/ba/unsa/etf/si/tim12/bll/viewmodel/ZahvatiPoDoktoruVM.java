@@ -7,11 +7,20 @@ public class ZahvatiPoDoktoruVM {
 	private String doktor;
 	private Date vrijemeOd,vrijemeDo;
 	private double ukupnaCijena;
-	private int ukupnoPosjeta;
-	
+	private int ukupnoPosjeta;	
 	private ArrayList<ZahvatiPoDoktoruRowVM> zahvati;
 	
-	public ZahvatiPoDoktoruVM() {
+	public ZahvatiPoDoktoruVM(String doktor, Date vrijemeOd, Date vrijemeDo, double ukupnaCijena,
+			int ukupnoPosjeta, ArrayList<ZahvatiPoDoktoruRowVM> zahvati) {
+		this.doktor = doktor;
+		this.vrijemeOd = new Date(vrijemeOd.getTime());
+		this.vrijemeDo = new Date(vrijemeDo.getTime());
+		this.ukupnaCijena = ukupnaCijena;
+		this.ukupnoPosjeta = ukupnoPosjeta;
+		this.zahvati = zahvati;
+	}
+	
+	public ZahvatiPoDoktoruVM() {		
 		zahvati = new ArrayList<ZahvatiPoDoktoruRowVM>();
 	}
 	public String getDoktor() {
