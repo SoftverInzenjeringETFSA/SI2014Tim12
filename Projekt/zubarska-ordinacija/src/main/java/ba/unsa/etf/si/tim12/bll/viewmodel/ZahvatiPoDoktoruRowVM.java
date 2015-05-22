@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class ZahvatiPoDoktoruRowVM {
 	private long id;
-	private String ime;
-	private String prezime;
+	private String imePrezime;
 	private String nazivZahvata;
 	private Date vrijemePosjete;
 	private double cijena;
@@ -17,16 +16,16 @@ public class ZahvatiPoDoktoruRowVM {
 		this.id = id;
 	}
 	public String getIme() {
-		return ime;
+		return imePrezime;
 	}
 	public void setIme(String ime) {
-		this.ime = ime;
+		this.imePrezime = ime;
 	}
 	public String getPrezime() {
-		return prezime;
+		return imePrezime;
 	}
 	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+		this.imePrezime = prezime;
 	}
 	public String getNazivZahvata() {
 		return nazivZahvata;
