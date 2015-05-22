@@ -99,9 +99,12 @@ public class PosjetaManagerTest {
 		catch(Exception e)
 		{
 			t.rollback();
+			throw e;
+		}	
+		finally
+		{
 			if(session.isOpen())
 				session.close();
-			throw e;
 		}
 		
 	}

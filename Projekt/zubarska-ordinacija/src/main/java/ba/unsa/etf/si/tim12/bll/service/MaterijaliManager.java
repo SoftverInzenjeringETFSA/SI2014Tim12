@@ -61,7 +61,7 @@ public class MaterijaliManager {
 		//String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM  Materijal p,UtroseniMaterijal u INNER JOIN ObavljeniZahvat o ON  u.obavljeniZahvatId = o.zahvatId WHERE p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		Query q = session.createQuery(hql);
 		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) "
 				+ "FROM  Materijal p,UtroseniMaterijal u, ObavljeniZahvat o  "
-				+ "WHERE  u.obavljeniZahvatId = o.zahvatId AND p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		
+				+ "WHERE  u.obavljeniZahvatId = o.id AND p.id=u.materijalId AND o.zahvatId= :tipZahvataId";		
 		Query q = session.createQuery(hql);
 		q.setLong("tipZahvataId", tipZahvataId);
 		
@@ -81,7 +81,9 @@ public class MaterijaliManager {
         
 		//i ovaj je isti kao prethodni , ne znam koja je razlika, uglavnom samo upit se treba promjeniti
 		//bas kao i na prethodnom
-		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM Materijal p, UtroseniMaterijal u, ObavljeniZahvat o WHERE u.obavljeniZahvatId=o.zahvatId AND p.id=u.materijalId AND u.obavljeniZahvatId= :obavljeniZahvatId";
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) "
+				+ "FROM Materijal p, UtroseniMaterijal u, ObavljeniZahvat o "
+				+ "WHERE u.obavljeniZahvatId=o.id AND p.id=u.materijalId AND o.id= :obavljeniZahvatId";
 		Query q = session.createQuery(hql);
 		q.setLong("obavljeniZahvatId", obavljeniZahvatId);
 		

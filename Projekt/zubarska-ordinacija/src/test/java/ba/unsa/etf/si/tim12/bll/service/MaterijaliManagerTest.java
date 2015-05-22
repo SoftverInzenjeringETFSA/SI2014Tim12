@@ -24,14 +24,16 @@ public class MaterijaliManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
+        Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		Transaction t = sess.beginTransaction();
+
+		
+		try{
 		materijal = new Materijal();
 		materijal.setNaziv("nazivMaterijala");
 		materijal.setCijena(24.55);
 		materijal.setMjernaJedinica("gram");
-		Session sess = HibernateUtil.getSessionFactory().openSession();
-		
-		Transaction t = sess.beginTransaction();
-
 		long id = (Long) sess.save(materijal);
 		
 		materijal.setId(id);
@@ -40,6 +42,17 @@ public class MaterijaliManagerTest {
 		t.commit();
 
 		sess.close();
+		}
+		catch(Exception e)
+		{
+			t.rollback();
+			throw e;
+		}
+		finally
+		{
+			if(sess.isOpen())
+				sess.close();
+		}
 	}
 
 	@After
