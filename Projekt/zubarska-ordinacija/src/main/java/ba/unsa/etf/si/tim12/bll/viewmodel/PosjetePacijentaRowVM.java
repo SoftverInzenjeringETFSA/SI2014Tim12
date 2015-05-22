@@ -37,6 +37,6 @@ public class PosjetePacijentaRowVM {
 	}
 
 	public void setVrijeme(Date vrijeme) {
-		this.vrijeme = vrijeme;
+		this.vrijeme = new Date(vrijeme.getTime());
 	}
 }

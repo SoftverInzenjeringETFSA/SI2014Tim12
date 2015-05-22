@@ -28,7 +28,7 @@ public class FinancijskiUlazVM {
 	}
 
 	public void setVrijemeOd(Date vrijemeOd) {
-		this.vrijemeOd = vrijemeOd;
+		this.vrijemeOd = new Date(vrijemeOd.getTime());
 	}
 
 	public Date getVrijemeDo() {
@@ -36,7 +36,7 @@ public class FinancijskiUlazVM {
 	}
 
 	public void setVrijemeDo(Date vrijemeDo) {
-		this.vrijemeDo = vrijemeDo;
+		this.vrijemeDo = new Date(vrijemeDo.getTime());
 	}
 
 	public double getUkupnaCijena() {
@@ -59,7 +59,8 @@ public class FinancijskiUlazVM {
 		return listaFinancijskiUlazRowVM;
 	}
 
-	public void setFinancijskiUlazRowVM(ArrayList<FinancijskiUlazRowVM> listaFinancijskiUlazRowVM) {
+	public void setFinancijskiUlazRowVM(
+			ArrayList<FinancijskiUlazRowVM> listaFinancijskiUlazRowVM) {
 		this.listaFinancijskiUlazRowVM = listaFinancijskiUlazRowVM;
 	}
 }

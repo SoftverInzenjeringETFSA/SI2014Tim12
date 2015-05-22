@@ -11,13 +11,14 @@ public class PotMaterijaliVM {
 	public PotMaterijaliVM() {
 		materijali = new ArrayList<PotMaterijaliRowVM>();
 	}
+
 	public PotMaterijaliVM(Date vrijemeOd, Date vrijemeDo, double cijena) {
 		this.vrijemeOd = new Date(vrijemeOd.getTime());
 		this.vrijemeDo = new Date(vrijemeDo.getTime());
 		ukupnaCijena = cijena;
 		materijali = new ArrayList<PotMaterijaliRowVM>();
 	}
-	
+
 	public Date getVrijemeOd() {
 		return vrijemeOd;
 	}

@@ -110,7 +110,22 @@ public class IzvjestajManager {
 	}
 
 	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
-		return new OdradjenePosjeteVM();
+		Transaction t = session.beginTransaction();
+		String hql = "select new OdradjenePosjeteVM(datum, count(*) from posjeta "
+				+ "where datum = :datum)";
+		Query q = session.createQuery(hql);
+		q.setDate("datum", vrijeme);
+		OdradjenePosjeteVM posjete;
+		if(!q.list().isEmpty())
+			posjete = (OdradjenePosjeteVM) q.list().get(0);
+		else posjete = null;
+		t.commit();
+		hql = "select new OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.datum)"
+				+ "from posjeta pos, pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
+		ArrayList<OdradjenePosjeteRowVM> posjeteRed = new ArrayList<OdradjenePosjeteRowVM>(q.list());
+		t.commit();
+		posjete.setOdradjenePosjete(posjeteRed);
+		return posjete;
 	}
 
 }
