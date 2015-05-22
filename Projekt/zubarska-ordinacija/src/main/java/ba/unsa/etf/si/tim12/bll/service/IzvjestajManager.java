@@ -13,11 +13,11 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 @SuppressWarnings("unchecked")
 public class IzvjestajManager {
 	Session session;
-	
+
 	public IzvjestajManager(Session session) {
 		this.session = session;
-	}	
-	//TODO: popraviti query tako da uzima u obzir vrijemeOd i vrijemeDo - Emina
+	}
+
 	public ZahvatiPoDoktoruVM sviZahvatiPoDoktoru(String imeDoktora) {
 		imeDoktora = "%" + imeDoktora.trim() + "%";
 		Transaction t = session.beginTransaction();
@@ -26,19 +26,21 @@ public class IzvjestajManager {
 				+ "t.id = z.zahvatId and pac.id = pos.pacijentId and pos.doktor like :doktor";
 		Query q = session.createQuery(hql);
 		q.setParameter("doktor", imeDoktora);
-		ArrayList<ZahvatiPoDoktoruRowVM> rez = new ArrayList<ZahvatiPoDoktoruRowVM>(q.list());
+		ArrayList<ZahvatiPoDoktoruRowVM> rez = new ArrayList<ZahvatiPoDoktoruRowVM>(
+				q.list());
 		t.commit();
 		hql = "select new ZahvatiPoDoktoruVM(pos.doktor, min(pos.datum), max(pos.datum), sum(z.cijena), count(pos.id) "
 				+ "from posjeta pos, obavljenizahvat z where pos.doktor like :doktor and pos.id = z.posjetaId";
 		q = session.createQuery(hql);
-//		q.setParameter("doktor", imeDoktora);
+		// q.setParameter("doktor", imeDoktora); TODO: valjda ga ne treba opet setovati?
 		ZahvatiPoDoktoruVM rezultat = (ZahvatiPoDoktoruVM) q.list().get(0);
 		t.commit();
 		rezultat.setZahvati(rez);
 		return rezultat;
 	}
 	
-	public  FinancijskiUlazVM financijskiUlaz(Date vrijemeOd, Date vrijemeDo) {
+	//TODO: provjeri t.commit() i treba li nova sesija - Emina
+	public FinancijskiUlazVM financijskiUlaz(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
 		String hql = "select new FinancijskiUlazVM(:vrijemeOd, :vrijemeDo, sum(z.cijena), count(p.id)"
 				+ " from obavljeniZahvat z, posjeta p where p.id = obavljeniZahvat.posjetaId "
@@ -47,9 +49,10 @@ public class IzvjestajManager {
 		q.setDate("vrijemeOd", vrijemeOd);
 		q.setDate("vrijemeDo", vrijemeDo);
 		FinancijskiUlazVM rez;
-		if(!q.list().isEmpty())
+		if (!q.list().isEmpty())
 			rez = (FinancijskiUlazVM) q.list().get(0);
-		else rez = null;
+		else
+			rez = null;
 		t.commit();
 		hql = "select new FinancijskiUlazRowVM(pos.id, pac.imeIPrezime, t.naziv, pos.datum, z.cijena "
 				+ "from posjete pos, pacijent pac, tipzahvata t, obavljenizahvat z "
@@ -60,12 +63,37 @@ public class IzvjestajManager {
 		rez.setFinancijskiUlazRowVM(r);
 		return rez;
 	}
-	
-	public  PotMaterijaliVM potroseniMaterijali(Date vrijemeOd, Date vrijemeDo) {return new PotMaterijaliVM();}
-	
-	public  PosjetePacijentaVM posjetePacijenta(long idPacijenta) { return new PosjetePacijentaVM();}
-	
-	public  OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {return new OdradjenePosjeteVM();}
-	
-	
+
+	public PotMaterijaliVM potroseniMaterijali(Date vrijemeOd, Date vrijemeDo) {
+		Transaction t = session.beginTransaction();
+		String hql = "select new PotMaterijaliVM(:vrijemeOd, :vrijemeDo, sum(m.cijena)) "
+				+ "from materijal m, utrosenimaterijal u, obavljeni zahvat o, posjeta p "
+				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId";
+		Query q = session.createQuery(hql);
+		q.setDate("vrijemeOd", vrijemeOd);
+		q.setDate("vrijemeDo", vrijemeDo);		
+		PotMaterijaliVM rez;
+		if (!q.list().isEmpty())
+			rez = (PotMaterijaliVM) q.list().get(0);
+		else
+			rez = null;
+		t.commit();
+		hql = "select new PotMaterijaliRowVM(m.id, m.naziv, m.cijena, m.mjernaJedinica, u.kolicina, u.kolicina*m.cijena)"
+				+ "from materijal m, utrosenimaterijal u, posjeta p, obavljenizahvat o "
+				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
+				+ "and p.datum between :vrijemeOd and :vrijemeDo";
+		ArrayList<PotMaterijaliRowVM> r = new ArrayList<PotMaterijaliRowVM>(q.list());
+		t.commit();
+		rez.setMaterijali(r);
+		return rez;
+	}
+
+	public PosjetePacijentaVM posjetePacijenta(long idPacijenta) {
+		return new PosjetePacijentaVM();
+	}
+
+	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
+		return new OdradjenePosjeteVM();
+	}
+
 }
