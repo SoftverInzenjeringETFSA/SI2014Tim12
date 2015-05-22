@@ -40,6 +40,7 @@ public class loginGUI {
 	private JPasswordField passwordField;
 	private JTextField textField;
 
+	private String username;
 
 
 	/**
@@ -81,17 +82,16 @@ public class loginGUI {
 		JButton prijavaBtn = new JButton("Prijavi se");
 		prijavaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (Prijava())
-					{
-						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
-						frmPrijava.setVisible (false);
-						frmPrijava.dispose();
-					}
+				if (Prijava()){
+					frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
+					frmPrijava.setVisible (false);
+					frmPrijava.dispose();
+				}
 				else { JOptionPane.showMessageDialog(frmPrijava,
 					    "Prijava nije uspjela",
 					    "Obavještenje",
 					    JOptionPane.INFORMATION_MESSAGE);}
-			}
+				}
 		});
 		prijavaBtn.setBounds(164, 86, 113, 23);
 		frmPrijava.getContentPane().add(prijavaBtn);
@@ -124,6 +124,7 @@ public class loginGUI {
 		Session sess = null;
 		
 		try{
+			
 			sess = HibernateUtil.getSessionFactory().openSession();
 			KorisnikManager m= new KorisnikManager(sess);
 			
@@ -132,6 +133,8 @@ public class loginGUI {
 			lgvm.setUsername(textField.getText());
 			lgvm.setPassword(new String(passwordField.getPassword()));
 			
+			this.username = lgvm.getUsername();
+					
 			return m.provjeriPassword(lgvm);
 		} catch(Exception e){
 			e.printStackTrace();
