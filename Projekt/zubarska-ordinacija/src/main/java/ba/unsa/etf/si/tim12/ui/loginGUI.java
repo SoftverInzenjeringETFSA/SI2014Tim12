@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.tim12.ui;
 
 
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
@@ -24,6 +25,13 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.KorisnikManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+
 
 public class loginGUI {
 
@@ -108,12 +116,26 @@ public class loginGUI {
 	}
 	
 	// Implemetirati funkciju za prijavu 
-	public Boolean Prijava() {
-		JOptionPane.showMessageDialog(frmPrijava,
-			    "Nije implementirano.",
-			    "Obavje�tenje",
-			    JOptionPane.INFORMATION_MESSAGE);
-		return true; //neka za sada stoji da je korisnik logovan
+	public boolean Prijava() {
+		Session sess = null;
+		try{
+		sess = HibernateUtil.getSessionFactory().openSession();
+		KorisnikManager m= new KorisnikManager(sess);
+		LoginVM lgvm = new LoginVM();
+		lgvm.setUsername(textField.getText());
+		lgvm.setPassword(passwordField.getPassword().toString());
+		return m.provjeriPassword(lgvm);
+		
+		
+		} catch(Exception e){
+			e.printStackTrace();
+			return false;
+		} finally{
+			if(sess != null)
+				sess.close();
+		}
+
+
 
 	}
 }
