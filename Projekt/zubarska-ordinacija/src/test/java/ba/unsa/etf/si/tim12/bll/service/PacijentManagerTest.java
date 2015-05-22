@@ -231,4 +231,28 @@ public class PacijentManagerTest {
 		
 		sess.close();
 	}
+	
+	@Test
+	public void modificirajPacijentaPacijentNePostojiTest() {
+		
+		    Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+			PacijentManager pm = new PacijentManager(sess);
+			
+			PacijentVM pc = new PacijentVM();
+	
+			long id1 = NadjiSlobodanID();
+			
+			Date now = new Date();
+			
+			pc.setImePrezime("fwqf");
+			pc.setDatumRodjenja(now);
+			pc.setBrojTelefona("062/222-222");
+			pc.setOpis("bolestan");
+			pc.setId(id1);
+					
+			assertFalse(pm.modificirajPacijenta(pc));	
+			
+			sess.close();	
+	}
 }
