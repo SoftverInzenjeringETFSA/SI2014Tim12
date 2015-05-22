@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class ObavljeniZahvatManager {
+class ObavljeniZahvatManager {
 	Session session;
 	
 	public ObavljeniZahvatManager(Session session)
