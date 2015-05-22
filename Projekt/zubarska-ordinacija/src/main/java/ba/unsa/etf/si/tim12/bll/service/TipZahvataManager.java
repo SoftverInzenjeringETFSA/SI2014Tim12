@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 
+@SuppressWarnings("unchecked")
 public class TipZahvataManager {
 	Session session;
 	
@@ -58,7 +59,7 @@ public class TipZahvataManager {
 	}
 	
 	
-	public  boolean promjeniCijenuZahvata(long id, double cijena) {
+	public  boolean promijeniCijenuZahvata(long id, double cijena) {
 	
 		Transaction t = session.beginTransaction();
 

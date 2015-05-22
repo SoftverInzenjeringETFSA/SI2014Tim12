@@ -47,8 +47,7 @@ public class ObavljeniZahvatManager {
 		Query q = session.createQuery(hql);
 		q.setString("id", id);	    
 		List<TipZahvataVM> rez = q.list();
-	    t.commit();	    
-		return new ArrayList<TipZahvataVM>(rez);
+	    t.commit();
+	    return new ArrayList<TipZahvataVM>(rez);
 	}
-
 }
