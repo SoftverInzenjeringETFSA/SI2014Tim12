@@ -40,7 +40,7 @@ public class MaterijaliManager {
 		
 	}
 	
-	public  boolean izbrisiMaterijal(long id) {
+	public  boolean izbrisiMaterijal(long id) throws MaterijalNotFound {
 		Transaction t = session.beginTransaction();
 	
 		 String hql = "DELETE Materijal WHERE id = :id";
@@ -50,8 +50,7 @@ public class MaterijaliManager {
 
 		        int result = q.executeUpdate();
 		        if (result == 0) {
-		        	return false;
-			       //  throw new RuntimeException("Ne postoji materijal sa takvim ID-om!");
+			        throw  new MaterijalNotFound("Ne postoji materijal sa takvim ID-om!");
 			    }	
 		        t.commit();
 		        return true;

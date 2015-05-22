@@ -215,6 +215,38 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
+	@Test(expected = MaterijalNotFound.class)
+	public void IzbrisiMaterijalNePostoji()  throws Exception {
+		Session sess = null;
+		
+		try{
+			sess = HibernateUtil.getSessionFactory().openSession();
+			
+			MaterijaliManager mManager = new MaterijaliManager(sess);
+			
+			Materijal m = new Materijal();
+			m.setNaziv(materijal.getNaziv());
+			m.setCijena(materijal.getCijena());
+			m.setMjernaJedinica(materijal.getMjernaJedinica());
+			m.setId(materijal.getId());
+			
+			sess.save(m);
+			boolean x = mManager.izbrisiMaterijal(m.getId()+1);
+
+			assertEquals(true , x);
+			
+			
+		} catch(Exception e){
+			e.printStackTrace();
+			throw e;
+			
+		} finally {
+			if(sess != null)
+				sess.close();
+		}
+
+	}
+	
 	@Test
 	public void nadjiPoObavljenomZahvatu()  throws Exception {
 		Session sess = null;
