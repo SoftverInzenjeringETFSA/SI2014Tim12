@@ -1,8 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
-import ba.unsa.etf.si.tim12.dal.domainmodel.MaterijalTipZahvata;
-import ba.unsa.etf.si.tim12.dal.domainmodel.TipZahvata;
-import ba.unsa.etf.si.tim12.dal.domainmodel.ObavljeniZahvat;
+import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.Session;
 
 import java.util.*;
+
 @SuppressWarnings("unchecked")
 public class ObavljeniZahvatManager {
 	Session session;
@@ -38,16 +37,15 @@ public class ObavljeniZahvatManager {
 		
 	}
 	
-	public ArrayList<TipZahvataVM> nadjiSvePoTipuZahvata(long idTipa) {
-		String id = "%" + Long.toString(idTipa) + "%";
+	public ArrayList<ObavljeniZahvatVM> nadjiSvePoTipuZahvata(long idTipa) {
 		Transaction t = session.beginTransaction();
 		
-		String hql ="select new ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM(id, naziv, cijena)" +
-				"from TipZahvata where str(id) = :id";
+		String hql ="select new ba.unsa.etf.si.tim12.bll.viewmodel.ObavljeniZahvatVM(z.id, z.zahvatId, z.posjetaId, z.cijena) " +
+				"from ObavljeniZahvat z where z.zahvatId = :id";
 		Query q = session.createQuery(hql);
-		q.setString("id", id);	    
-		List<TipZahvataVM> rez = q.list();
+		q.setLong("id", idTipa);	    
+		ArrayList<ObavljeniZahvatVM> rez = new ArrayList<ObavljeniZahvatVM>(q.list());
 	    t.commit();
-	    return new ArrayList<TipZahvataVM>(rez);
+	    return rez;
 	}
 }
