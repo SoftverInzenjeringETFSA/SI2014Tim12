@@ -125,20 +125,7 @@ public class PosjetaManagerTest {
 			
 			//We have to clean the database, delete every "Posjeta" that we added in our previous test
 			//We first need to delete all the dependencies also newly added in our tests			
-			
-			/*String hql2 = "Select m.id from UtroseniMaterijal m, ObavljeniZahvat z "
-					+ "WHERE z.id = m.obavljeniZahvatId AND z.posjetaId = :Id";
-
-			Query q2 = sess.createQuery(hql2);
-			q2.setLong("Id", p.getId());
-			List<Long> ids = q2.list();
-			
-			hql = "DELETE UtroseniMaterijal m "
-					+ "WHERE m.id IN (:lista)";
-			
-			q = sess.createQuery(hql);
-			q.setParameterList("lista", ids);
-		    q.executeUpdate();*/
+		
 		
 		    String hql2 = "DELETE FROM UtroseniMaterijal m "
 		    		+ "WHERE exists( SELECT 1 FROM ObavljeniZahvat z "
