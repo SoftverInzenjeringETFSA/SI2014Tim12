@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class FinancijskiUlazRowVM {
 	private long id;
-	private String ime;
-	private String prezime;
+	private String imeIPrezime;
 	private String imeZahvata;
 	private Date vrijemePosjete;
 	private double cijena;
@@ -17,16 +16,10 @@ public class FinancijskiUlazRowVM {
 		this.id = id;
 	}
 	public String getIme() {
-		return ime;
+		return imeIPrezime;
 	}
 	public void setIme(String ime) {
-		this.ime = ime;
-	}
-	public String getPrezime() {
-		return prezime;
-	}
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+		this.imeIPrezime = ime;
 	}
 	public String getImeZahvata() {
 		return imeZahvata;
