@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import ba.unsa.etf.si.tim12.bll.viewmodel.ObavljeniZahvatVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.ObavljeniZahvat;
@@ -58,7 +59,7 @@ public class ObavljeniZahvatManagerTest {
 	public void testNadjiSvePoTipuZahvata() {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		ObavljeniZahvatManager manager = new ObavljeniZahvatManager(sess);
-		ArrayList<TipZahvataVM> rez = manager.nadjiSvePoTipuZahvata(zahvat.getZahvatId());
+		ArrayList<ObavljeniZahvatVM> rez = manager.nadjiSvePoTipuZahvata(zahvat.getZahvatId());
 		long rezId = rez.get(0).getId();
 		long zahId = zahvat.getZahvatId();
 		assertEquals(rezId, zahId);
