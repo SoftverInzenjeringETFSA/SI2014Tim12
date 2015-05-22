@@ -255,4 +255,40 @@ public class PacijentManagerTest {
 			
 			sess.close();	
 	}
+	
+	@Test
+	public void modificirajPacijentaTest() {
+		
+		    Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+			PacijentManager pm = new PacijentManager(sess);
+			
+			PacijentVM pc = new PacijentVM();
+	
+			long id1 = pac.getId();
+			
+			Date now = new Date();
+			
+			pc.setImePrezime("fwqf");
+			pc.setDatumRodjenja(now);
+			pc.setBrojTelefona("062/222-222");
+			pc.setOpis("bolestan");
+			pc.setId(id1);
+					
+			assertTrue(pm.modificirajPacijenta(pc));	
+			
+			Pacijent pacijent = (Pacijent) sess.get(Pacijent.class, id1);
+			
+			assertNotNull(pacijent);
+			if(pacijent == null){ sess.close(); return; }
+			
+			assertEquals(pacijent.getId(), pc.getId());
+			assertEquals(pacijent.getImeIPrezime(), pc.getImePrezime());
+			assertEquals(pacijent.getDatumRodjenja(), pc.getDatumRodjenja());
+			assertEquals(pacijent.getTelefon(), pc.getBrojTelefona());
+			assertEquals(pacijent.getOpis(), pc.getOpis());
+			
+			sess.close();	
+	}
 }
+
