@@ -1,4 +1,5 @@
 package ba.unsa.etf.si.tim12.bll.service;
+import ba.unsa.etf.si.tim12.MaterijalNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
@@ -21,8 +22,14 @@ public class ObavljeniZahvatManager {
 		this.session = session;
 	}
 	
-	public  boolean dodajNoviZahvat(NoviObavljeniZahvatVM zahvat) {
-     Transaction t = session.beginTransaction();
+	public  boolean dodajNoviZahvat(NoviObavljeniZahvatVM zahvat) throws Exception { 
+		
+		String hql = "SELECT COUNT(DISTINCT z.id) from  TipZahvata z "
+				+ "WHERE z.id=id";
+		Query query = session.createQuery(hql);
+		query.setLong("id", zahvat.getZahvatId());
+		if(query.equals(0))
+			return false;
 		
 		ObavljeniZahvat z = new ObavljeniZahvat();
 		z.setCijena(zahvat.getCijena());
@@ -30,11 +37,30 @@ public class ObavljeniZahvatManager {
 		z.setPosjetaId(zahvat.getPosjetaId());
 
 		session.save(z);
+
+		for(NoviOZahvatMaterijalVM m : zahvat.getMaterijali())
+		{
+			UtroseniMaterijal mat = new UtroseniMaterijal();
+			hql = "SELECT COUNT(DISTINCT m.id) "+
+					"FROM Materijal m WHERE m.id=id";
+			
+			query = session.createQuery(hql);
+			query.setLong("id", m.getMaterijalId());
+			if(query.equals(0))
+				throw new MaterijalNotFound();
+			
+			mat.setKolicina(m.getKolicina());
+			mat.setMaterijalId(m.getMaterijalId());
+			mat.setObavljeniZahvatId(z.getId());
+			
+			session.save(mat);
+			
+		}
+	
+      
 		
-		t.commit();
 		
-		return true;
-		
+		return true;		
 	}
 	
 	public ArrayList<ObavljeniZahvatVM> nadjiSvePoTipuZahvata(long idTipa) {
