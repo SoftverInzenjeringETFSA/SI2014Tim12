@@ -25,7 +25,7 @@ public class ObavljeniZahvatManager {
 	public  boolean dodajNoviZahvat(NoviObavljeniZahvatVM zahvat) throws Exception { 
 		
 		String hql = "SELECT COUNT(DISTINCT z.id) from  TipZahvata z "
-				+ "WHERE z.id=id";
+				+ "WHERE z.id = :id";
 		Query query = session.createQuery(hql);
 		query.setLong("id", zahvat.getZahvatId());
 		if(query.equals(0))
@@ -42,7 +42,7 @@ public class ObavljeniZahvatManager {
 		{
 			UtroseniMaterijal mat = new UtroseniMaterijal();
 			hql = "SELECT COUNT(DISTINCT m.id) "+
-					"FROM Materijal m WHERE m.id=id";
+					"FROM Materijal m WHERE m.id=:id";
 			
 			query = session.createQuery(hql);
 			query.setLong("id", m.getMaterijalId());

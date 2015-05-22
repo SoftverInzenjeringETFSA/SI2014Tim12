@@ -59,7 +59,9 @@ public class MaterijaliManager {
 		//jer za JOIN bi sve tri klase biti poveza i napraviti
 		//poseban konstruktor koji bi vracao sta se tacno hoce ovom metodom
 		//String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM  Materijal p,UtroseniMaterijal u INNER JOIN ObavljeniZahvat o ON  u.obavljeniZahvatId = o.zahvatId WHERE p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		Query q = session.createQuery(hql);
-		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM  Materijal p,UtroseniMaterijal u, ObavljeniZahvat o  WHERE  u.obavljeniZahvatId = o.zahvatId AND p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) "
+				+ "FROM  Materijal p,UtroseniMaterijal u, ObavljeniZahvat o  "
+				+ "WHERE  u.obavljeniZahvatId = o.zahvatId AND p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		
 		Query q = session.createQuery(hql);
 		q.setLong("tipZahvataId", tipZahvataId);
 		
