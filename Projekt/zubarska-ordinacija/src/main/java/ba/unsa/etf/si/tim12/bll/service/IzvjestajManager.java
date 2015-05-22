@@ -89,7 +89,24 @@ public class IzvjestajManager {
 	}
 
 	public PosjetePacijentaVM posjetePacijenta(long idPacijenta) {
-		return new PosjetePacijentaVM();
+		Transaction t = session.beginTransaction();
+		String hql = "select new PosjetePacijentaVM(pac.imeIPrezime, pac.id, count(*) "
+				+ "from pacijent pac, posjeta pos where pos.pacijentId = pac.id and pac.id = :id)";
+		Query q = session.createQuery(hql);
+		q.setLong("id", idPacijenta);	
+		PosjetePacijentaVM rez;
+		if (!q.list().isEmpty())
+			rez = (PosjetePacijentaVM) q.list().get(0);
+		else
+			rez = null;
+		t.commit();
+		hql = "select new PosjetePacijentaRowVM(t.naziv, p.dijagnoza, p.doktor, p.datum)"
+				+ "from posjeta p, pacijent pac, tipzahvata z, obavljenizahvat o "
+				+ "where p.id = o.posjetaId and t.id = o.zahvatId and pac.id = p.pacijentId and pac.id = :id";
+		ArrayList<PosjetePacijentaRowVM> r = new ArrayList<PosjetePacijentaRowVM>(q.list());
+		t.commit();
+		rez.setPosjete(r);
+		return rez;
 	}
 
 	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
