@@ -263,7 +263,7 @@ public class TipZahvataManagerTest {
 		TipZahvataManager tzmManager = new TipZahvataManager(sess);
 		
 		double novaCijena = zahvat.getCijena()*10;
-		assertTrue(tzmManager.promjeniCijenuZahvata (zahvat.getId(), novaCijena));
+		assertTrue(tzmManager.promijeniCijenuZahvata (zahvat.getId(), novaCijena));
 		
 		TipZahvata t = (TipZahvata) sess.get(TipZahvata.class, zahvat.getId());
 		
@@ -279,7 +279,7 @@ public class TipZahvataManagerTest {
 	
 		TipZahvataManager tzmManager = new TipZahvataManager(sess);
 		
-		assertFalse(tzmManager.promjeniCijenuZahvata (NadjiSlobodanID(), 333));
+		assertFalse(tzmManager.promijeniCijenuZahvata (NadjiSlobodanID(), 333));
 		
 		
 		sess.close();

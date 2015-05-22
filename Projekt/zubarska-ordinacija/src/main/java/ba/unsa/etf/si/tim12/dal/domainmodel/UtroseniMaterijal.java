@@ -6,6 +6,7 @@ public class UtroseniMaterijal  implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = -3035542043834501773L;
 	
+	private long id;
 	private long materijalId,obavljeniZahvatId;
 	private double kolicina;
 	public UtroseniMaterijal(long materijalId,long obavljeniZahvatId,double kolicina)
@@ -18,6 +19,12 @@ public class UtroseniMaterijal  implements java.io.Serializable {
 	public UtroseniMaterijal()
 	{
 		
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	public long getMaterijalId() {
 		return materijalId;
@@ -37,6 +44,7 @@ public class UtroseniMaterijal  implements java.io.Serializable {
 	public void setKolicina(double kolicina) {
 		this.kolicina = kolicina;
 	}
+	
 
 
 }
