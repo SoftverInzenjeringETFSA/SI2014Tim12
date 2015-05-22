@@ -33,6 +33,7 @@ public class IzvjestajManager {
 		q = session.createQuery(hql);
 //		q.setParameter("doktor", imeDoktora);
 		ZahvatiPoDoktoruVM rezultat = (ZahvatiPoDoktoruVM) q.list().get(0);
+		t.commit();
 		rezultat.setZahvati(rez);
 		return rezultat;
 	}
@@ -49,11 +50,13 @@ public class IzvjestajManager {
 		if(!q.list().isEmpty())
 			rez = (FinancijskiUlazVM) q.list().get(0);
 		else rez = null;
+		t.commit();
 		hql = "select new FinancijskiUlazRowVM(pos.id, pac.imeIPrezime, t.naziv, pos.datum, z.cijena "
 				+ "from posjete pos, pacijent pac, tipzahvata t, obavljenizahvat z "
 				+ "where pos.id = z.posjetaid and pac.id = pos.pacijentid and tipzahvataid = z.zahvatid "
 				+ "and pos.datum between :vrijemeOd and :vrijemeDo";
 		ArrayList<FinancijskiUlazRowVM> r = new ArrayList<FinancijskiUlazRowVM>(q.list());
+		t.commit();
 		rez.setFinancijskiUlazRowVM(r);
 		return rez;
 	}
