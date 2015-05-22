@@ -83,7 +83,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
-	@Test(expected = MaterijalNotFound.class)
+	@Test
 	public void NadjiPoImenuMaterijalNePostoji()  throws Exception {
 		Session sess = null;
 		
@@ -93,14 +93,9 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			
 			ArrayList<MaterijalVM> l = mManager.nadjiPoImenu("aaaaa");
-						
+			assertTrue(l.isEmpty());
 			
 		}
-		catch(MaterijalNotFound e){
-			e.printStackTrace();
-			throw e;
-			
-		} 
 		catch(Exception e){
 			e.printStackTrace();
 			throw e;
@@ -160,7 +155,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
-	@Test(expected = MaterijalNotFound.class)
+	@Test
 	public void nadjiPoTipuZahvataNePostoji()  throws Exception {
 		Session sess = null;
 		
@@ -169,8 +164,8 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(materijal.getId()+1);	
-			assertEquals(materijal.getNaziv() , l.get(0).getNaziv());
 			
+			assertTrue(l.isEmpty());
 			
 		} catch(Exception e){
 			e.printStackTrace();
@@ -215,7 +210,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
-	@Test(expected = MaterijalNotFound.class)
+	@Test
 	public void IzbrisiMaterijalNePostoji()  throws Exception {
 		Session sess = null;
 		
@@ -233,7 +228,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			sess.save(m);
 			boolean x = mManager.izbrisiMaterijal(m.getId()+1);
 
-			assertEquals(true , x);
+			assertFalse(x);
 			
 			
 		} catch(Exception e){
@@ -294,7 +289,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
-	@Test(expected = MaterijalNotFound.class)
+	@Test
 	public void nadjiPoObavljenomZahvatuNePostoji()  throws Exception {
 		Session sess = null;
 		
@@ -303,8 +298,8 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			ArrayList<MaterijalVM> l = mManager.nadjiPoObavljenomZahvatu(materijal.getId()+1);	
-			assertEquals(materijal.getNaziv() , l.get(0).getNaziv());
 			
+			assertTrue(l.isEmpty());
 			
 		} catch(Exception e){
 			e.printStackTrace();
