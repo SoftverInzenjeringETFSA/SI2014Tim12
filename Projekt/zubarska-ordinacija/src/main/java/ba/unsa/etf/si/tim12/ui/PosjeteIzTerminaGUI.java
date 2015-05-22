@@ -27,7 +27,8 @@ import java.awt.Dialog.ModalityType;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 public class PosjeteIzTerminaGUI {
 
@@ -111,7 +112,7 @@ public class PosjeteIzTerminaGUI {
 		dlgPosjeteRegistracija.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
 			new String[] {

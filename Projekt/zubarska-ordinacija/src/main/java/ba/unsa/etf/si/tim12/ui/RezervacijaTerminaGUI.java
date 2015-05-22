@@ -1,25 +1,13 @@
 package ba.unsa.etf.si.tim12.ui;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-
-import java.awt.Window.Type;
-
-import javax.swing.JSpinner;
-
 import org.jdesktop.swingx.JXMonthView;
-import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;

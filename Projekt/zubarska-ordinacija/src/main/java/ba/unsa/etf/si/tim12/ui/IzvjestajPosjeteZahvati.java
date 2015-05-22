@@ -8,7 +8,6 @@ import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JToolBar;
@@ -17,6 +16,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -64,7 +65,7 @@ public class IzvjestajPosjeteZahvati {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
 			new String[] {

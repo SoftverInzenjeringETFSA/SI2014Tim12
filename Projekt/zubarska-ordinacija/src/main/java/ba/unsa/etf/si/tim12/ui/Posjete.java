@@ -1,21 +1,13 @@
 package ba.unsa.etf.si.tim12.ui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
-
-import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,7 +20,8 @@ import java.awt.Dialog.ModalityType;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 public class Posjete {
 
@@ -142,7 +135,7 @@ public class Posjete {
 		dlgPosjeteRegistracija.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
 			new String[] {

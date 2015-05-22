@@ -1,31 +1,21 @@
 package ba.unsa.etf.si.tim12.ui;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
-
-import java.awt.BorderLayout;
-
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
 import org.hibernate.Session;
 
-import ba.unsa.etf.si.tim12.bll.service.KorisnikManager;
 import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
-import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
@@ -68,7 +58,7 @@ public class PrikazMaterijalaGUI {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -100,14 +90,14 @@ public class PrikazMaterijalaGUI {
 					MaterijaliManager m= new MaterijaliManager(sess);
 					ArrayList<MaterijalVM> nadjeniMaterijali=m.nadjiPoImenu(textField.getText());
 					//prvo praznjenje
-					 table.setModel(new DefaultTableModel(
+					 table.setModel(new UneditableTableModel(
 								new Object[][] {
 								},
 								new String[] {
 									"ID", "Ime materijala", "Jedini\u010Dna cijena", "Mjerna jedinica"
 								}
 							));
-					 DefaultTableModel model = (DefaultTableModel) table.getModel();
+					UneditableTableModel model = (UneditableTableModel) table.getModel();
 					for (MaterijalVM materijal :nadjeniMaterijali){
 						 model.addRow(new Object[]{materijal.getId(),materijal.getNaziv() ,materijal.getCijena(),materijal.getMjernaJedinica()});
 					}
@@ -137,8 +127,10 @@ public class PrikazMaterijalaGUI {
 					sess = HibernateUtil.getSessionFactory().openSession();
 					MaterijaliManager m= new MaterijaliManager(sess);
 //obrisati
-					boolean izbrisano=m.izbrisiMaterijal(Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString()));
-					((DefaultTableModel) table.getModel()).removeRow(table.getSelectedRow());
+					Long id = Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString());
+					
+					boolean izbrisano=m.izbrisiMaterijal(id);
+					((UneditableTableModel) table.getModel()).removeRow(table.getSelectedRow());
 					if (izbrisano) { JOptionPane.showMessageDialog(frame,
 						    "Materijal je obrisan",
 						    "Obavještenje",
