@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -29,6 +30,7 @@ import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 
@@ -87,17 +89,26 @@ public class PrikazMaterijalaGUI {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
+		
 		btnNewButton = new JButton("Pretra\u017Ei");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Session sess = null;
-				
+				//dodavanje pretrazenih materijala u tabelu
 				try{
 					sess = HibernateUtil.getSessionFactory().openSession();
 					MaterijaliManager m= new MaterijaliManager(sess);
 					ArrayList<MaterijalVM> nadjeniMaterijali=m.nadjiPoImenu(textField.getText());
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					for (MaterijalVM materijal :nadjeniMaterijali){ 
+					//prvo praznjenje
+					 table.setModel(new DefaultTableModel(
+								new Object[][] {
+								},
+								new String[] {
+									"ID", "Ime materijala", "Jedini\u010Dna cijena", "Mjerna jedinica"
+								}
+							));
+					 DefaultTableModel model = (DefaultTableModel) table.getModel();
+					for (MaterijalVM materijal :nadjeniMaterijali){
 						 model.addRow(new Object[]{materijal.getId(),materijal.getNaziv() ,materijal.getCijena(),materijal.getMjernaJedinica()});
 					}
 					
@@ -126,7 +137,16 @@ public class PrikazMaterijalaGUI {
 					sess = HibernateUtil.getSessionFactory().openSession();
 					MaterijaliManager m= new MaterijaliManager(sess);
 //obrisati
-					//boolean izbrisano=m.izbrisiMaterijal(table.se);
+					boolean izbrisano=m.izbrisiMaterijal(Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					((DefaultTableModel) table.getModel()).removeRow(table.getSelectedRow());
+					if (izbrisano) { JOptionPane.showMessageDialog(frame,
+						    "Materijal je obrisan",
+						    "Obavještenje",
+						    JOptionPane.INFORMATION_MESSAGE); }
+					else { JOptionPane.showMessageDialog(frame,
+						    "Greška u brisanju",
+						    "Obavještenje",
+						    JOptionPane.INFORMATION_MESSAGE);} 
 
 					
 				
@@ -143,6 +163,11 @@ public class PrikazMaterijalaGUI {
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			}
+		});
 		btnOdustani.setBounds(372, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
 	}

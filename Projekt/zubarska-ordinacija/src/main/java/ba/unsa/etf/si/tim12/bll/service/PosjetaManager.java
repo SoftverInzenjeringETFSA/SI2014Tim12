@@ -40,16 +40,15 @@ public class PosjetaManager {
 		return lista1;
 	}
 	
-	public  void dodajNovuPosjetu(NovaPosjetaVM posjeta) throws Exception {
+	public  Long dodajNovuPosjetu(NovaPosjetaVM posjeta) throws Exception {
 		Transaction t = session.beginTransaction();
 		
 		try{
 		
 		Posjeta p = new Posjeta();
 		
-		PacijentManager mng = new PacijentManager(session);
-		ArrayList<PacijentVM> pacijenti = mng.nadjiPoIdu(posjeta.getPacijentId());
-		if(pacijenti.isEmpty())
+		Pacijent pac = (Pacijent) session.get(Pacijent.class, posjeta.getPacijentId());
+		if(pac == null)
 			throw new PacijentNotFound();
 
 		p.setPacijentId(posjeta.getPacijentId());
@@ -67,6 +66,9 @@ public class PosjetaManager {
 		}
 		
 		t.commit();
+		
+		return p.getId();
+		
 		}
 		catch(PacijentNotFound e)
 		{
@@ -107,5 +109,11 @@ public class PosjetaManager {
 		
 		return new ArrayList<PosjetaVM>(rezultati);
 	}
-
+	
+	public ArrayList<PosjetaVM> dajSvePosjete(){
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetaVM(p.id, p.pacijentId, "+
+				"p.doktor, p.dijagnoza, p.vrijeme) FROM Posjeta p ";
+		Query query = session.createQuery(hql);
+		return new ArrayList<PosjetaVM>(query.list());
+	}
 }

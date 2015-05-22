@@ -2,15 +2,15 @@ package ba.unsa.etf.si.tim12.ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
+
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -18,9 +18,19 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
+
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 
 public class PacijentiGUI {
@@ -31,7 +41,7 @@ public class PacijentiGUI {
 	private JButton btnNoviPacijent;
 	private JTextField textField;
 	private JButton btnNewButton;
-
+	private JComboBox comboBox;
 
 
 	/**
@@ -56,16 +66,19 @@ public class PacijentiGUI {
 		frame.setLocationRelativeTo(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 118, 492, 197);
+		
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		
+		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Ime", "Prezime", "Broj telefona"
+				"ID", "Ime i prezime", "Broj telefona", "Datum rodjenja"
 			}
 		));
+		
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
 		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
@@ -99,8 +112,8 @@ public class PacijentiGUI {
 		lblPretraivanjePo.setBounds(10, 69, 103, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Prezimenu", "Imenu", "ID-u", "Opisu"}));
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Imenu i prezimenu", "ID-u", "Opisu"}));
 		comboBox.setBounds(116, 68, 118, 20);
 		frame.getContentPane().add(comboBox);
 		
@@ -114,6 +127,78 @@ public class PacijentiGUI {
 		//ENIL: mijenjam...
 		btnNewButton.setIcon(new ImageIcon("src/main/resources/SearchIcon.png"));
 		btnNewButton.setBounds(403, 68, 99, 20);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				Session sess = null;
+				ArrayList<PacijentVM> podaci = null;
+				try{
+					String opcija = (String)comboBox.getSelectedItem();
+					String text = textField.getText();
+					
+					sess = HibernateUtil.getSessionFactory().openSession();
+					PacijentManager pManager = new PacijentManager(sess);
+					
+					if(opcija.equals("Imenu i prezimenu")){
+						podaci = pManager.nadjiPoImenu(text);
+					} else if (opcija.equals("ID-u")){
+						
+						podaci = pManager.nadjiPoIdu(Integer.parseInt(text));
+						
+					} else if (opcija.equals("Opisu")){
+						
+						podaci = pManager.nadjiPoOpisu(text);
+						
+					} else {
+						JOptionPane.showMessageDialog(frame, "Odaberite način pretrage",
+								"Obavještenje",	JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch(NumberFormatException ex){
+					
+					JOptionPane.showMessageDialog(frame, "Za pretraživanje unesite broj",
+							"Greška",	JOptionPane.INFORMATION_MESSAGE);
+		
+				} catch(Exception er){
+					
+					er.printStackTrace();
+					JOptionPane.showMessageDialog(frame, er.getMessage(),
+							"Greška",	JOptionPane.INFORMATION_MESSAGE);
+		
+				}finally{
+					if(sess != null)
+						sess.close();
+				}
+				
+				if(podaci != null)
+					PrikaziPodatke(podaci);
+				
+			}
+			
+		});
 		frame.getContentPane().add(btnNewButton);
+	}
+	
+	private void PrikaziPodatke(ArrayList<PacijentVM> pacijenti){
+		if(pacijenti == null)
+			return;
+		
+		String[][] data = new String[pacijenti.size()][];
+		for(int i = 0; i < pacijenti.size(); i++){
+			data[i] = PacijentVMtoObjectRow(pacijenti.get(i));
+		}
+		
+		String[] columns = new String[]{"ID", "Ime i prezime", "Broj telefona", "Datum rođenja", "Opis"};
+		
+		
+		table.setModel(new UneditableTableModel(data, columns));
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		table.getColumnModel().getColumn(0).setMinWidth(2);
+	}
+	
+	private String[] PacijentVMtoObjectRow(PacijentVM p) {
+		DateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+		String[] r = {Long.toString(p.getId()), p.getImePrezime(), p.getBrojTelefona(), f.format(p.getDatumRodjenja()), p.getOpis()};
+		return r;
 	}
 }

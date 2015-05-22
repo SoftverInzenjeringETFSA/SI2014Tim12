@@ -63,12 +63,19 @@ public class loginGUI {
 			public void keyPressed(KeyEvent evt) {
 	            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
 	            {
-					if (Prijava());
+					if (Prijava())
 					{
 						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
 						frmPrijava.setVisible (false);
 						frmPrijava.dispose();
 					}
+					else { 
+						JOptionPane.showMessageDialog(frmPrijava,
+						"Prijava nije uspjela",
+						"Obavještenje",
+						JOptionPane.INFORMATION_MESSAGE);
+					}
+					
 	            }
 			}
 		});
@@ -87,10 +94,11 @@ public class loginGUI {
 					frmPrijava.setVisible (false);
 					frmPrijava.dispose();
 				}
-				else { JOptionPane.showMessageDialog(frmPrijava,
-					    "Prijava nije uspjela",
-					    "Obavještenje",
-					    JOptionPane.INFORMATION_MESSAGE);}
+				else { 
+					JOptionPane.showMessageDialog(frmPrijava,
+					"Prijava nije uspjela",
+					"Obavještenje",
+					JOptionPane.INFORMATION_MESSAGE);}
 				}
 		});
 		prijavaBtn.setBounds(164, 86, 113, 23);

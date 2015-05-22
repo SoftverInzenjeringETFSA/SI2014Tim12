@@ -49,8 +49,10 @@ public class PosjetaManagerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
 		Session session = HibernateUtil.getSessionFactory().openSession(); 
 		Transaction t = session.beginTransaction();
+		try{
 		dodanePosjete = new ArrayList<Posjeta>();
 		dodaniTipoviZahvata = new ArrayList<TipZahvata>();
 		dodaniMaterijali = new ArrayList<Materijal>();
@@ -72,9 +74,35 @@ public class PosjetaManagerTest {
 			
 			dodanePosjete.add(p);
 			
+			Materijal m = new Materijal();
+			m.setCijena(53);
+			m.setMjernaJedinica("l");
+			m.setNaziv("Med alkohol");
+			
+			session.save(m);
+			
+			dodaniMaterijali.add(m);
+			
+			TipZahvata z = new TipZahvata();
+			z.setCijena(34);
+			z.setNaziv("lala");
+			z.setOpis("dgdg");
+			
+			session.save(z);
+			
+			dodaniTipoviZahvata.add(z);
+			
 			t.commit();
 			
 			session.close();
+		}
+		catch(Exception e)
+		{
+			t.rollback();
+			if(session.isOpen())
+				session.close();
+			throw e;
+		}
 		
 	}
 
@@ -86,6 +114,8 @@ public class PosjetaManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = sess.beginTransaction();
 		
+		try{
+		
 		sess.delete(pacijent);
 		
 		String hql;
@@ -95,19 +125,16 @@ public class PosjetaManagerTest {
 			
 			//We have to clean the database, delete every "Posjeta" that we added in our previous test
 			//We first need to delete all the dependencies also newly added in our tests			
-			
-		/*	String hql2 = "(Select m.id from UtroseniMaterijal m "
-					+ "INNER JOIN ObavljeniZahvat z ON z.ud = m.zahvatId"
-					+ "WHERE z.posjetaId = :Id)";
-			
-			hql = "DELETE UtroseniMaterijal m "
-					+ "WHERE m.id IN "
-					+ hql2;
-			
-			q = sess.createQuery(hql);
-			q.setLong("Id", p.getId());
-		    q.executeUpdate();
-		    */
+		
+		
+		    String hql2 = "DELETE FROM UtroseniMaterijal m "
+		    		+ "WHERE exists( SELECT 1 FROM ObavljeniZahvat z "
+		    		+ "WHERE z.id = m.obavljeniZahvatId "
+		    		+ "and z.posjetaId = :Id )";
+
+			Query q2 = sess.createQuery(hql2);
+			q2.setLong("Id", p.getId());
+		    
 		    
 		    hql = "DELETE ObavljeniZahvat z "
 		    		+ "WHERE z.posjetaId = :Id";
@@ -146,6 +173,18 @@ public class PosjetaManagerTest {
 		
 		t.commit();
 		sess.close();
+		}
+		catch(Exception e)
+		{
+			t.rollback();
+			if(sess.isOpen())
+				sess.close();
+			throw e;
+		}
+		finally
+		{
+			
+		}
 		
 	}
 
@@ -206,11 +245,57 @@ public class PosjetaManagerTest {
 	 * Test method for {@link ba.unsa.etf.si.tim12.bll.service.PosjetaManager#dodajNovuPosjetu(ba.unsa.etf.si.tim12.bll.viewmodel.NovaPosjetaVM)}.
 	 */
 	
-	/*TODO Uraditi ovo
-	 * @Test
-	public void testDodajNovuPosjetu() {
-		fail("Not yet implemented");
-	}*/
+	@Test
+	public void testDodajNovuPosjetu() throws Exception {
+
+		Session session =  HibernateUtil.getSessionFactory().openSession();
+			
+		try{
+			PosjetaManager mngr = new PosjetaManager(session);
+			int num = mngr.dajSvePosjete().size();
+		
+		NoviOZahvatMaterijalVM m = new NoviOZahvatMaterijalVM();
+		m.setMaterijalId(dodaniMaterijali.get(0).getId());
+		m.setKolicina(3);
+		ArrayList<NoviOZahvatMaterijalVM> materijali = new ArrayList<NoviOZahvatMaterijalVM>();
+		materijali.add(m);
+		
+		NoviObavljeniZahvatVM z = new NoviObavljeniZahvatVM();
+		z.setCijena(343);
+		z.setZahvatId(dodaniTipoviZahvata.get(0).getId());
+		z.setMaterijali(materijali);
+		ArrayList<NoviObavljeniZahvatVM> obavljeniZahvati = new ArrayList<NoviObavljeniZahvatVM>();
+		obavljeniZahvati.add(z);
+		
+		NovaPosjetaVM p = new NovaPosjetaVM();
+		p.setObavljeniZahvati(obavljeniZahvati);
+		p.setDijagnoza(dijagnoza);
+		p.setDoktor(doktor);
+		p.setPacijentId(pacijentId);
+		p.setVrijeme(vrijeme);
+		
+		Long id = mngr.dodajNovuPosjetu(p);
+		
+		
+		Posjeta posjet = new Posjeta();
+		posjet.setId(id);
+		posjet.setPacijentId(pacijentId);
+		
+		dodanePosjete.add(posjet);
+		
+		assertEquals(num + 1, mngr.dajSvePosjete().size());
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally
+		{
+			if(session != null)
+				session.close();
+		}
+		
+	}
 
 	/**
 	 * Test method for {@link ba.unsa.etf.si.tim12.bll.service.PosjetaManager#nadjiPoDijagnozi(java.lang.String)}.
