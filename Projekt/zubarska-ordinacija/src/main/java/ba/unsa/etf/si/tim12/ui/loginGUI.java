@@ -81,12 +81,16 @@ public class loginGUI {
 		JButton prijavaBtn = new JButton("Prijavi se");
 		prijavaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (Prijava());
+				if (Prijava())
 					{
 						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
 						frmPrijava.setVisible (false);
 						frmPrijava.dispose();
 					}
+				else { JOptionPane.showMessageDialog(frmPrijava,
+					    "Prijava nije uspjela",
+					    "Obavještenje",
+					    JOptionPane.INFORMATION_MESSAGE);}
 			}
 		});
 		prijavaBtn.setBounds(164, 86, 113, 23);
