@@ -16,15 +16,19 @@ import org.junit.Test;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTipZahvataMaterijalVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTipZahvataVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Materijal;
 import ba.unsa.etf.si.tim12.dal.domainmodel.MaterijalTipZahvata;
+import ba.unsa.etf.si.tim12.dal.domainmodel.TipZahvata;
 
 public class TipZahvataManagerTest {
 
 	NoviTipZahvataVM vm;
 	ArrayList<NoviTipZahvataMaterijalVM> mvms;
 	ArrayList<Materijal> ms;
+	
+	TipZahvata	zahvat;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -68,6 +72,14 @@ public class TipZahvataManagerTest {
 			
 			mvms.add(mvm);
 		}
+		
+		
+		zahvat = new TipZahvata();
+		zahvat.setNaziv("testTiptest");
+		zahvat.setCijena(33.3);
+		zahvat.setOpis("Ovo je testni tip zahvata");
+		
+		sess.save(zahvat);
 		
 		t.commit();
 		sess.close();
@@ -245,39 +257,74 @@ public class TipZahvataManagerTest {
 		return max_id + 1;
 	}
 	@Test
-	private void promijeniCijenuZahvata() {
+	public void promijeniCijenuZahvata() {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
-		long broja_zahvata = dajBrojTipZahvata(sess);
-        TipZahvataManager tzmManager = new TipZahvataManager(sess);
+	
+		TipZahvataManager tzmManager = new TipZahvataManager(sess);
 		
+		double novaCijena = zahvat.getCijena()*10;
+		assertTrue(tzmManager.promjeniCijenuZahvata (zahvat.getId(), novaCijena));
 		
-		boolean result = tzmManager.dodajNoviTip(vm);
-		assertTrue(result);
-		
-		assertEquals("Broj tipova zahvata mora se uvecat",
-				broja_zahvata + 1, dajBrojTipZahvata(sess));
-		
-		
-		String hql = "SELECT id FROM TipZahvata t WHERE t.naziv = :naziv";
-		Query q = sess.createQuery(hql);
-		q.setString("naziv", vm.getNaziv());
-		
-		Long id = (Long) q.uniqueResult();
-		assertNotNull("TipZahvata mora biti pronadjen",id);
-		
-		assertTrue(tzmManager.promjeniCijenuZahvata (id, 25.55));
-		
-		hql = "SELECT Cijena FROM TipZahvata t " +
-				"WHERE t.id = :tipZahvataId";
-		q = sess.createQuery(hql);
-		q.setLong("tipZahvataId", id);
-		
-		double cijena = (Double) q.uniqueResult();
-		
+		TipZahvata t = (TipZahvata) sess.get(TipZahvata.class, zahvat.getId());
 		
 		assertEquals("Broj tipova zahvata mora se uvecat",
-				25.55, cijena);
+				novaCijena, t.getCijena(), 0.00001);
 		sess.close();
+	}
+	
+
+	@Test
+	public void promijeniCijenuZahvataNePostojiZahvat() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+	
+		TipZahvataManager tzmManager = new TipZahvataManager(sess);
+		
+		assertFalse(tzmManager.promjeniCijenuZahvata (NadjiSlobodanID(), 333));
+		
+		
+		sess.close();
+	}
+	
+	@Test
+	public void nadjiPoImenu(){
+		
+		String ime = zahvat.getNaziv();
+		String dioImena = ime.substring(2, ime.length()/2);
+	
+		nadjiPoImenuPomocna(ime, "Mora se poklapati cijelo ime");
+		
+		nadjiPoImenuPomocna(ime.toLowerCase(), "Ne smije zavisiti od velicine slova");
+		nadjiPoImenuPomocna(ime.toUpperCase(), "Ne smije zavisiti od velicine slova");
+		
+		nadjiPoImenuPomocna(dioImena, "Mora se poklapati dio imena");
+		
+		
+		nadjiPoImenuPomocna(dioImena.toLowerCase(), "Dio imena i sva mala slova");
+		nadjiPoImenuPomocna(dioImena.toUpperCase(), "Dio imena i sva velika slova");
+
+		
+	}
+	
+	private void nadjiPoImenuPomocna(String trazenoIme, String errorMessage){
+		
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		
+		TipZahvataManager tzmManager = new TipZahvataManager(sess);
+		ArrayList<TipZahvataVM> nadjeniZahvati = tzmManager.nadjiPoImenu(trazenoIme);
+		
+		sess.close();
+		
+		boolean any = false;
+		for (TipZahvataVM tipZahvataVM : nadjeniZahvati) {
+			if(tipZahvataVM.getId() == zahvat.getId()){
+				any = true;
+				double epsilon = zahvat.getCijena()*0.00001;
+				assertEquals(tipZahvataVM.getCijena(), zahvat.getCijena(), epsilon);
+				assertEquals(tipZahvataVM.getNaziv(), zahvat.getNaziv());
+			}
+		}
+		assertTrue(errorMessage,any);
+		
 	}
 	
 }
