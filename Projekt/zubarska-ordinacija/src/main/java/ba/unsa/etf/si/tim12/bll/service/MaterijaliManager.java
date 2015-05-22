@@ -60,19 +60,25 @@ public class MaterijaliManager {
 	
 	
 	
-	public ArrayList< MaterijalVM> nadjiPoTipuZahvata(long tipZahvataId) {
-		Transaction t = session.beginTransaction();
+	public ArrayList< MaterijalVM> nadjiPoTipuZahvata(long tipZahvataId)throws MaterijalNotFound {
+
 		
-		String hql ="Select new ba.unsa.etf.si.tim12.dal.domainmodel.UtroseniMaterijal(u.materijalId) FROM  UtroseniMaterijal u INNER JOIN ba.unsa.etf.si.tim12.dal.domainmodel.ObavljeniZahvat o ON u.obavljeniZahvatId = o.zahvatId WHERE u.obavljeniZahvatId= :tipZahvataId";
+		Transaction t = session.beginTransaction();
+		//nisam ovo uspio sa JOIN-om pa sam ovako uradio,
+		//jer za JOIN bi sve tri klase biti poveza i napraviti
+		//poseban konstruktor koji bi vracao sta se tacno hoce ovom metodom
+		//String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM  Materijal p,UtroseniMaterijal u INNER JOIN ObavljeniZahvat o ON  u.obavljeniZahvatId = o.zahvatId WHERE p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		Query q = session.createQuery(hql);
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM  Materijal p,UtroseniMaterijal u, ObavljeniZahvat o  WHERE  u.obavljeniZahvatId = o.zahvatId AND p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		
 		Query q = session.createQuery(hql);
 		q.setLong("tipZahvataId", tipZahvataId);
-		List<MaterijalVM> nesto = q.list();
+		
+		List<MaterijalVM> nesto =  (List<MaterijalVM>) q.list();
 		ArrayList<MaterijalVM> materijali = new ArrayList<MaterijalVM>(nesto);
 	
 		
 		
 		if (materijali.isEmpty()) {
-	         throw new RuntimeException("Ne postoji materijal sa tim tipom zahvata!");
+			 throw new MaterijalNotFound("Ne postoji materijal sa tim tipom zahvata!");
 	    }			
 		t.commit();	
 		return materijali;	
@@ -81,21 +87,21 @@ public class MaterijaliManager {
 	
 	
 	
-	public  ArrayList< MaterijalVM> nadjiPoObavljenomZahvatu(long obavljeniZahvatId) {
+	public  ArrayList< MaterijalVM> nadjiPoObavljenomZahvatu(long obavljeniZahvatId)throws MaterijalNotFound {
 Transaction t = session.beginTransaction();
         
-		//nisam siguran
-		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalIVM(id, naziv, mjernaJedinica,cijena) FROM MaterijalIVM INNER JOIN UtroseniMaterijal ON MaterijalIVM.id =  (Select materijalId from UtroseniMaterijal u,ObavljeniZahvat o where u.obavljeniZahvatId=o.id) WHERE UtroseniMaterijal.obavljeniZahvatId= :tipZahvataId";
+		//i ovaj je isti kao prethodni , ne znam koja je razlika, uglavnom samo upit se treba promjeniti
+		//bas kao i na prethodnom
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM Materijal p, UtroseniMaterijal u, ObavljeniZahvat o WHERE u.obavljeniZahvatId=o.zahvatId AND p.id=u.materijalId AND u.obavljeniZahvatId= :obavljeniZahvatId";
 		Query q = session.createQuery(hql);
 		q.setLong("obavljeniZahvatId", obavljeniZahvatId);
 		
-		List<MaterijalVM> nesto = q.list();
+		List<MaterijalVM> nesto =  (List<MaterijalVM>) q.list();
 		ArrayList<MaterijalVM> materijali = new ArrayList<MaterijalVM>(nesto);
 	
 		
-		
 		if (materijali.isEmpty()) {
-	         throw new RuntimeException("Ne postoji materijal sa tim obavljenim zahvatom!");
+			throw new MaterijalNotFound("Ne postoji materijal sa tim obavljenim zahvatom!");
 	    }			
 		t.commit();	
 		return materijali;	

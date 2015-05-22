@@ -6,7 +6,7 @@ public class ObavljeniZahvat implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1573668064870019191L;
 	
-	private Long id,zahvatId,posjetaId;
+	private long id,zahvatId,posjetaId;
 	private double cijena;
 	
 	public Long getId() {

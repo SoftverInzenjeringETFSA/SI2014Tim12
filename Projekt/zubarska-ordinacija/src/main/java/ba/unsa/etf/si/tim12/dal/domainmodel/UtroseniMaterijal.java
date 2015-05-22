@@ -8,7 +8,17 @@ public class UtroseniMaterijal  implements java.io.Serializable {
 	
 	private long materijalId,obavljeniZahvatId;
 	private double kolicina;
-	
+	public UtroseniMaterijal(long materijalId,long obavljeniZahvatId,double kolicina)
+	{
+		this.materijalId=materijalId;
+		this.obavljeniZahvatId=obavljeniZahvatId;
+		this.kolicina=kolicina;
+
+	}
+	public UtroseniMaterijal()
+	{
+		
+	}
 	public long getMaterijalId() {
 		return materijalId;
 	}
