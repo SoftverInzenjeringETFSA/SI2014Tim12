@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.service;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+import ba.unsa.etf.si.tim12.dal.domainmodel.Termin;
 
 import java.util.*;
 
@@ -54,15 +55,12 @@ public class TerminManager {
 		return lista1;
 	}
 	
-	//TODO: 
-	//Vjerovatno nije ovako jednostavno xD, za sad se samo brise termin iz baze
-	public  void otkaziTermin(long terminId) 
-	{
-		Transaction t = session.beginTransaction();
-		
-		String hql ="delete from Termin where id=:terminId";
-		
-		t.commit();
+
+public void otkaziTermin(long terminId)
+	{			
+		Termin t = (Termin)session.get(Termin.class, terminId);
+		t.setOtkazano(false);
+		session.update(t);		
 	}
 
 }
