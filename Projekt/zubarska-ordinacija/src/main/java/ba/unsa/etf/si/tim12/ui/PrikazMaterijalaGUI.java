@@ -18,9 +18,18 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.KorisnikManager;
+import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 
 public class PrikazMaterijalaGUI {
@@ -79,12 +88,57 @@ public class PrikazMaterijalaGUI {
 		textField.setColumns(10);
 		
 		btnNewButton = new JButton("Pretra\u017Ei");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Session sess = null;
+				
+				try{
+					sess = HibernateUtil.getSessionFactory().openSession();
+					MaterijaliManager m= new MaterijaliManager(sess);
+					ArrayList<MaterijalVM> nadjeniMaterijali=m.nadjiPoImenu(textField.getText());
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					for (MaterijalVM materijal :nadjeniMaterijali){ 
+						 model.addRow(new Object[]{materijal.getId(),materijal.getNaziv() ,materijal.getCijena(),materijal.getMjernaJedinica()});
+					}
+					
+
+					
+				
+				} catch(Exception e){
+					e.printStackTrace();
+				} finally{
+					if(sess != null)
+						sess.close();
+				}
+			}
+		});
 		//ENIL: mijenjam ikonu
 		btnNewButton.setIcon(new ImageIcon("src/main/resources/SearchIcon.png"));
 		btnNewButton.setBounds(394, 20, 99, 20);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnModifikacijaMaterijala = new JButton("Obri\u0161i");
+		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Session sess = null;
+				
+				try{
+					sess = HibernateUtil.getSessionFactory().openSession();
+					MaterijaliManager m= new MaterijaliManager(sess);
+//obrisati
+					//boolean izbrisano=m.izbrisiMaterijal(table.se);
+
+					
+				
+				} catch(Exception e){
+					e.printStackTrace();
+				} finally{
+					if(sess != null)
+						sess.close();
+				}
+				
+			}
+		});
 		btnModifikacijaMaterijala.setBounds(240, 299, 121, 23);
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
