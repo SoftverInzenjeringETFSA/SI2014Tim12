@@ -122,15 +122,17 @@ public class loginGUI {
 	// Implemetirati funkciju za prijavu 
 	public boolean Prijava() {
 		Session sess = null;
+		
 		try{
-		sess = HibernateUtil.getSessionFactory().openSession();
-		KorisnikManager m= new KorisnikManager(sess);
-		LoginVM lgvm = new LoginVM();
-		lgvm.setUsername(textField.getText());
-		lgvm.setPassword(passwordField.getPassword().toString());
-		return m.provjeriPassword(lgvm);
-		
-		
+			sess = HibernateUtil.getSessionFactory().openSession();
+			KorisnikManager m= new KorisnikManager(sess);
+			
+			LoginVM lgvm = new LoginVM();
+			
+			lgvm.setUsername(textField.getText());
+			lgvm.setPassword(new String(passwordField.getPassword()));
+			
+			return m.provjeriPassword(lgvm);
 		} catch(Exception e){
 			e.printStackTrace();
 			return false;
@@ -138,8 +140,5 @@ public class loginGUI {
 			if(sess != null)
 				sess.close();
 		}
-
-
-
 	}
 }
