@@ -19,7 +19,6 @@ public class ModifikacijaPacijentaGUI {
 
 	private JDialog frmModifikacijaPacijenta;
 	private JTextField textField;
-	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
 
@@ -53,22 +52,13 @@ public class ModifikacijaPacijentaGUI {
 		panel_1.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBounds(153, 11, 196, 20);
+		textField.setBounds(153, 31, 196, 20);
 		panel_1.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(153, 42, 196, 20);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblIme = new JLabel("Ime:");
-		lblIme.setBounds(29, 11, 86, 20);
-		panel_1.add(lblIme);
-		
-		JLabel lblPrezime = new JLabel("Prezime:");
-		lblPrezime.setBounds(29, 42, 86, 20);
-		panel_1.add(lblPrezime);
+		JLabel lblImeIPrezime = new JLabel("Ime i prezime:");
+		lblImeIPrezime.setBounds(29, 31, 86, 20);
+		panel_1.add(lblImeIPrezime);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
