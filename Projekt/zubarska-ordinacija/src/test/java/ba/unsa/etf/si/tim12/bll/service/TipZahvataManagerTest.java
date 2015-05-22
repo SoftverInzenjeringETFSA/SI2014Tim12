@@ -244,4 +244,40 @@ public class TipZahvataManagerTest {
 		
 		return max_id + 1;
 	}
+	@Test
+	private void promijeniCijenuZahvata() {
+		Session sess = HibernateUtil.getSessionFactory().openSession();
+		long broja_zahvata = dajBrojTipZahvata(sess);
+        TipZahvataManager tzmManager = new TipZahvataManager(sess);
+		
+		
+		boolean result = tzmManager.dodajNoviTip(vm);
+		assertTrue(result);
+		
+		assertEquals("Broj tipova zahvata mora se uvecat",
+				broja_zahvata + 1, dajBrojTipZahvata(sess));
+		
+		
+		String hql = "SELECT id FROM TipZahvata t WHERE t.naziv = :naziv";
+		Query q = sess.createQuery(hql);
+		q.setString("naziv", vm.getNaziv());
+		
+		Long id = (Long) q.uniqueResult();
+		assertNotNull("TipZahvata mora biti pronadjen",id);
+		
+		assertTrue(tzmManager.promjeniCijenuZahvata (id, 25.55));
+		
+		hql = "SELECT Cijena FROM TipZahvata t " +
+				"WHERE t.id = :tipZahvataId";
+		q = sess.createQuery(hql);
+		q.setLong("tipZahvataId", id);
+		
+		double cijena = (Double) q.uniqueResult();
+		
+		
+		assertEquals("Broj tipova zahvata mora se uvecat",
+				25.55, cijena);
+		sess.close();
+	}
+	
 }
