@@ -127,6 +127,7 @@ public class PrikazMaterijalaGUI {
 					sess = HibernateUtil.getSessionFactory().openSession();
 					MaterijaliManager m= new MaterijaliManager(sess);
 //obrisati
+					//TODO osigurati se u slucaju da nije odabra niti jedan red
 					Long id = Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString());
 					
 					boolean izbrisano=m.izbrisiMaterijal(id);

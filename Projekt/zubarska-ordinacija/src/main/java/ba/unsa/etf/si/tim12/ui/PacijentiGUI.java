@@ -2,7 +2,6 @@ package ba.unsa.etf.si.tim12.ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
@@ -42,7 +41,7 @@ public class PacijentiGUI {
 	private JTextField textField;
 	private JButton btnNewButton;
 	private JComboBox comboBox;
-
+	ArrayList<PacijentVM> podaci;
 
 	/**
 	 * Create the application.
@@ -50,6 +49,7 @@ public class PacijentiGUI {
 	public PacijentiGUI() {
 		initialize();
 		frame.setVisible(true);
+		podaci = null;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class PacijentiGUI {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Ime i prezime", "Broj telefona", "Datum rodjenja"
+				"ID", "Ime i prezime", "Broj telefona", "Datum rođenja", "Opis"
 			}
 		));
 		
@@ -103,7 +103,15 @@ public class PacijentiGUI {
 		JButton btnModifikacijaPacijenta = new JButton("Modifikacija pacijenta");
 		btnModifikacijaPacijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ModifikacijaPacijentaGUI();
+			
+				Integer index = table.getSelectedRow();
+				if(index < 0){
+					JOptionPane.showMessageDialog(frame, "Odaberite pacijenta u tabeli",
+							"Obavještenje",	JOptionPane.INFORMATION_MESSAGE);
+				}
+						
+				new ModifikacijaPacijentaGUI(podaci.get(index));
+			
 			}
 		});
 		toolBar.add(btnModifikacijaPacijenta);
@@ -132,7 +140,7 @@ public class PacijentiGUI {
 			public void actionPerformed(ActionEvent e) {
 				
 				Session sess = null;
-				ArrayList<PacijentVM> podaci = null;
+				podaci = null;
 				try{
 					String opcija = (String)comboBox.getSelectedItem();
 					String text = textField.getText();
