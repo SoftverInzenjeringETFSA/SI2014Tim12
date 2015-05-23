@@ -171,7 +171,7 @@ public class PacijentiGUI {
 
 					JOptionPane.showMessageDialog(frame,
 							"Za pretraživanje unesite broj", "Greška",
-							JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
 
 				} catch (Exception er) {
 

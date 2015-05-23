@@ -125,6 +125,12 @@ public class ModifikacijaPacijentaGUI {
 					Date datumRodjenja = dateFormat.parse(textField_3.getText());
 					String opis = textPane.getText();
 
+					if(imeIPrezime.isEmpty())
+						throw new Exception("Morate unijeti ime i prezime!");
+					if(brojTelefona.isEmpty())
+						throw new Exception("Morate unijeti broj telefona!");
+					
+					
 					PacijentVM pacijent = new PacijentVM();
 					pacijent.setId(pacijentId);
 					pacijent.setImePrezime(imeIPrezime);
@@ -132,6 +138,8 @@ public class ModifikacijaPacijentaGUI {
 					pacijent.setDatumRodjenja(datumRodjenja);
 					pacijent.setOpis(opis);
 
+					
+					
 					sess = HibernateUtil.getSessionFactory().openSession();
 
 					PacijentManager pManager = new PacijentManager(sess);
