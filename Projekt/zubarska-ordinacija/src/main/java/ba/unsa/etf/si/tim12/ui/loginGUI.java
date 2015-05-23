@@ -1,7 +1,5 @@
 package ba.unsa.etf.si.tim12.ui;
 
-
-
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
@@ -26,14 +24,15 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.bll.service.KorisnikManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 
 public class loginGUI {
 
@@ -41,9 +40,8 @@ public class loginGUI {
 	private JLabel lblLozinka;
 	private JPasswordField passwordField;
 	private JTextField textField;
-
 	private String username;
-
+	private static final Logger logger = Logger.getLogger(loginGUI.class);
 
 	/**
 	 * Create the application.
@@ -59,28 +57,24 @@ public class loginGUI {
 	 */
 	private void initialize() {
 		frmPrijava = new JDialog();
-		
-	
+
 		frmPrijava.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		frmPrijava.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
-	            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-	            {
-					if (Prijava())
-					{
-						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
-						frmPrijava.setVisible (false);
+				if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (Prijava()) {
+						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava,
+								WindowEvent.WINDOW_CLOSING));
+						frmPrijava.setVisible(false);
 						frmPrijava.dispose();
-					}
-					else { 
+					} else {
 						JOptionPane.showMessageDialog(frmPrijava,
-						"Prijava nije uspjela",
-						"Obavještenje",
-						JOptionPane.INFORMATION_MESSAGE);
+								"Prijava nije uspjela", "Obavještenje",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
-					
-	            }
+
+				}
 			}
 		});
 		frmPrijava.setResizable(false);
@@ -90,70 +84,69 @@ public class loginGUI {
 		frmPrijava.getContentPane().setLayout(null);
 		frmPrijava.setLocationRelativeTo(null);
 
-		
 		JButton prijavaBtn = new JButton("Prijavi se");
 		prijavaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (Prijava()){
-					frmPrijava.dispatchEvent(new WindowEvent(frmPrijava, WindowEvent.WINDOW_CLOSING));
-					frmPrijava.setVisible (false);
+				if (Prijava()) {
+					frmPrijava.dispatchEvent(new WindowEvent(frmPrijava,
+							WindowEvent.WINDOW_CLOSING));
+					frmPrijava.setVisible(false);
 					frmPrijava.dispose();
-				}
-				else { 
+				} else {
 					JOptionPane.showMessageDialog(frmPrijava,
-					"Prijava nije uspjela",
-					"Obavještenje",
-					JOptionPane.INFORMATION_MESSAGE);}
+							"Prijava nije uspjela", "Obavještenje",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
+			}
 		});
 		prijavaBtn.setBounds(164, 86, 113, 23);
 		frmPrijava.getContentPane().add(prijavaBtn);
-		
+
 		lblLozinka = new JLabel("Password:");
 		lblLozinka.setBounds(10, 60, 79, 14);
 		frmPrijava.getContentPane().add(lblLozinka);
-		
+
 		passwordField = new JPasswordField("");
 		passwordField.setToolTipText("");
 		passwordField.setForeground(Color.GRAY);
 		passwordField.setColumns(10);
 		passwordField.setBounds(111, 55, 166, 20);
 		frmPrijava.getContentPane().add(passwordField);
-		
+
 		JLabel label = new JLabel("Korisni\u010Dko ime:");
 		label.setBounds(10, 24, 95, 14);
 		frmPrijava.getContentPane().add(label);
-		
+
 		textField = new JTextField();
 		textField.setForeground(Color.GRAY);
 		textField.setColumns(10);
 		textField.setBounds(111, 21, 166, 20);
 		frmPrijava.getContentPane().add(textField);
-		
+
 	}
-	
-	// Implemetirati funkciju za prijavu 
+
+	// Implemetirati funkciju za prijavu
 	public boolean Prijava() {
 		Session sess = null;
-		
-		try{
-			
+
+		try {
+
 			sess = HibernateUtil.getSessionFactory().openSession();
-			KorisnikManager m= new KorisnikManager(sess);
-			
+			KorisnikManager m = new KorisnikManager(sess);
+
 			LoginVM lgvm = new LoginVM();
-			
+
 			lgvm.setUsername(textField.getText());
 			lgvm.setPassword(new String(passwordField.getPassword()));
-			
+
 			this.username = lgvm.getUsername();
-					
+
 			return m.provjeriPassword(lgvm);
-		} catch(Exception e){
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.debug(e.getMessage(), e);
 			return false;
-		} finally{
-			if(sess != null)
+		} finally {
+			if (sess != null)
 				sess.close();
 		}
 	}

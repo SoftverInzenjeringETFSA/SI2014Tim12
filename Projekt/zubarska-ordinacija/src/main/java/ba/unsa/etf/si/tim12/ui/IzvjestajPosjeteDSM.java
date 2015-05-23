@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import org.apache.log4j.Logger;
+
+import ba.unsa.etf.si.tim12.App;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
@@ -21,7 +24,6 @@ import java.awt.event.ActionListener;
 
 
 public class IzvjestajPosjeteDSM {
-
 	private JDialog frame;
 	private JTable table;
 	private JLabel lblOd;
@@ -34,7 +36,8 @@ public class IzvjestajPosjeteDSM {
 	private JComboBox comboBox_5;
 	private JLabel lblVrstaPregleda;
 	private JComboBox comboBox_6;
-
+	
+	final static Logger logger = Logger.getLogger(IzvjestajPosjeteDSM.class);
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +48,7 @@ public class IzvjestajPosjeteDSM {
 					IzvjestajPosjeteDSM window = new IzvjestajPosjeteDSM();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.debug("Došlo je do greške.", e);
 				}
 			}
 		});
@@ -62,7 +65,7 @@ public class IzvjestajPosjeteDSM {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() {		
 		frame = new JDialog();
 		MainForma.Prekini(frame);
 		frame.setTitle("Izvje\u0161taj o posjetama");
@@ -135,19 +138,19 @@ public class IzvjestajPosjeteDSM {
 		comboBox_1.setBounds(127, 87, 49, 20);
 		frame.getContentPane().add(comboBox_1);
 		
-		comboBox_2 = new JComboBox();
+		comboBox_2 = new JComboBox<Object>();
 		comboBox_2.setBounds(196, 87, 68, 20);
 		frame.getContentPane().add(comboBox_2);
 		
-		comboBox_3 = new JComboBox();
+		comboBox_3 = new JComboBox<Object>();
 		comboBox_3.setBounds(334, 87, 49, 20);
 		frame.getContentPane().add(comboBox_3);
 		
-		comboBox_4 = new JComboBox();
+		comboBox_4 = new JComboBox<Object>();
 		comboBox_4.setBounds(398, 87, 49, 20);
 		frame.getContentPane().add(comboBox_4);
 		
-		comboBox_5 = new JComboBox();
+		comboBox_5 = new JComboBox<Object>();
 		comboBox_5.setBounds(457, 87, 68, 20);
 		frame.getContentPane().add(comboBox_5);
 		
@@ -155,8 +158,8 @@ public class IzvjestajPosjeteDSM {
 		lblVrstaPregleda.setBounds(22, 24, 110, 14);
 		frame.getContentPane().add(lblVrstaPregleda);
 		
-		comboBox_6 = new JComboBox();
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"Dnevni", "Sedmi\u010Dni", "Mjese\u010Dni"}));
+		comboBox_6 = new JComboBox<Object>();
+		comboBox_6.setModel(new DefaultComboBoxModel<Object>(new String[] {"Dnevni", "Sedmi\u010Dni", "Mjese\u010Dni"}));
 		comboBox_6.setBounds(132, 18, 94, 20);
 		frame.getContentPane().add(comboBox_6);
 	}
