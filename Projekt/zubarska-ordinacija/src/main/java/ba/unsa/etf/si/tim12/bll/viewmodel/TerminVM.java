@@ -7,6 +7,20 @@ public class TerminVM {
 	private String doktor;
 	private Date vrijeme;
 	private boolean otkazan;
+	
+	public TerminVM()
+	{
+		
+	}
+	
+	public TerminVM(long id, String doktor, Date vrijeme, boolean otkazan)
+	{
+		setId(id);
+		setDoktor(doktor);
+		setVrijeme(vrijeme);
+		setOtkazan(otkazan);
+		
+	}
 
 	public long getId() {
 		return id;

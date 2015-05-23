@@ -19,9 +19,9 @@ public class TerminManager {
 	public  ArrayList<TerminVM> nadjiPoPacijentu(long idpacijenta) {
 		Transaction t = session.beginTransaction();
 		
-	    //TODO: ovdje trebe Select new TerminVM(...) tako da neće ni biti potrebe
-		//za konverzijom
-		String hql ="from Termin where pacijentId = :idpacijenta";
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM(t.id, t.doktor, t.vrijeme, t.otkazano) "
+				+ "FROM Termin t "
+				+ "WHERE t.pacijentId = :idpacijenta";
 		Query q = session.createQuery(hql);
 		q.setLong("idpacijenta", idpacijenta); 
 	  
@@ -36,11 +36,12 @@ public class TerminManager {
 	public  ArrayList<TerminVM> nadjiPoVremenu(Date vrijemePoc, Date vrijemeKraj) {
 		Transaction t = session.beginTransaction();
 		
-	    //nisam nasao u tabeli u bazi da ima i kraj termina
-		//ovo poredjenje u sljedecoj liniji vjerovatno ne treba ovako, posto je datum
-		String hql ="from Termin where vrijeme=:vrijemePoc";
+		String hql ="Select new TerminVM(t.id, t.doktor, t.vrijeme, t.otkazano) "
+				+ "from Termin t "
+				+ "where t.vrijeme BETWEEN :date1 AND :date2;";
 		Query q = session.createQuery(hql);
-		q.setDate("vrijeme", vrijemePoc); 
+		q.setDate("date1", vrijemePoc);
+		q.setDate("date2", vrijemeKraj);
 	  
 	    List<TerminVM> lista = q.list();
 	    
@@ -52,11 +53,17 @@ public class TerminManager {
 	}
 	
 
-	public void otkaziTermin(long terminId)
-	{			
-		Termin t = (Termin)session.get(Termin.class, terminId);
-		t.setOtkazano(false);
-		session.update(t);		
+	public boolean otkaziTermin(long terminId)
+	{	
+		Transaction t = session.beginTransaction();
+		
+		Termin ter = (Termin)session.get(Termin.class, terminId);
+		ter.setOtkazano(true);
+		session.update(ter);
+		
+		t.commit();
+		
+		return true;
 	}
 
 }
