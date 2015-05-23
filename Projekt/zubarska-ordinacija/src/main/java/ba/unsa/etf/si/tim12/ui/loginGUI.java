@@ -31,6 +31,8 @@ import org.hibernate.Session;
 import ba.unsa.etf.si.tim12.bll.service.KorisnikManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class loginGUI {
@@ -57,6 +59,8 @@ public class loginGUI {
 	 */
 	private void initialize() {
 		frmPrijava = new JDialog();
+		
+	
 		frmPrijava.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		frmPrijava.addKeyListener(new KeyAdapter() {
 			@Override
@@ -85,6 +89,7 @@ public class loginGUI {
 		frmPrijava.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		frmPrijava.getContentPane().setLayout(null);
 		frmPrijava.setLocationRelativeTo(null);
+
 		
 		JButton prijavaBtn = new JButton("Prijavi se");
 		prijavaBtn.addActionListener(new ActionListener() {

@@ -128,6 +128,9 @@ public class PrikazMaterijalaGUI {
 					MaterijaliManager m= new MaterijaliManager(sess);
 //obrisati
 					//TODO osigurati se u slucaju da nije odabra niti jedan red
+					if (table.getSelectedRow()<0) {JOptionPane.showMessageDialog(frame, "Odaberite materijal u tabeli",
+							"Obavještenje",	JOptionPane.INFORMATION_MESSAGE);}
+					
 					Long id = Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString());
 					
 					boolean izbrisano=m.izbrisiMaterijal(id);
