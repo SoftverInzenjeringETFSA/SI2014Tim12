@@ -21,6 +21,9 @@ import org.junit.Test;
 public class MaterijaliManagerTest {
 
 	private Materijal materijal; 
+	private UtroseniMaterijal u;
+	private ObavljeniZahvat o;
+	private TipZahvata z;
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,6 +41,21 @@ public class MaterijaliManagerTest {
 		
 		materijal.setId(id);
 		
+		z = new TipZahvata();
+		z.setNaziv("lalal");
+		sess.save(z);
+		
+		o = new ObavljeniZahvat();
+		o.setZahvatId(z.getId());
+		sess.save(o);
+		
+		u = new UtroseniMaterijal();
+		u.setKolicina(5);
+		u.setMaterijalId(materijal.getId());
+		u.setObavljeniZahvatId(o.getId());
+		sess.save(u);
+
+		
 		
 		t.commit();
 
@@ -50,7 +68,7 @@ public class MaterijaliManagerTest {
 		}
 		finally
 		{
-			if(sess.isOpen())
+			if(sess != null && sess.isOpen())
 				sess.close();
 		}
 	}
@@ -60,7 +78,11 @@ public class MaterijaliManagerTest {
 Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		Transaction t = sess.beginTransaction();
+		if(materijal != null)
 		sess.delete(materijal);
+		sess.delete(u);
+		sess.delete(o);
+		sess.delete(z);
 		t.commit();
 		
 		sess.close();
@@ -76,13 +98,8 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			
 			ArrayList<MaterijalVM> l = mManager.nadjiPoImenu(materijal.getNaziv());
-			MaterijalVM m = new MaterijalVM();
-			m.setNaziv(materijal.getNaziv());
-			m.setCijena(materijal.getCijena());
-			m.setMjernaJedinica(materijal.getMjernaJedinica());
-			m.setId(materijal.getId());
-			
-			assertEquals(m.getNaziv() , l.get(0).getNaziv());
+				
+			assertEquals(materijal.getNaziv() , l.get(0).getNaziv());
 			
 			
 		} catch(Exception e){
@@ -128,29 +145,8 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
-			//nova pomocna varijabla za iste id-eve
-			long x = materijal.getId() + 1;
 			
-			UtroseniMaterijal u = new UtroseniMaterijal();
-			u.setKolicina(5);
-			u.setMaterijalId(materijal.getId());
-			u.setObavljeniZahvatId(x);
-			sess.save(u);
-
-			ObavljeniZahvat o = new ObavljeniZahvat();
-			o.setId(7L);
-			o.setZahvatId(x);
-			sess.save(o);
-			
-			Materijal m = new Materijal();
-			m.setNaziv(materijal.getNaziv());
-			m.setCijena(materijal.getCijena());
-			m.setMjernaJedinica(materijal.getMjernaJedinica());
-			m.setId(materijal.getId());
-	
-			sess.save(m);
-
-			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(x);
+			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(z.getId());
 
 			
 			
@@ -176,7 +172,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
-			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(materijal.getId()+1);	
+			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(NadjiSlobodanIDTipaZahvata());	
 			
 			assertTrue(l.isEmpty());
 			
@@ -200,15 +196,9 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			
-			Materijal m = new Materijal();
-			m.setNaziv(materijal.getNaziv());
-			m.setCijena(materijal.getCijena());
-			m.setMjernaJedinica(materijal.getMjernaJedinica());
-			m.setId(materijal.getId());
+			boolean x = mManager.izbrisiMaterijal(materijal.getId());
+			materijal = null;
 			
-			sess.save(m);
-			boolean x = mManager.izbrisiMaterijal(m.getId());
-
 			assertEquals(true , x);
 			
 			
@@ -232,14 +222,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			
-			Materijal m = new Materijal();
-			m.setNaziv(materijal.getNaziv());
-			m.setCijena(materijal.getCijena());
-			m.setMjernaJedinica(materijal.getMjernaJedinica());
-			m.setId(materijal.getId());
-			
-			sess.save(m);
-			boolean x = mManager.izbrisiMaterijal(m.getId()+1);
+			boolean x = mManager.izbrisiMaterijal(NadjiSlobodanIDMaterijala());
 
 			assertFalse(x);
 			
@@ -263,27 +246,8 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			sess = HibernateUtil.getSessionFactory().openSession();
 
 			MaterijaliManager mManager = new MaterijaliManager(sess);
-			long x = materijal.getId() + 1;
-			UtroseniMaterijal u = new UtroseniMaterijal();
-			u.setKolicina(5);
-			u.setMaterijalId(materijal.getId());
-			u.setObavljeniZahvatId(x);
-			sess.save(u);
-
-			ObavljeniZahvat o = new ObavljeniZahvat();
-			o.setId(7L);
-			o.setZahvatId(x);
-			sess.save(o);
 			
-			Materijal m = new Materijal();
-			m.setNaziv(materijal.getNaziv());
-			m.setCijena(materijal.getCijena());
-			m.setMjernaJedinica(materijal.getMjernaJedinica());
-			m.setId(materijal.getId());
-	
-			sess.save(m);
-
-			ArrayList<MaterijalVM> l = mManager.nadjiPoObavljenomZahvatu(x);
+			ArrayList<MaterijalVM> l = mManager.nadjiPoObavljenomZahvatu(o.getId());
 
 			
 			
@@ -310,7 +274,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
-			ArrayList<MaterijalVM> l = mManager.nadjiPoObavljenomZahvatu(materijal.getId()+1);	
+			ArrayList<MaterijalVM> l = mManager.nadjiPoObavljenomZahvatu(NadjiSlobodanIDOZahvata());	
 			
 			assertTrue(l.isEmpty());
 			
@@ -325,5 +289,47 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
+	 private long NadjiSlobodanIDTipaZahvata() {
+			
+			Session sess = HibernateUtil.getSessionFactory().openSession();
+			
+			Query q = sess.createQuery("SELECT MAX(id) FROM TipZahvata");
+			Long max_id = (Long) q.uniqueResult();
+		
+			sess.close();
+			if(max_id == null)
+				return 1;
+		
+			return max_id + 1;
+		}
+		
+	 private long NadjiSlobodanIDMaterijala() {
+			
+			Session sess = HibernateUtil.getSessionFactory().openSession();
+			
+			Query q = sess.createQuery("SELECT MAX(id) FROM Materijal");
+			Long max_id = (Long) q.uniqueResult();
+		
+			sess.close();
+			if(max_id == null)
+				return 1;
+		
+			return max_id + 1;
+		}
+		
+	 private long NadjiSlobodanIDOZahvata() {
+			
+			Session sess = HibernateUtil.getSessionFactory().openSession();
+			
+			Query q = sess.createQuery("SELECT MAX(id) FROM ObavljeniZahvat");
+			Long max_id = (Long) q.uniqueResult();
+		
+			sess.close();
+			if(max_id == null)
+				return 1;
+		
+			return max_id + 1;
+		}
+
 
 }
