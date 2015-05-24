@@ -7,12 +7,26 @@ public class PosjetePacijentaRowVM {
 	private String dijagnoza;
 	private String doktor;
 	private Date vrijeme;
+	
+	public PosjetePacijentaRowVM()
+	{
+		
+	}
+	
+	public PosjetePacijentaRowVM(String dijagnoza, String doktor, String opisZahvata, Date vrijeme)
+	{
+		this.setDijagnoza(dijagnoza);
+		this.setDoktor(doktor);
+		this.setOpisZahvata(opisZahvata);
+		this.setVrijeme(vrijeme);
+		
+	}
 
-	public String getOpiszahvata() {
+	public String getOpisZahvata() {
 		return opisZahvata;
 	}
 
-	public void setOpiszahvata(String opiszahvata) {
+	public void setOpisZahvata(String opiszahvata) {
 		this.opisZahvata = opiszahvata;
 	}
 

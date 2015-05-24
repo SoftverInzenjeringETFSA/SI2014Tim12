@@ -7,6 +7,13 @@ public class PosjetePacijentaVM {
 	private long idPacijenta;
 	private int ukupnoPosjeta;
 	private ArrayList<PosjetePacijentaRowVM> posjete;
+	
+	
+    public PosjetePacijentaVM(long idPacijenta, String imePrezimePacijenta, int ukupnoPosjeta){
+    	this.setIdPacijenta(idPacijenta);
+		this.setImePrezimePacijenta(imePrezimePacijenta);
+	    this.setUkupnoPosjeta(ukupnoPosjeta);
+    }
 
 	public PosjetePacijentaVM() {
 		posjete = new ArrayList<PosjetePacijentaRowVM>();

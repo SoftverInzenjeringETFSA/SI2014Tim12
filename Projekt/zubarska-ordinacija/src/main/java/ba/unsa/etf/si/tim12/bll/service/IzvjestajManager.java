@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.tim12.bll.service;
 
+import ba.unsa.etf.si.tim12.PacijentNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 
 import java.util.*;
@@ -9,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+import ba.unsa.etf.si.tim12.dal.domainmodel.Pacijent;
 
 @SuppressWarnings("unchecked")
 public class IzvjestajManager {
@@ -115,22 +117,30 @@ public class IzvjestajManager {
 		return rez;
 	}
 
-	public PosjetePacijentaVM posjetePacijenta(long idPacijenta) {
+	public PosjetePacijentaVM posjetePacijenta(long idPacijenta) throws Exception {
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM(pac.imeIPrezime, pac.id, count(*) "
+		
+		Pacijent pac = (Pacijent) session.get(Pacijent.class, idPacijenta);
+		if(pac == null)
+			throw new PacijentNotFound("Pacijent sa unesenim id-em ne postoji!");
+
+		
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM(pac.id, pac.imeIPrezime, count(DISTINCT pos.id) "
 				+ "from pacijent pac, posjeta pos where pos.pacijentId = pac.id and pac.id = :id)";
 		Query q = session.createQuery(hql);
 		q.setLong("id", idPacijenta);	
-		PosjetePacijentaVM rez;
-		if (!q.list().isEmpty())
-			rez = (PosjetePacijentaVM) q.list().get(0);
-		else
-			rez = null;
-		t.commit();
-		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaRowVM(t.naziv, p.dijagnoza, p.doktor, p.datum)"
-				+ "from posjeta p, pacijent pac, tipzahvata z, obavljenizahvat o "
+		
+		
+		PosjetePacijentaVM rez = (PosjetePacijentaVM) q.list().get(0);
+		
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaRowVM(p.dijagnoza, p.doktor, t.opis, p.vrijeme)"
+				+ "from posjeta p, pacijent pac, tipzahvata t, obavljenizahvat o "
 				+ "where p.id = o.posjetaId and t.id = o.zahvatId and pac.id = p.pacijentId and pac.id = :id";
+		q = session.createQuery(hql);
+		q.setLong("id", idPacijenta);
+		
 		ArrayList<PosjetePacijentaRowVM> r = new ArrayList<PosjetePacijentaRowVM>(q.list());
+		
 		t.commit();
 		rez.setPosjete(r);
 		return rez;
