@@ -55,11 +55,11 @@ public class FinancijskiUlazVM {
 		this.ukupnoPosjeta = ukupnoPosjeta;
 	}
 
-	public ArrayList<FinancijskiUlazRowVM> geListaFinancijskiUlazRowVM() {
+	public ArrayList<FinancijskiUlazRowVM> getListaFinancijskiUlazRowVM() {
 		return listaFinancijskiUlazRowVM;
 	}
 
-	public void setFinancijskiUlazRowVM(
+	public void setListaFinancijskiUlazRowVM(
 			ArrayList<FinancijskiUlazRowVM> listaFinancijskiUlazRowVM) {
 		this.listaFinancijskiUlazRowVM = listaFinancijskiUlazRowVM;
 	}
