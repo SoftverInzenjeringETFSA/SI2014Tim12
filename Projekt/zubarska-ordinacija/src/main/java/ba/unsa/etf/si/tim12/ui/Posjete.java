@@ -207,7 +207,7 @@ public class Posjete {
 			public void actionPerformed(ActionEvent arg0) {
 				NoviObavljeniZahvatVM noviZahvat = new NoviObavljeniZahvatVM();
 				new DodavanjeZahvataGUI(noviZahvat);
-				JOptionPane.showMessageDialog(null, "" + noviZahvat.getZahvatId() + " -> " + noviZahvat.getMaterijali().size());
+				//JOptionPane.showMessageDialog(null, "" + noviZahvat.getZahvatId() + " -> " + noviZahvat.getMaterijali().size());
 				if(noviZahvat.getZahvatId() == 0)
 					return;
 				
@@ -346,7 +346,7 @@ public class Posjete {
 		
 		Object[][] data = new Object[obavljeniZahvati.size()][];
 		for(int i = 0; i < obavljeniZahvati.size(); i++){
-			data[i] = new Object[]{obavljeniZahvati.get(i).getZahvatId(), obavljeniZahvati.get(i).getCijena()};
+			data[i] = new Object[]{obavljeniZahvati.get(i).getZahvatime(), obavljeniZahvati.get(i).getCijena()};
 		}
 		
 		table.setModel(new UneditableTableModel(

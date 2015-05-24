@@ -366,7 +366,7 @@ public class DodavanjeZahvataGUI {
 		}
 		
 		noviZahvat.setZahvatId(((TipZahvataVM) comboBoxZahvat.getSelectedItem()).getId());
-		
+		noviZahvat.setZahvatime(((TipZahvataVM) comboBoxZahvat.getSelectedItem()).getNaziv());
 		try{
 		
 			noviZahvat.setCijena(Double.parseDouble(textCijena.getText()));
