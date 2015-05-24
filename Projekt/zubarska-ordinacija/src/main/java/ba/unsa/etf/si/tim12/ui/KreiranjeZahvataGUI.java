@@ -318,6 +318,10 @@ public class KreiranjeZahvataGUI {
 				
 				try{
 					double kolicina = Double.parseDouble((String)tableMaterijali.getModel().getValueAt(i, 1));
+					if(kolicina < 0)
+						throw new Exception("Kolicina materijala " + dataMaterijali.get(i).getMaterijalIme() +
+								" je negativna");
+					
 					novi.setKolicina(kolicina);
 					
 				} catch (NumberFormatException e){

@@ -383,6 +383,13 @@ public class DodavanjeZahvataGUI {
 			
 			try{
 				double kolicina = Double.parseDouble((String)tableMaterijali.getModel().getValueAt(i, 1));
+				if(kolicina < 0){
+					String msg = "Kolicina materijala " + dataMaterijali.get(i).getMaterijalIme() +
+							" je negativna";
+					
+					JOptionPane.showMessageDialog(null, msg, 
+							"Greška", JOptionPane.ERROR_MESSAGE);
+				}
 				novi.setKolicina(kolicina);
 				
 			} catch (NumberFormatException e){
