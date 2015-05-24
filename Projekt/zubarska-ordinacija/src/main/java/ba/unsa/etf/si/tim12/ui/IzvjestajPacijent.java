@@ -226,7 +226,7 @@ public class IzvjestajPacijent {
 			JOptionPane.showMessageDialog(frame, e.getMessage(), 
 					"Greška!", JOptionPane.ERROR_MESSAGE);
 		
-			//logger.debug(e.getMessage(), e);
+			logger.debug(e.getMessage(), e);
 		} finally {
 			if (sess != null)
 				sess.close();
