@@ -16,6 +16,14 @@ import java.awt.SystemColor;
 
 import javax.swing.JPasswordField;
 
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.KorisnikManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.LoginVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PromjenaPasswordaVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -26,6 +34,7 @@ public class PasswordMgr extends JDialog {
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private JPasswordField passwordField_2;
+	private static final Logger logger = Logger.getLogger(PasswordMgr.class);
 
 
 	/**
@@ -93,27 +102,54 @@ public class PasswordMgr extends JDialog {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(ActionEvent e2) {
 						String s = new String (passwordField.getPassword());
-						if (!s.equals("s")) //stari password - izmijeniti
-						{
-							JOptionPane.showMessageDialog(null,
-							"Stari password nije ta�an! (za sada je 's')", "Greska!", JOptionPane.ERROR_MESSAGE);
+						Session sess = null;
+
+						try {
+
+							sess = HibernateUtil.getSessionFactory().openSession();
+							KorisnikManager m = new KorisnikManager(sess);
+
+							PromjenaPasswordaVM pm = new PromjenaPasswordaVM();
+
+							pm.setUsername(loginGUI.DajUsername());
+							pm.setStariPass(new String(passwordField.getPassword()));
+							pm.setNoviPass(new String(passwordField_1.getPassword()));
+							pm.setPonovoNoviPass(new String(passwordField_2.getPassword()));
+							
+							int i = m.promjeniPassword(pm);
+							if (i == 0)
+							{
+								JOptionPane.showMessageDialog(null,
+										"Password uspjesno promijenjen!", "Promjena passworda", JOptionPane.INFORMATION_MESSAGE);
+								mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
+								return;
+							}
+							switch (i)
+							{
+							case 1:
+								JOptionPane.showMessageDialog(null,
+										"Uneseni novi password i ponovljeni password nisu isti!", "Greska", JOptionPane.ERROR_MESSAGE);
+								break;
+							case 2:
+								//nece se nikad dogoditi, ali svejedno tretiramo i ovaj slucaj!
+								JOptionPane.showMessageDialog(null,
+										"Ne postoji korisnik sa navedenim korisnickim imenom!", "Greska", JOptionPane.ERROR_MESSAGE);
+								break;
+							case 3:
+								JOptionPane.showMessageDialog(null,
+										"Pogresan stari password!", "Greska", JOptionPane.ERROR_MESSAGE);
+								break;																
+								
+							}
+						} catch (Exception e) {
+							logger.debug(e.getMessage(), e);
 							return;
+						} finally {
+							if (sess != null)
+								sess.close();
 						}
-						String n = new String (passwordField_1.getPassword());
-						String np = new String (passwordField_2.getPassword());
-						if (!n.equals(np))
-						{
-							JOptionPane.showMessageDialog(null,
-									"Passwordi nisu isti!", "Greska!", JOptionPane.ERROR_MESSAGE);
-							return;
-						}
-						mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
-						//promjena passworda zauvijek
-						//Snimi ("passwword", n);
-						//U bazu ili gdje ve�
-						
 					}
 				});
 				okButton.setActionCommand("OK");
