@@ -92,7 +92,7 @@ public class IzvjestajManager {
 
 	public PotMaterijaliVM potroseniMaterijali(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM(:vrijemeOd, :vrijemeDo, sum(m.cijena)) "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM(sum(m.cijena * u.kolicina)) "
 				+ "from Materijal m, UtroseniMaterijal u, ObavljeniZahvat o, Posjeta p "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
 				+ "and p.vrijeme BETWEEN :vrijemeOd AND :vrijemeDo";
@@ -109,6 +109,10 @@ public class IzvjestajManager {
 			rez = (PotMaterijaliVM) q.list().get(0);
 		else
 			return rez;
+		
+
+		rez.setVrijemeDo(vrijemeDo);
+		rez.setVrijemeOd(vrijemeOd);
 		
 		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.cijena, u.kolicina, m.mjernaJedinica, m.naziv, u.kolicina*m.cijena)"
 				+ "from Materijal m, UtroseniMaterijal u, Posjeta p, ObavljeniZahvat o "

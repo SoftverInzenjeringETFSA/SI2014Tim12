@@ -2,11 +2,14 @@ package ba.unsa.etf.si.tim12.bll.service;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruVM;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
@@ -177,12 +180,29 @@ public class IzvjestajManagerTest {
 				session.close();
 		}
 	}
-/*
-	@Test
-	public void testPotroseniMaterijali() {
-		fail("Not yet implemented");
-	}
 
+	@Test
+	public void testPotroseniMaterijali() throws Exception {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			IzvjestajManager mngr = new IzvjestajManager(session);
+			PotMaterijaliVM materijali = mngr.potroseniMaterijali(vrijemeOd, vrijemeDo);
+			assertEquals(m.getCijena() * u.getKolicina(), materijali.getUkupnaCijena(), 0.0002);
+			//Object row =  (PotMaterijaliRowVM) materijali.getMaterijali().get(0);
+			// WTFFF
+			//assertEquals(Long.valueOf(m.getId()), Long.valueOf(row.getIdMaterijala()));
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally{
+			if(session != null)
+				session.close();
+		}
+	}
+/*
 	@Test
 	public void testPosjetePacijenta() {
 		fail("Not yet implemented");
