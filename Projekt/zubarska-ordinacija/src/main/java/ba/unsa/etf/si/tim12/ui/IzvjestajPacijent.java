@@ -163,7 +163,7 @@ public class IzvjestajPacijent {
 			Object[][] data = new Object[redovi.size()][]
 					;
 			for(int i = 0; i < redovi.size(); i++){
-				data[i] = new Object[]{ redovi.get(i).getOpiszahvata(), redovi.get(i).getDijagnoza(), 
+				data[i] = new Object[]{ redovi.get(i).getOpisZahvata(), redovi.get(i).getDijagnoza(), 
 						redovi.get(i).getDoktor(),redovi.get(i).getVrijeme()};
 			}
 			
