@@ -6,21 +6,42 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 
 import java.awt.Dialog.ModalityType;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JCheckBoxMenuItem;
 
 import java.awt.List;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
+
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
+import ba.unsa.etf.si.tim12.bll.service.TipZahvataManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.NoviObavljeniZahvatVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.CijeneEditableTM;
 
 
 public class DodavanjeZahvataGUI {
@@ -28,14 +49,16 @@ public class DodavanjeZahvataGUI {
 	private JDialog frmKreiranjeZahvata;
 	private JTextField textField_2;
 	private JTextField textField;
-
-
+	private NoviObavljeniZahvatVM noviZahvat;
+	private JComboBox comboBoxZahvat;
 
 	/**
 	 * Create the application.
+	 * @param noviZahvat 
 	 */
-	public DodavanjeZahvataGUI() {
+	public DodavanjeZahvataGUI(NoviObavljeniZahvatVM noviZahvat) {
 		initialize();
+		this.noviZahvat = noviZahvat;
 		frmKreiranjeZahvata.setVisible(true);
 	}
 
@@ -78,18 +101,17 @@ public class DodavanjeZahvataGUI {
 		lblNewLabel.setBounds(10, 109, 65, 23);
 		panel_1.add(lblNewLabel);
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list.setBounds(89, 112, 245, 137);
-		panel_1.add(list);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(89, 112, 245, 137);
+		
+		JTable tableMaterijali = new JTable();
+		tableMaterijali.setModel(new CijeneEditableTM(
+			new Object[][]{{"Rukavice", 3.33}}, 
+			new String[] {"Materijal", "Količina"}
+		));
+		
+		scrollPane.setViewportView(tableMaterijali);
+		panel_1.add(scrollPane);
 		
 		JLabel lblNewLabel_1 = new JLabel("Materijal:");
 		lblNewLabel_1.setBounds(10, 42, 76, 20);
@@ -112,14 +134,81 @@ public class DodavanjeZahvataGUI {
 		btnDodaj.setBounds(89, 78, 89, 23);
 		panel_1.add(btnDodaj);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setEditable(true);
-		comboBox_1.setBounds(87, 11, 247, 20);
-		panel_1.add(comboBox_1);
+		comboBoxZahvat = new JComboBox();
+		comboBoxZahvat.setEditable(true);
+		comboBoxZahvat.setBounds(87, 11, 247, 20);
+		JTextComponent jtc = (JTextComponent) comboBoxZahvat.getEditor().getEditorComponent();
+		jtc.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void removeUpdate(DocumentEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						OsvjeziCBZahvat(true);
+					}
+				});
+			}
+			public void insertUpdate(DocumentEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {			
+					public void run() {
+						OsvjeziCBZahvat(true);
+					}
+				});
+			}
+			public void changedUpdate(DocumentEvent e) {
+				//This never happens
+			}
+		});
+		comboBoxZahvat.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				if(comboBoxZahvat.getSelectedItem() instanceof TipZahvataVM){
+					TipZahvataVM t = (TipZahvataVM) comboBoxZahvat.getSelectedItem();
+					textField.setText(Double.toString(Math.round(t.getCijena()*100)/100));
+				}
+			}
+		});
+		panel_1.add(comboBoxZahvat);
 		
 		textField = new JTextField();
 		textField.setBounds(248, 260, 86, 20);
 		panel_1.add(textField);
 		textField.setColumns(10);
+	}
+
+	private void OsvjeziCBZahvat(boolean expand) {
+		Session sess = null;
+		
+		try {
+			if ( comboBoxZahvat.getEditor().getItem() instanceof String){
+				
+				sess = HibernateUtil.getSessionFactory().openSession();
+				TipZahvataManager tzmManager = new TipZahvataManager(sess);
+				
+				String ime = (String) comboBoxZahvat.getEditor().getItem();
+				
+				ArrayList<TipZahvataVM> data = tzmManager.nadjiPoImenu(ime);
+				Object[] array = new Object[data.size() + 1];
+				array[0] = ime;
+				
+				for(int i = 0; i < data.size(); i++){
+					array[i+1] = data.get(i);
+				}
+				
+				DefaultComboBoxModel model = new DefaultComboBoxModel(array); //(DefaultComboBoxModel) comboBoxPacijent.getModel();
+				comboBoxZahvat.setModel(model);
+				
+				if(expand)
+					comboBoxZahvat.getUI().setPopupVisible(comboBoxZahvat, true);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frmKreiranjeZahvata, e.getMessage(), 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+		
+			//logger.debug(e.getMessage(), e);
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+		
 	}
 }
