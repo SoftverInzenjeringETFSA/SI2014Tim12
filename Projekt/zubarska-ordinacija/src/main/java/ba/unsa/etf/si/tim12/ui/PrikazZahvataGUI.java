@@ -147,11 +147,16 @@ public class PrikazZahvataGUI {
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		btnOdustani.setBounds(372, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
 		
-		JButton button = new JButton("Modifikacija cijene");
-		button.addActionListener(new ActionListener() {
+		JButton btnIzmeniCjenuZa = new JButton("Izmeni cjenu za zahvat");
+		btnIzmeniCjenuZa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
 				Integer index = table.getSelectedRow();
@@ -165,8 +170,8 @@ public class PrikazZahvataGUI {
 				new ModifikacijaZahvataGUI(podaci.get(index));
 			}
 		});
-		button.setBounds(205, 299, 145, 23);
-		frame.getContentPane().add(button);
+		btnIzmeniCjenuZa.setBounds(150, 299, 200, 23);
+		frame.getContentPane().add(btnIzmeniCjenuZa);
 		
 		JLabel lblPretraivanjePoImenu = new JLabel("Pretraživanje po imenu:");
 		lblPretraivanjePoImenu.setBounds(22, 23, 159, 14);
