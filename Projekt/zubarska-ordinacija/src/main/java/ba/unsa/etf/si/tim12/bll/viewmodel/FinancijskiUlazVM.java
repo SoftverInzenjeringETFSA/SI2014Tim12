@@ -10,12 +10,9 @@ public class FinancijskiUlazVM {
 	private int ukupnoPosjeta;
 	private ArrayList<FinancijskiUlazRowVM> listaFinancijskiUlazRowVM;
 
-	public FinancijskiUlazVM(Date vrijemeOd, Date vrijemeDo,
-			double ukupnaCijena, int ukupnoPosjeta) {
-		this.vrijemeOd = new Date(vrijemeOd.getTime());
-		this.vrijemeDo = new Date(vrijemeDo.getTime());
+	public FinancijskiUlazVM(double ukupnaCijena, long ukupnoPosjeta) {
 		this.ukupnaCijena = ukupnaCijena;
-		this.ukupnoPosjeta = ukupnoPosjeta;
+		this.ukupnoPosjeta = (int) ukupnoPosjeta;
 		listaFinancijskiUlazRowVM = new ArrayList<FinancijskiUlazRowVM>();
 	}
 

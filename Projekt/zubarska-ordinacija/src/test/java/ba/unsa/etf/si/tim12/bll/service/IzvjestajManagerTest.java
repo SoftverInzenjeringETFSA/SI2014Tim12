@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruVM;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
@@ -155,12 +156,28 @@ public class IzvjestajManagerTest {
 		}
 	}
 
-/*
-	@Test
-	public void testFinancijskiUlaz() {
-		fail("Not yet implemented");
-	}
 
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testFinancijskiUlaz() throws Exception {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			IzvjestajManager mngr = new IzvjestajManager(session);
+			FinancijskiUlazVM rezultat = mngr.financijskiUlaz(vrijemeOd, vrijemeDo);
+		    assertEquals(o.getCijena(), rezultat.getUkupnaCijena(), 0.000002);
+			assertEquals(Long.valueOf(o.getId()), Long.valueOf(rezultat.getListaFinancijskiUlazRowVM().get(0).getId()));
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally{
+			if(session != null)
+				session.close();
+		}
+	}
+/*
 	@Test
 	public void testPotroseniMaterijali() {
 		fail("Not yet implemented");

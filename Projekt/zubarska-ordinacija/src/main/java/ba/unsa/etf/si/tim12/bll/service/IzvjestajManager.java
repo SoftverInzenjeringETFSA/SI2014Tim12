@@ -55,19 +55,26 @@ public class IzvjestajManager {
 	
 	public FinancijskiUlazVM financijskiUlaz(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM(:vrijemeOd, :vrijemeDo, sum(z.cijena), count(DISTINCT p.id)"
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM(sum(z.cijena), count(DISTINCT p.id))"
 				+ " from ObavljeniZahvat z, Posjeta p where p.id = z.posjetaId "
 				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
 		Query q = session.createQuery(hql);
 		q.setDate("vrijemeOd", vrijemeOd);
 		q.setDate("vrijemeDo", vrijemeDo);
-		FinancijskiUlazVM rez;
+		FinancijskiUlazVM rez = new FinancijskiUlazVM();
+		rez.setUkupnaCijena(0);
+		rez.setUkupnoPosjeta(0);
+		
 		if (!q.list().isEmpty())
 			rez = (FinancijskiUlazVM) q.list().get(0);
 		else
-			rez = null;
+			return rez;
 		
-		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazRowVM(z.id, pac.imeIPrezime, t.naziv, pos.vrijeme, z.cijena "
+		rez.setVrijemeDo(vrijemeDo);
+		rez.setVrijemeOd(vrijemeOd);
+		
+		
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazRowVM(z.id, pac.imeIPrezime, t.naziv, pos.vrijeme, z.cijena) "
 				+ "from Posjeta pos, Pacijent pac, TipZahvata t, ObavljeniZahvat z "
 				+ "where pos.id = z.posjetaId and pac.id = pos.pacijentId and t.id = z.zahvatId "
 				+ "and pos.vrijeme between :vrijemeOd and :vrijemeDo";
