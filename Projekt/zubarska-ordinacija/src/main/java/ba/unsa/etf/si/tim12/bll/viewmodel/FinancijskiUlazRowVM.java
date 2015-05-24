@@ -8,6 +8,18 @@ public class FinancijskiUlazRowVM {
 	private String imeZahvata;
 	private Date vrijemePosjete;
 	private double cijena;
+	
+	public FinancijskiUlazRowVM(){
+		
+	}
+	
+public FinancijskiUlazRowVM(long id, String imeIPrezime, String imeZahvata, Date vrijemePosjete, double cijena){
+		this.setCijena(cijena);
+		this.setId(id);
+		this.setIme(imeIPrezime);
+		this.setImeZahvata(imeZahvata);
+		this.setVrijemePosjete(vrijemePosjete);
+	}
 
 	public long getId() {
 		return id;
