@@ -117,6 +117,10 @@ public class ModifikacijaPacijentaGUI {
 		btnKreiraj.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				
+				if(textField.getText().length()<3) {JOptionPane.showMessageDialog(null,
+						"Unesite najmanje tri slova imena i prezimena", "Greška!",
+						JOptionPane.ERROR_MESSAGE); return;}
 
 				Session sess = null;
 				try {
