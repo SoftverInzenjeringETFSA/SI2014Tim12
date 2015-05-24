@@ -63,7 +63,7 @@ public class IzvjestajUlazi {
 	private void initialize() {
 		frame = new JDialog();
 		MainForma.Prekini(frame);
-		frame.setTitle("Finansijski izvjeĹˇtaj o svim ulazima");
+		frame.setTitle("Finansijski izvještaj o svim ulazima");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 550, 364);
