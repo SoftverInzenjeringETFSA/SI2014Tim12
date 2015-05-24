@@ -8,18 +8,6 @@ public class ZahvatiPoDoktoruRowVM {
 	private String nazivZahvata;
 	private Date vrijemePosjete;
 	private double cijena;
-	
-	public ZahvatiPoDoktoruRowVM(){
-		
-	}
-	
-	public ZahvatiPoDoktoruRowVM(long id, String imePrezime, String nazivZahvata, Date vrijemePosjete, double cijena){
-		this.setId(id);
-		this.setCijena(cijena);
-		this.setImePrezime(imePrezime);
-		this.setNazivZahvata(nazivZahvata);
-		this.setVrijemePosjete(vrijemePosjete);
-	}
 
 	public long getId() {
 		return id;
@@ -29,15 +17,21 @@ public class ZahvatiPoDoktoruRowVM {
 		this.id = id;
 	}
 
-	public String getImePrezime() {
+	public String getIme() {
 		return imePrezime;
 	}
 
-	public void setImePrezime(String ime) {
+	public void setIme(String ime) {
 		this.imePrezime = ime;
 	}
 
-	
+	public String getPrezime() {
+		return imePrezime;
+	}
+
+	public void setPrezime(String prezime) {
+		this.imePrezime = prezime;
+	}
 
 	public String getNazivZahvata() {
 		return nazivZahvata;
