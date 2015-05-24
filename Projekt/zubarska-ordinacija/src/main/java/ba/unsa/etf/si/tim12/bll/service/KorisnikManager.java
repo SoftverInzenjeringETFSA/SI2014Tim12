@@ -42,7 +42,7 @@ public class KorisnikManager {
 	public int promjeniPassword(PromjenaPasswordaVM model) throws Exception {
 		
 		//Ponovljeni password nije uredu
-		if(model.getNoviPass() != model.getPonovoNoviPass())
+		if(!model.getNoviPass().equals(model.getPonovoNoviPass()))
 			return 1;
 		
 		model.setStariPass(HashPassword(model.getStariPass()));
