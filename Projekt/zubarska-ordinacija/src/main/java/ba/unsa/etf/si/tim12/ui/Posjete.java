@@ -180,7 +180,7 @@ public class Posjete {
 			public void actionPerformed(ActionEvent arg0) {
 				NoviObavljeniZahvatVM noviZahvat = new NoviObavljeniZahvatVM();
 				new DodavanjeZahvataGUI(noviZahvat);
-			
+				JOptionPane.showMessageDialog(null, "" + noviZahvat.getZahvatId() + " -> " + noviZahvat.getMaterijali().size());
 			}
 		});
 		btnDodajZahvat_1.setBounds(651, 191, 107, 23);

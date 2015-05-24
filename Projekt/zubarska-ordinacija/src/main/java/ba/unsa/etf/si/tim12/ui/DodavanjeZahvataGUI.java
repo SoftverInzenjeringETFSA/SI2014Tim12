@@ -27,6 +27,9 @@ import javax.swing.AbstractListModel;
 import javax.swing.JCheckBoxMenuItem;
 
 import java.awt.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -40,19 +43,21 @@ import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.service.TipZahvataManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.NoviOZahvatMaterijalVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviObavljeniZahvatVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataMaterijalVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.CijeneEditableTM;
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 
 public class DodavanjeZahvataGUI {
 
 	private JDialog frmKreiranjeZahvata;
-	private JTextField textField_2;
-	private JTextField textField;
+	private JTextField textKolicina;
+	private JTextField textCijena;
 	private NoviObavljeniZahvatVM noviZahvat;
 	private JComboBox comboBoxZahvat;
 	private JTable tableMaterijali;
@@ -72,8 +77,8 @@ public class DodavanjeZahvataGUI {
 	}
 
 	private void Resetiraj() {
-		textField.setText("/");
-		textField_2.setText("");
+		textCijena.setText("/");
+		textKolicina.setText("");
 		dataMaterijali = new ArrayList<TipZahvataMaterijalVM>();
 		tableMaterijali.setModel(new CijeneEditableTM(
 			new Object[][]{}, 
@@ -108,8 +113,15 @@ public class DodavanjeZahvataGUI {
 		lblPrezime.setBounds(189, 260, 86, 20);
 		panel_1.add(lblPrezime);
 		
-		JButton btnKreiraj = new JButton("Dodaj");
+		JButton btnKreiraj = new JButton("Dodaj Zahvat");
 		btnKreiraj.setBounds(225, 330, 109, 23);
+		btnKreiraj.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				DodajZahvat();
+			}
+
+		});
 		panel_1.add(btnKreiraj);
 		
 		JButton btnOdustani = new JButton("Odustani");
@@ -166,10 +178,10 @@ public class DodavanjeZahvataGUI {
 		lblKoliina.setBounds(218, 42, 57, 20);
 		panel_1.add(lblKoliina);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(277, 42, 57, 20);
-		panel_1.add(textField_2);
-		textField_2.setColumns(10);
+		textKolicina = new JTextField();
+		textKolicina.setBounds(277, 42, 57, 20);
+		panel_1.add(textKolicina);
+		textKolicina.setColumns(10);
 		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.setBounds(89, 78, 89, 23);
@@ -201,7 +213,7 @@ public class DodavanjeZahvataGUI {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxZahvat.getSelectedItem() instanceof TipZahvataVM){
 					TipZahvataVM t = (TipZahvataVM) comboBoxZahvat.getSelectedItem();
-					textField.setText(Double.toString(Math.round(t.getCijena()*100)/100));
+					textCijena.setText(Double.toString(Math.round(t.getCijena()*100)/100));
 					
 					OsvjeziTabeluMaterijala(t.getId());
 				}
@@ -210,10 +222,10 @@ public class DodavanjeZahvataGUI {
 		});
 		panel_1.add(comboBoxZahvat);
 		
-		textField = new JTextField();
-		textField.setBounds(248, 260, 86, 20);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		textCijena = new JTextField();
+		textCijena.setBounds(248, 260, 86, 20);
+		panel_1.add(textCijena);
+		textCijena.setColumns(10);
 	}
 
 	
@@ -293,7 +305,7 @@ public class DodavanjeZahvataGUI {
 		Session sess = null;
 		
 		try{
-			sess = HibernateUtil.getSessionFactory().getCurrentSession();
+			sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			dataMaterijali = mManager.nadjiPoTipuZahvata(tipZahvataId);
@@ -309,6 +321,59 @@ public class DodavanjeZahvataGUI {
 		if(dataMaterijali == null)
 			dataMaterijali = new ArrayList<TipZahvataMaterijalVM>();
 		
+
+		Object[][] data = new Object[dataMaterijali.size()][];
+		for (int i = 0; i < dataMaterijali.size(); i++) {
+			TipZahvataMaterijalVM vm = dataMaterijali.get(i);
+			data[i] = new Object[]{vm.getMaterijalIme(), Double.toString(vm.getKolicina())};
+		}
+
+		String[] columns = new String[] { "Materijal", "Količina" };
+
+		tableMaterijali.setModel(new CijeneEditableTM(data, columns));
+		tableMaterijali.getColumnModel().getColumn(1).setPreferredWidth(15);
+		tableMaterijali.getColumnModel().getColumn(1).setMinWidth(5);
+	}
+	
+	private void DodajZahvat() {
 		
+		if( !(comboBoxZahvat.getSelectedItem() instanceof TipZahvataVM)){
+			JOptionPane.showMessageDialog(null, "Odaberite tip zahvata", 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		noviZahvat.setZahvatId(((TipZahvataVM) comboBoxZahvat.getSelectedItem()).getId());
+		
+		try{
+		
+			noviZahvat.setCijena(Double.parseDouble(textCijena.getText()));
+		
+		} catch (NumberFormatException e){
+			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(null, "Za cijenu unesite decimalni broj", 
+					"Greška", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		ArrayList<NoviOZahvatMaterijalVM> materijali = new ArrayList<NoviOZahvatMaterijalVM>();
+		for(int i = 0; i < dataMaterijali.size(); i++){
+			NoviOZahvatMaterijalVM novi = new NoviOZahvatMaterijalVM();
+			novi.setMaterijalId(dataMaterijali.get(i).getMaterijalId());
+			
+			try{
+				double kolicina = Double.parseDouble((String)tableMaterijali.getModel().getValueAt(i, 1));
+				novi.setKolicina(kolicina);
+				
+			} catch (NumberFormatException e){
+				JOptionPane.showMessageDialog(null, "Unesite decimalan broj za kolicine", 
+						"Greška", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
+		
+		frmKreiranjeZahvata.dispatchEvent(new WindowEvent(frmKreiranjeZahvata,
+				WindowEvent.WINDOW_CLOSING));
+
 	}
 }
