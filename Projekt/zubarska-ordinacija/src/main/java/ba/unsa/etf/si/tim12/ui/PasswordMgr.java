@@ -53,19 +53,19 @@ public class PasswordMgr extends JDialog {
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		setLocationRelativeTo(null);
 		JLabel txtpnStariPassword = new JLabel();
-		txtpnStariPassword.setText("Stari password");
+		txtpnStariPassword.setText("Stari password:");
 		txtpnStariPassword.setBackground(SystemColor.control);
 		txtpnStariPassword.setBounds(10, 11, 96, 20);
 		contentPanel.add(txtpnStariPassword);
 		
 		JLabel txtpnNoviPasswword = new JLabel();
-		txtpnNoviPasswword.setText("Novi password");
+		txtpnNoviPasswword.setText("Novi password:");
 		txtpnNoviPasswword.setBackground(SystemColor.menu);
 		txtpnNoviPasswword.setBounds(10, 42, 96, 20);
 		contentPanel.add(txtpnNoviPasswword);
 		
 		JLabel txtpnPonovljeniNoviPassword = new JLabel();
-		txtpnPonovljeniNoviPassword.setText("Ponovite novi password");
+		txtpnPonovljeniNoviPassword.setText("Ponovite novi password:");
 		txtpnPonovljeniNoviPassword.setBackground(SystemColor.menu);
 		txtpnPonovljeniNoviPassword.setBounds(10, 73, 159, 20);
 		contentPanel.add(txtpnPonovljeniNoviPassword);
@@ -122,7 +122,7 @@ public class PasswordMgr extends JDialog {
 							if (i == 0)
 							{
 								JOptionPane.showMessageDialog(null,
-										"Password uspjesno promijenjen!", "Promjena passworda", JOptionPane.INFORMATION_MESSAGE);
+										"Password uspješno promijenjen!", "Promjena passworda", JOptionPane.INFORMATION_MESSAGE);
 								mee.dispatchEvent(new WindowEvent(mee, WindowEvent.WINDOW_CLOSING));
 								return;
 							}
@@ -130,16 +130,16 @@ public class PasswordMgr extends JDialog {
 							{
 							case 1:
 								JOptionPane.showMessageDialog(null,
-										"Uneseni novi password i ponovljeni password nisu isti!", "Greska", JOptionPane.ERROR_MESSAGE);
+										"Uneseni novi password i ponovljeni password nisu isti!", "Greška", JOptionPane.ERROR_MESSAGE);
 								break;
 							case 2:
 								//nece se nikad dogoditi, ali svejedno tretiramo i ovaj slucaj!
 								JOptionPane.showMessageDialog(null,
-										"Ne postoji korisnik sa navedenim korisnickim imenom!", "Greska", JOptionPane.ERROR_MESSAGE);
+										"Ne postoji korisnik sa navedenim korisničkim imenom!", "Greška", JOptionPane.ERROR_MESSAGE);
 								break;
 							case 3:
 								JOptionPane.showMessageDialog(null,
-										"Pogresan stari password!", "Greska", JOptionPane.ERROR_MESSAGE);
+										"Pogrešan stari password!", "Greška", JOptionPane.ERROR_MESSAGE);
 								break;																
 								
 							}
