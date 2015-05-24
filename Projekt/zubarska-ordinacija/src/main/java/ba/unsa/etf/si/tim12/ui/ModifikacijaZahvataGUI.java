@@ -41,6 +41,8 @@ public class ModifikacijaZahvataGUI {
 	 * Create the application.
 	 */
 	public ModifikacijaZahvataGUI(TipZahvataVM zahvat) {
+		initialize();
+		
 		id=zahvat.getId();
 		textField.setText(Double.toString(zahvat.getCijena()));
 		initialize();
