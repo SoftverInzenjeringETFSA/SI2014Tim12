@@ -38,6 +38,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.NovaPosjetaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviObavljeniZahvatVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviPacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
@@ -70,26 +71,40 @@ public class Posjete {
 		textFieldDoktor.setText(termin.getDoktor());
 		textFieldVrijeme.setText(formater.format(termin.getVrijeme()));
 		
-		/*Session sess = null;
-		try{
-			
-			sess = HibernateUtil.getSessionFactory().openSession();
-			
-			PacijentManager pManager = new PacijentManager(sess);
-			
-			
-		}catch(Exception e){
-			
-			
-			
-		}finally{
-			if(sess != null)
-				sess.close();
-		}*/
+		PostaviUsera(termin.getPacijentId());
 		
 		dlgPosjeteRegistracija.setVisible(true);
 	}
 
+	private void PostaviUsera(long pacijentId) {
+		Session sess = null;
+		try{
+			
+			sess = HibernateUtil.getSessionFactory().openSession();
+			
+			PacijentManager pm = new PacijentManager(sess);
+			PrikazPacijentaVM ppvm = pm.dajPacijenta(pacijentId);
+			
+			PacijentVM vm = new PacijentVM();
+			vm.setId(ppvm.getId());
+			vm.setImePrezime(ppvm.getImeIPrezime());
+			vm.setBrojTelefona(ppvm.getBrojTelefona());
+			
+			Object[] array = new Object[]{vm};
+			DefaultComboBoxModel model = new DefaultComboBoxModel(array); //(DefaultComboBoxModel) comboBoxPacijent.getModel();
+			comboBoxPacijent.setModel(model);
+			
+			comboBoxPacijent.getUI().setPopupVisible(comboBoxPacijent, true);
+			
+		} catch(Exception e){
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(dlgPosjeteRegistracija, e.getMessage(), 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+		}finally{
+			if(sess != null)
+				sess.close();
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
