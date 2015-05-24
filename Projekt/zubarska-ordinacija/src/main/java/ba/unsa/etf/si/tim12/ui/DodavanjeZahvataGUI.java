@@ -37,6 +37,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
@@ -63,6 +64,7 @@ public class DodavanjeZahvataGUI {
 	private JTable tableMaterijali;
 	private JComboBox comboBoxMaterijal;
 	private ArrayList<TipZahvataMaterijalVM> dataMaterijali;
+	private static final Logger logger = Logger.getLogger(DodavanjeZahvataGUI.class);
 	
 	/**
 	 * Create the application.
@@ -397,6 +399,7 @@ public class DodavanjeZahvataGUI {
 			} catch (NumberFormatException e){
 				JOptionPane.showMessageDialog(null, "Unesite decimalan broj za kolicine", 
 						"Greška", JOptionPane.ERROR_MESSAGE);
+				logger.debug(e.getMessage(),e);
 				return;
 			}
 			
