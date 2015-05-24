@@ -72,7 +72,7 @@ public class PrikazMaterijalaGUI {
 		frame.getContentPane().add(lblPretraivanjePo);
 
 		textField = new JTextField();
-		textField.setBounds(224, 20, 149, 19);
+		textField.setBounds(235, 20, 149, 19);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 

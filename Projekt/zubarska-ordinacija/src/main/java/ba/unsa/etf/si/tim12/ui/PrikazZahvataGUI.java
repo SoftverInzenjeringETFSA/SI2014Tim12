@@ -30,16 +30,17 @@ import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrikazZahvataGUI {
 
 	private JDialog frame;
-	private JTable table;
 	private JTextField textField;
 	private JButton btnNewButton;
 	static final Logger logger = Logger.getLogger(PrikazZahvataGUI.class);
 	ArrayList<TipZahvataVM> podaci;
+	private JTable table;
 
 
 
@@ -70,15 +71,13 @@ public class PrikazZahvataGUI {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new UneditableTableModel(
+		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-			 "Naziv", "Materijali", "Cijena"
+				"ID", "Naziv", "Cijena"
 			}
 		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(15);
-		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
 		
 		textField = new JTextField();
@@ -123,15 +122,14 @@ public class PrikazZahvataGUI {
 					data[i] = TipZahvataVMtoObjectRow(zahvati.get(i));
 				}
 				
-				String[] columns = new String[] {"Naziv", "Materijali", "Cijena"
+				String[] columns = new String[] {"Id", "Naziv", "Cijena"
 				};
 				table.setModel(new UneditableTableModel(data, columns));
 				
 				
 				
 			}
-			private String[] TipZahvataVMtoObjectRow(TipZahvataVM z) {
-				
+			private String[] TipZahvataVMtoObjectRow(TipZahvataVM z) { 
 				String[] r = { Long.toString(z.getId()), z.getNaziv(),
 						Double.toString(z.getCijena()) };
 				return r;
