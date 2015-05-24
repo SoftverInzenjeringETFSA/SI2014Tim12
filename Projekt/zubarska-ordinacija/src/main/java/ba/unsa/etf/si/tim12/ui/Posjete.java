@@ -213,9 +213,13 @@ public class Posjete {
 				
 				else {
 					obavljeniZahvati.add(noviZahvat);
+					OsvjeziTable();
+					OsvjeziUkupnuCijenu();
 				}
 				
 			}
+
+			
 		});
 		btnDodajZahvat_1.setBounds(651, 191, 107, 23);
 		dlgPosjeteRegistracija.getContentPane().add(btnDodajZahvat_1);
@@ -351,5 +355,18 @@ public class Posjete {
 		table.getColumnModel().getColumn(0).setPreferredWidth(202);
 		table.getColumnModel().getColumn(1).setPreferredWidth(80);
 	
+	}
+	
+	void OsvjeziUkupnuCijenu(){
+		double suma = 0;
+		for (NoviObavljeniZahvatVM item : obavljeniZahvati) {
+			suma += item.getCijena();
+		}
+		
+		if(obavljeniZahvati.size() == 0)
+			PrikaziUkupnuCijenu(0.0);
+		else 
+			PrikaziUkupnuCijenu(suma);
+		
 	}
 }

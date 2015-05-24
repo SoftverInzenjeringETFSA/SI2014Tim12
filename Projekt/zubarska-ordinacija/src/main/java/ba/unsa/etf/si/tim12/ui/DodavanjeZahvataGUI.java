@@ -393,6 +393,8 @@ public class DodavanjeZahvataGUI {
 					
 					JOptionPane.showMessageDialog(null, msg, 
 							"Greška", JOptionPane.ERROR_MESSAGE);
+					
+					return;
 				}
 				novi.setKolicina(kolicina);
 				
