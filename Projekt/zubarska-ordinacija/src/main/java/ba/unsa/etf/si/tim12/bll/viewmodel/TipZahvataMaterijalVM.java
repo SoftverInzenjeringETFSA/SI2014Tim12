@@ -21,6 +21,10 @@ public class TipZahvataMaterijalVM {
 		this.kolicina = kolicina;
 	}
 
+	public TipZahvataMaterijalVM(){
+		
+	}
+	
 	public void setMaterijalId(long materijalId) {
 		this.materijalId = materijalId;
 	}

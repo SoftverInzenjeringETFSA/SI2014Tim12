@@ -73,6 +73,7 @@ public class DodavanjeZahvataGUI {
 		this.noviZahvat = noviZahvat;
 		Resetiraj();
 		OsvjeziCBZahvat(false);
+		OsvjeziCBMaterijal(false);
 		frmKreiranjeZahvata.setVisible(true);
 	}
 
@@ -84,6 +85,8 @@ public class DodavanjeZahvataGUI {
 			new Object[][]{}, 
 			new String[] {"Materijal", "Količina"}
 		));
+		tableMaterijali.getColumnModel().getColumn(1).setPreferredWidth(15);
+		tableMaterijali.getColumnModel().getColumn(1).setMinWidth(5);
 	}
 
 	/**
@@ -172,6 +175,15 @@ public class DodavanjeZahvataGUI {
 			}
 			public void changedUpdate(DocumentEvent e) {/*This never happens*/}
 		});
+		comboBoxMaterijal.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				if(comboBoxMaterijal.getSelectedItem() instanceof MaterijalVM){
+					MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
+					textKolicina.setText(Double.toString(vm.getCijena()));
+				}
+			}
+		});
 		panel_1.add(comboBoxMaterijal);
 		
 		JLabel lblKoliina = new JLabel("Koli\u010Dina:");
@@ -185,6 +197,14 @@ public class DodavanjeZahvataGUI {
 		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.setBounds(89, 78, 89, 23);
+		btnDodaj.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				DodajMaterijal();
+			}
+
+			
+		});
 		panel_1.add(btnDodaj);
 		
 		comboBoxZahvat = new JComboBox();
@@ -356,7 +376,7 @@ public class DodavanjeZahvataGUI {
 					"Greška", JOptionPane.ERROR_MESSAGE);
 		}
 		
-		ArrayList<NoviOZahvatMaterijalVM> materijali = new ArrayList<NoviOZahvatMaterijalVM>();
+		noviZahvat.setMaterijali(new ArrayList<NoviOZahvatMaterijalVM>());
 		for(int i = 0; i < dataMaterijali.size(); i++){
 			NoviOZahvatMaterijalVM novi = new NoviOZahvatMaterijalVM();
 			novi.setMaterijalId(dataMaterijali.get(i).getMaterijalId());
@@ -370,10 +390,28 @@ public class DodavanjeZahvataGUI {
 						"Greška", JOptionPane.ERROR_MESSAGE);
 			}
 			
+			noviZahvat.getMaterijali().add(novi);
 		}
 		
 		frmKreiranjeZahvata.dispatchEvent(new WindowEvent(frmKreiranjeZahvata,
 				WindowEvent.WINDOW_CLOSING));
 
+	}
+	
+	private void DodajMaterijal() {
+		if(!(comboBoxMaterijal.getSelectedItem() instanceof MaterijalVM )){
+			JOptionPane.showMessageDialog(frmKreiranjeZahvata, "Odaberite materijal", 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
+		TipZahvataMaterijalVM m = new TipZahvataMaterijalVM();
+		m.setMaterijalId(vm.getId());
+		
+		dataMaterijali.add(m);
+		
+		((CijeneEditableTM) tableMaterijali.getModel()).addRow(new Object[]{vm.getNaziv(), textKolicina.getText()});
+		//TODO: ovdje oprez... mislim da samo ovo treba, ali oprez
 	}
 }
