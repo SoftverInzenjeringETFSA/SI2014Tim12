@@ -23,6 +23,7 @@ import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
@@ -116,7 +117,41 @@ public class PacijentiGUI {
 			}
 		});
 		toolBar.add(btnModifikacijaPacijenta);
+		JButton BtnInfo = new JButton("Informacije o pacijentu");
+		BtnInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+				Integer index = table.getSelectedRow();
+				if (index < 0) {
+					JOptionPane.showMessageDialog(frame,
+							"Odaberite pacijenta u tabeli", "Obavještenje",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				PacijentVM pp = podaci.get(index);
+				Session sess = null;
+				podaci = null;
+				try {
+					String opcija = (String) comboBox.getSelectedItem();
+					String text = textField.getText();
+
+					sess = HibernateUtil.getSessionFactory().openSession();
+					PacijentManager pm = new PacijentManager(sess);
+					PrikazPacijentaVM pvm = pm.dajPacijenta(pp.getId());
+					new PrikazPacijentaGUI(pvm);
+					}
+				catch (Exception er) {
+
+					logger.debug(er.getMessage(), er);
+					JOptionPane.showMessageDialog(frame, er.getMessage(),
+							"Greška", JOptionPane.INFORMATION_MESSAGE);
+
+				} finally {
+					if (sess != null)
+						sess.close();
+				}
+			}
+		});
+		toolBar.add (BtnInfo);
 		JLabel lblPretraivanjePo = new JLabel("Pretra\u017Eivanje po:");
 		lblPretraivanjePo.setBounds(10, 69, 103, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
@@ -151,7 +186,6 @@ public class PacijentiGUI {
 
 					sess = HibernateUtil.getSessionFactory().openSession();
 					PacijentManager pManager = new PacijentManager(sess);
-
 					if (opcija.equals("Imenu i prezimenu")) {
 						podaci = pManager.nadjiPoImenu(text);
 					} else if (opcija.equals("ID-u")) {

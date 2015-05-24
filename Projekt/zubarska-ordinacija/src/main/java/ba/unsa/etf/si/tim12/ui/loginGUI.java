@@ -65,7 +65,6 @@ public class loginGUI {
 	private void initialize() {
 		frmPrijava = new JDialog();
 
-		frmPrijava.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		frmPrijava.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
@@ -107,6 +106,7 @@ public class loginGUI {
 			}
 		});
 		prijavaBtn.setBounds(164, 86, 113, 23);
+		prijavaBtn.setActionCommand("OK");
 		frmPrijava.getContentPane().add(prijavaBtn);
 
 		lblLozinka = new JLabel("Password:");
@@ -129,7 +129,8 @@ public class loginGUI {
 		textField.setColumns(10);
 		textField.setBounds(111, 21, 166, 20);
 		frmPrijava.getContentPane().add(textField);
-
+		frmPrijava.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		frmPrijava.getRootPane().setDefaultButton(prijavaBtn);
 	}
 
 	// Implemetirati funkciju za prijavu
