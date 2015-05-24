@@ -20,6 +20,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Pacijent;
 import ba.unsa.etf.si.tim12.dal.domainmodel.Termin;
+import ba.unsa.etf.si.tim12.dal.domainmodel.TipZahvata;
 
 
 public class TerminManagerTest {

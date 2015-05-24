@@ -37,10 +37,4 @@ public class TipZahvataVM {
 	public void setCijena(double cijena) {
 		this.cijena = cijena;
 	}
-	
-	@Override
-	public String toString() {
-		
-		return getNaziv() + " (" + getId() + ")";
-	}
 }
