@@ -191,7 +191,7 @@ public class MainForma {
 		TP.addTab("Materijali", null, p6, "Materijali");
 		p6.setLayout(new MigLayout("", "[][][][]", "[]"));
 
-		JButton btnDodavanjeMaterijal = new JButton("Dodavanje materijal");
+		JButton btnDodavanjeMaterijal = new JButton("Dodavanje materijala");
 		btnDodavanjeMaterijal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new KreiranjeMaterijalaGUI();
