@@ -18,6 +18,7 @@ import org.hibernate.Session;
 
 
 
+
 import ba.unsa.etf.si.tim12.bll.service.TipZahvataManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
@@ -80,6 +81,15 @@ public class ModifikacijaZahvataGUI {
 		JButton btnKreiraj = new JButton("Izmjeni");
 		btnKreiraj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if (textField.getText().isEmpty()) {JOptionPane.showMessageDialog(null,
+						"Unesite cijenu", "Greška!",
+						JOptionPane.ERROR_MESSAGE); return;}
+				
+				if (Double.parseDouble(textField.getText())<0) {JOptionPane.showMessageDialog(null,
+						"Unešena cijena je negativna", "Greška!",
+						JOptionPane.ERROR_MESSAGE); return;}
+				
 				Session sess = null;
 				// dodavanje pretrazenih materijala u tabelu
 				try {
