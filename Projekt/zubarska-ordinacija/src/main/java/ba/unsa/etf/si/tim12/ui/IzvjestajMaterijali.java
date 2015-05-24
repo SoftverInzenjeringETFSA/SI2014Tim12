@@ -172,7 +172,7 @@ public class IzvjestajMaterijali {
 		frame.getContentPane().add(lblTotal);
 		
 		textArea = new JTextArea();
-		textArea.setBounds(435, 270, 90, 34);
+		textArea.setBounds(435, 276, 90, 28);
 		frame.getContentPane().add(textArea);
 	}
 }

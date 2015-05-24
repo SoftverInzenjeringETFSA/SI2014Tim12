@@ -43,8 +43,6 @@ public class IzvjestajPosjeteDSM {
 	private JTable table;
 	private JLabel lblOd;
 	private JLabel lblOddo;
-	private JLabel lblVrstaPregleda;
-	private JComboBox comboBox_6;
 	private JSpinner spinnerOd;
 	private JSpinner spinnerDo;	
 	final static Logger logger = Logger.getLogger(IzvjestajPosjeteDSM.class);
@@ -83,12 +81,12 @@ public class IzvjestajPosjeteDSM {
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		
-		frame.setBounds(100, 100, 550, 364);
+		frame.setBounds(100, 100, 550, 320);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 118, 503, 157);
+		scrollPane.setBounds(22, 80, 503, 157);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -105,11 +103,11 @@ public class IzvjestajPosjeteDSM {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblPretraivanjePo = new JLabel("Odaberite vremenski interval:");
-		lblPretraivanjePo.setBounds(22, 57, 204, 19);
+		lblPretraivanjePo.setBounds(22, 13, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
 		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
-		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
+		btnModifikacijaMaterijala.setBounds(263, 250, 121, 23);
 		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +142,7 @@ public class IzvjestajPosjeteDSM {
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(404, 299, 121, 23);
+		btnOdustani.setBounds(404, 250, 121, 23);
 		btnOdustani.addActionListener(new ActionListener() {
 			
 			
@@ -157,32 +155,23 @@ public class IzvjestajPosjeteDSM {
 		frame.getContentPane().add(btnOdustani);
 		
 		lblOd = new JLabel("Od:");
-		lblOd.setBounds(22, 83, 27, 28);
+		lblOd.setBounds(22, 39, 27, 28);
 		frame.getContentPane().add(lblOd);
 		
 		lblOddo = new JLabel("Do:");
-		lblOddo.setBounds(315, 83, 27, 28);
+		lblOddo.setBounds(315, 39, 27, 28);
 		frame.getContentPane().add(lblOddo);
-		
-		lblVrstaPregleda = new JLabel("Vrsta pregleda:");
-		lblVrstaPregleda.setBounds(22, 24, 110, 14);
-		frame.getContentPane().add(lblVrstaPregleda);
-		
-		comboBox_6 = new JComboBox<Object>();
-		comboBox_6.setModel(new DefaultComboBoxModel<Object>(new String[] {"Dnevni", "Sedmi\u010Dni", "Mjese\u010Dni"}));
-		comboBox_6.setBounds(132, 21, 94, 20);
-		frame.getContentPane().add(comboBox_6);
 		
 		Calendar calendar = Calendar.getInstance();
 		Date initDate = calendar.getTime();
 		spinnerOd = new JSpinner();
 		spinnerOd.setModel(new SpinnerDateModel(new Date(-2208992399907L), null, null, Calendar.DAY_OF_YEAR));
 		spinnerOd.setEditor(new JSpinner.DateEditor(spinnerOd, "dd/MM/yyyy"));
-		spinnerOd.setBounds(61, 86, 171, 22);
+		spinnerOd.setBounds(61, 42, 171, 22);
 		frame.getContentPane().add(spinnerOd);
 		
 		spinnerDo = new JSpinner();
-		spinnerDo.setBounds(354, 86, 171, 22);
+		spinnerDo.setBounds(354, 42, 171, 22);
 		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
 		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
 		frame.getContentPane().add(spinnerDo);
