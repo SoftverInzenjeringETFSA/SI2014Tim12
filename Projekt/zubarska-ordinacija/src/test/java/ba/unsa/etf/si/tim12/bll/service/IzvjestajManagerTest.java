@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruVM;
@@ -202,12 +203,27 @@ public class IzvjestajManagerTest {
 				session.close();
 		}
 	}
-/*
-	@Test
-	public void testPosjetePacijenta() {
-		fail("Not yet implemented");
-	}
 
+	@Test
+	public void testPosjetePacijenta() throws Exception {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			IzvjestajManager mngr = new IzvjestajManager(session);
+			PosjetePacijentaVM posjete = mngr.posjetePacijenta(pac.getId());
+			assertEquals(1, posjete.getUkupnoPosjeta());
+			assertEquals(p.getDijagnoza(), posjete.getPosjete().get(0).getDijagnoza());
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally{
+			if(session != null)
+				session.close();
+		}
+	}
+/*
 	@Test
 	public void testOdradjenePosjetePoDanu() {
 		fail("Not yet implemented");

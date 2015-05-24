@@ -136,7 +136,7 @@ public class IzvjestajManager {
 			throw new PacijentNotFound("Pacijent sa unesenim id-em ne postoji!");
 
 		
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM(pac.id, pac.imeIPrezime, count(DISTINCT pos.id) "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM(pac.id, pac.imeIPrezime, count(DISTINCT pos.id)) "
 				+ "from Pacijent pac, Posjeta pos where pos.pacijentId = pac.id and pac.id = :id)";
 		Query q = session.createQuery(hql);
 		q.setLong("id", idPacijenta);	

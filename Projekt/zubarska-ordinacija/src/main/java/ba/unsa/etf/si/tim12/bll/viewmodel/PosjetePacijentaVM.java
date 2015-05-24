@@ -9,10 +9,10 @@ public class PosjetePacijentaVM {
 	private ArrayList<PosjetePacijentaRowVM> posjete;
 	
 	
-    public PosjetePacijentaVM(long idPacijenta, String imePrezimePacijenta, int ukupnoPosjeta){
+    public PosjetePacijentaVM(long idPacijenta, String imePrezimePacijenta, long ukupnoPosjeta){
     	this.setIdPacijenta(idPacijenta);
 		this.setImePrezimePacijenta(imePrezimePacijenta);
-	    this.setUkupnoPosjeta(ukupnoPosjeta);
+	    this.setUkupnoPosjeta((int)ukupnoPosjeta);
     }
 
 	public PosjetePacijentaVM() {
