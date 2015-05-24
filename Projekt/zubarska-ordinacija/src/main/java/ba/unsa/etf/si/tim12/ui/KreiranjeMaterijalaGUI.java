@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -19,12 +20,24 @@ import javax.swing.JToolBar;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.NoviMaterijalVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 
 public class KreiranjeMaterijalaGUI {
 
 	private JDialog frmDodavanjeMaterijala;
 	private JTextField materijal;
 	private JTextField jed_cijena;
+	private JComboBox comboBox;
+	static final Logger logger = Logger.getLogger(PrikazMaterijalaGUI.class);
 
 	
 
@@ -78,7 +91,35 @@ public class KreiranjeMaterijalaGUI {
 		lblBrojTelefona.setBounds(29, 73, 102, 20);
 		panel_1.add(lblBrojTelefona);
 		
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setEditable(true);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"miligram", "gram", "kilogram", "komad", "mililitar", "litar"}));
+		comboBox.setBounds(141, 42, 167, 23);
+		panel_1.add(comboBox);
+		
 		JButton btnKreiraj = new JButton("Kreiraj");
+		btnKreiraj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Session sess = null;
+				// dodavanje pretrazenih materijala u tabelu
+				try {
+					sess = HibernateUtil.getSessionFactory().openSession();
+					MaterijaliManager m = new MaterijaliManager(sess);
+					String jedinica= (String) comboBox.getSelectedItem();
+					NoviMaterijalVM materijalVM = new NoviMaterijalVM(materijal.getText(),jedinica,Double.parseDouble(jed_cijena.getText()));
+					boolean dodan=m.dodajNoviMaterijal(materijalVM);
+					if (dodan) { JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+							"Uspješno dodan materijal", "Obavještenje",
+							JOptionPane.INFORMATION_MESSAGE); }
+				} catch (Exception e2) {
+					logger.debug(e2.getMessage(), e2);
+				} finally {
+					if (sess != null)
+						sess.close();
+				}
+			}
+			
+		});
 		btnKreiraj.setBounds(181, 124, 127, 23);
 		panel_1.add(btnKreiraj);
 		
@@ -86,10 +127,7 @@ public class KreiranjeMaterijalaGUI {
 		btnOdustani.setBounds(29, 124, 127, 23);
 		panel_1.add(btnOdustani);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(true);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"miligram", "gram", "kilogram", "komad", "mililitar", "litar"}));
-		comboBox.setBounds(141, 42, 167, 23);
-		panel_1.add(comboBox);
+
+	
 	}
 }
