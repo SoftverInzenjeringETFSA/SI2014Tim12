@@ -3,6 +3,7 @@ package ba.unsa.etf.si.tim12.bll.service;
 import ba.unsa.etf.si.tim12.PacijentNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.hibernate.Query;
@@ -161,19 +162,54 @@ public class IzvjestajManager {
 		return rez;
 	}
 
-	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
+	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) throws Exception {
 		Transaction t = session.beginTransaction();
 		
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(vrijeme, count(DISTINCT id) from Posjeta "
-				+ "where vrijeme = :datum)";
-		Query q = session.createQuery(hql);
-		q.setDate("datum", vrijeme);
-		OdradjenePosjeteVM posjete = (OdradjenePosjeteVM) q.list().get(0);
+		Calendar calendar =  new GregorianCalendar();
+		calendar.setTime(vrijeme);
+		//"dd/MM/yy HH:mm a"
 		
-		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme)"
-				+ "from Posjeta pos, Pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
+		//SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		
+		//Date date = f.parse(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 00:00");
+        //Date date2 = f.parse(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 23:59");
+        
+        String date1 = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 00:00";
+        String date2 = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 23:59";
+        
+		/*
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date date1 = calendar.getTime();
+		
+		Calendar calendar2 =  new GregorianCalendar();
+		calendar2.setTime(vrijeme);
+		calendar2.set(Calendar.HOUR_OF_DAY, 0);
+		calendar2.set(Calendar.MINUTE, 0);
+		calendar2.set(Calendar.SECOND, 0);
+
+		calendar2.add(Calendar.DAY_OF_MONTH, -1);
+		Date date2 = calendar2.getTime();*/
+
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(count(DISTINCT id)) from Posjeta "
+				+ "where vrijeme BETWEEN STR_TO_DATE(:date1,'yyyy-MM-dd HH:mm') AND STR_TO_DATE(:date2,'yyyy-MM-dd HH:mm')";
+		Query q = session.createQuery(hql);
+		q.setString("date1", date1);
+		q.setString("date2", date2);
+		
+		
+		OdradjenePosjeteVM posjete = (OdradjenePosjeteVM) q.list().get(0);
+		posjete.setVrijeme(vrijeme);
+		
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme) "
+				+ "from Posjeta pos, Pacijent pac where pac.id = pos.pacijentId and pos.vrijeme BETWEEN STR_TO_DATE(:date1,'yyyy-MM-dd HH:mm') "
+				+ "AND STR_TO_DATE(:date2,'yyyy-MM-dd HH:mm')";
 		q = session.createQuery(hql);
-		q.setDate("datum", vrijeme);
+		q.setString("date1", date1);
+		q.setString("date2", date2);
 		
 		ArrayList<OdradjenePosjeteRowVM> posjeteRed = new ArrayList<OdradjenePosjeteRowVM>(q.list());
 		t.commit();

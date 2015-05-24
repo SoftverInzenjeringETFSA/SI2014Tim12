@@ -61,6 +61,7 @@ public class PosjetaManager {
 		ObavljeniZahvatManager mngr = new ObavljeniZahvatManager(session);
 		for(NoviObavljeniZahvatVM z: posjeta.getObavljeniZahvati())
 		{
+			z.setPosjetaId(p.getId());
 			if(!mngr.dodajNoviZahvat(z))
 				throw new Exception("Greska!Zahvat nije dodan!");
 		}
