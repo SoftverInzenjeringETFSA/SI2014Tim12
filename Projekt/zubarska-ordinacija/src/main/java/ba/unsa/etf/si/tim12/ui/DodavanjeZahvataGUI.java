@@ -368,12 +368,14 @@ public class DodavanjeZahvataGUI {
 		try{
 		
 			noviZahvat.setCijena(Double.parseDouble(textCijena.getText()));
-		
+			if(noviZahvat.getCijena() < 0)
+				throw new NumberFormatException("Cijena je negativna.");
 		} catch (NumberFormatException e){
 			e.printStackTrace();
 			
-			JOptionPane.showMessageDialog(null, "Za cijenu unesite decimalni broj", 
+			JOptionPane.showMessageDialog(null, "Za cijenu unesite nenegativan decimalni broj", 
 					"Greška", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		
 		noviZahvat.setMaterijali(new ArrayList<NoviOZahvatMaterijalVM>());
@@ -395,6 +397,7 @@ public class DodavanjeZahvataGUI {
 			} catch (NumberFormatException e){
 				JOptionPane.showMessageDialog(null, "Unesite decimalan broj za kolicine", 
 						"Greška", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
 			
 			noviZahvat.getMaterijali().add(novi);
