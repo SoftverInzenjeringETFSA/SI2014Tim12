@@ -70,6 +70,22 @@ public class Posjete {
 		textFieldDoktor.setText(termin.getDoktor());
 		textFieldVrijeme.setText(formater.format(termin.getVrijeme()));
 		
+		/*Session sess = null;
+		try{
+			
+			sess = HibernateUtil.getSessionFactory().openSession();
+			
+			PacijentManager pManager = new PacijentManager(sess);
+			
+			
+		}catch(Exception e){
+			
+			
+			
+		}finally{
+			if(sess != null)
+				sess.close();
+		}*/
 		
 		dlgPosjeteRegistracija.setVisible(true);
 	}
@@ -320,5 +336,20 @@ public class Posjete {
 			if (sess != null && sess.isOpen())
 				sess.close();
 		}
+	}
+	
+	void OsvjeziTable(){
+		
+		Object[][] data = new Object[obavljeniZahvati.size()][];
+		for(int i = 0; i < obavljeniZahvati.size(); i++){
+			data[i] = new Object[]{obavljeniZahvati.get(i).getZahvatId(), obavljeniZahvati.get(i).getCijena()};
+		}
+		
+		table.setModel(new UneditableTableModel(
+				data, new String[] {"Zahvat", "Cijena"}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(202);
+		table.getColumnModel().getColumn(1).setPreferredWidth(80);
+	
 	}
 }
