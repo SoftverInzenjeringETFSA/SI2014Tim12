@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,12 +18,25 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import javax.swing.SpinnerDateModel;
 
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.IzvjestajManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazRowVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class IzvjestajMaterijali {
@@ -31,14 +45,9 @@ public class IzvjestajMaterijali {
 	private JTable table;
 	private JLabel lblOd;
 	private JLabel lblOddo;
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
-	private JComboBox comboBox_4;
-	private JComboBox comboBox_5;
-
-
+	private JSpinner spinnerOd;
+	private JSpinner spinnerDo;
+	private static final Logger logger = Logger.getLogger(IzvjestajMaterijali.class);
 
 	/**
 	 * Create the application.
@@ -53,7 +62,7 @@ public class IzvjestajMaterijali {
 	 */
 	private void initialize() {
 		frame = new JDialog();
-		frame.setTitle("Finansijski izvjestaj materijala");
+		frame.setTitle("Finansijski izvještaj materijala");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		
@@ -66,11 +75,12 @@ public class IzvjestajMaterijali {
 		frame.getContentPane().add(scrollPane);
 		frame.setLocationRelativeTo(null);
 		table = new JTable();
+		table.setFillsViewportHeight(true);
 		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Materijal", "Jed.cijena", "m.jedinica", "Koli\u010Dina", "Ukupna cijena"
+				"ID", "Materijal", "Jed. cijena", "M. jedinica", "Količina", "Ukupna cijena"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -81,14 +91,34 @@ public class IzvjestajMaterijali {
 		lblPretraivanjePo.setBounds(22, 21, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
-		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
+		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
 		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame,
-					    "Nije implementirano.",
-					    "Obavje�tenje",
-					    JOptionPane.INFORMATION_MESSAGE);
+				Date datumOd = (Date) spinnerOd.getValue();
+				Date datumDo = (Date) spinnerDo.getValue();
+				Session sesija = null;
+				try {
+					sesija = HibernateUtil.getSessionFactory().openSession();
+					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
+					PotMaterijaliVM materijali = izvjestaji.potroseniMaterijali(datumOd, datumDo);
+					ArrayList<PotMaterijaliRowVM> redovi = materijali.getMaterijali();
+					for(int i = 0; i < redovi.size(); i++) {
+						table.getModel().setValueAt(redovi.get(i).getIdMaterijala(), i, 0);
+						table.getModel().setValueAt(redovi.get(i).getNazivMaterijala(), i, 1);
+						table.getModel().setValueAt(redovi.get(i).getJedinicnaCijena(), i, 2);
+						table.getModel().setValueAt(redovi.get(i).getMjernaJedinica(), i, 3);
+						table.getModel().setValueAt(redovi.get(i).getKolicina(), i, 4);
+						table.getModel().setValueAt(redovi.get(i).getUkupnaCijena(), i, 5);
+					}					
+				}
+				catch (Exception e1) {
+					logger.debug(e1.getMessage(), e1);
+				} 
+				finally {
+					if (sesija != null)
+						sesija.close();
+				}
 			}
 		});
 		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
@@ -114,28 +144,18 @@ public class IzvjestajMaterijali {
 		lblOddo.setBounds(297, 47, 27, 28);
 		frame.getContentPane().add(lblOddo);
 		
-		comboBox = new JComboBox();
-		comboBox.setBounds(46, 51, 49, 20);
-		frame.getContentPane().add(comboBox);
+		Calendar calendar = Calendar.getInstance();
+		Date initDate = calendar.getTime();
+		spinnerOd = new JSpinner();
+		spinnerOd.setModel(new SpinnerDateModel(new Date(-2208992399907L), null, null, Calendar.DAY_OF_YEAR));
+		spinnerOd.setEditor(new JSpinner.DateEditor(spinnerOd, "dd/MM/yyyy"));
+		spinnerOd.setBounds(73, 50, 171, 22);
+		frame.getContentPane().add(spinnerOd);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(105, 51, 49, 20);
-		frame.getContentPane().add(comboBox_1);
-		
-		comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(164, 51, 68, 20);
-		frame.getContentPane().add(comboBox_2);
-		
-		comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(334, 51, 49, 20);
-		frame.getContentPane().add(comboBox_3);
-		
-		comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(398, 51, 49, 20);
-		frame.getContentPane().add(comboBox_4);
-		
-		comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(457, 51, 68, 20);
-		frame.getContentPane().add(comboBox_5);
+		spinnerDo = new JSpinner();
+		spinnerDo.setBounds(354, 50, 171, 22);
+		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
+		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
+		frame.getContentPane().add(spinnerDo);
 	}
 }
