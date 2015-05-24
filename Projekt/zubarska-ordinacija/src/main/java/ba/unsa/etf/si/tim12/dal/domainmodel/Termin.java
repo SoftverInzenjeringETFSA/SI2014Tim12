@@ -34,6 +34,7 @@ public class Termin implements java.io.Serializable {
 	public Date getVrijeme() {
 		return vrijeme;
 	}
+	
 	public void setVrijeme(Date vrijeme) {
 		this.vrijeme = vrijeme;
 	}

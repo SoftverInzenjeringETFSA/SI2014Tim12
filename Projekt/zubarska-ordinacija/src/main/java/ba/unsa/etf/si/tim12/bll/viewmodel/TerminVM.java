@@ -7,13 +7,14 @@ public class TerminVM {
 	private String doktor;
 	private Date vrijeme;
 	private boolean otkazan;
+	private long pacijentId;
 	
 	public TerminVM()
 	{
 		
 	}
 	
-	public TerminVM(long id, String doktor, Date vrijeme, boolean otkazan)
+	public TerminVM(long id, String doktor, Date vrijeme, boolean otkazan, long pacijentId)
 	{
 		setId(id);
 		setDoktor(doktor);
@@ -25,9 +26,17 @@ public class TerminVM {
 	public long getId() {
 		return id;
 	}
+	
+	public long getPacijentId() {
+		return pacijentId;
+	}
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public void setPacijentId(long id) {
+		this.pacijentId = id;
 	}
 
 	public String getDoktor() {

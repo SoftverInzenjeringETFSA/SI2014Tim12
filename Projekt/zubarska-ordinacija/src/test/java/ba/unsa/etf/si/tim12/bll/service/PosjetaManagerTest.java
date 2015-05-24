@@ -29,11 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-
-/**
- * @author Sumejja, Emina
- *
- */
 public class PosjetaManagerTest {
 	
 	String dijagnoza = "Paradentoza";
@@ -94,7 +89,6 @@ public class PosjetaManagerTest {
 			
 			t.commit();
 			
-			session.close();
 		}
 		catch(Exception e)
 		{
@@ -103,7 +97,7 @@ public class PosjetaManagerTest {
 		}	
 		finally
 		{
-			if(session.isOpen())
+			if(session != null)
 				session.close();
 		}
 		
