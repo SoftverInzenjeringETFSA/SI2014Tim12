@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.tim12.ui;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -12,11 +13,23 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
+import org.hibernate.Session;
+import org.apache.log4j.Logger;
+
+import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
+import ba.unsa.etf.si.tim12.bll.service.TipZahvataManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 
 public class PrikazZahvataGUI {
@@ -25,6 +38,8 @@ public class PrikazZahvataGUI {
 	private JTable table;
 	private JTextField textField;
 	private JButton btnNewButton;
+	static final Logger logger = Logger.getLogger(PrikazZahvataGUI.class);
+	ArrayList<TipZahvataVM> podaci;
 
 
 
@@ -34,6 +49,7 @@ public class PrikazZahvataGUI {
 	public PrikazZahvataGUI() {
 		initialize();
 		frame.setVisible(true);
+		podaci=null;
 	}
 
 	/**
@@ -65,24 +81,72 @@ public class PrikazZahvataGUI {
 		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
 		
-		JLabel lblPretraivanjePo = new JLabel("Pretra\u017Eivanje po imenu zahvata:");
-		lblPretraivanjePo.setBounds(22, 21, 204, 19);
-		frame.getContentPane().add(lblPretraivanjePo);
-		
 		textField = new JTextField();
-		textField.setBounds(226, 20, 158, 19);
+		textField.setBounds(192, 20, 158, 19);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		btnNewButton = new JButton("Pretra\u017Ei");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Session sess = null;
+				// dodavanje pretrazenih materijala u tabelu
+				try {
+					sess = HibernateUtil.getSessionFactory().openSession();
+					TipZahvataManager m = new TipZahvataManager(sess);
+					podaci = m.nadjiPoImenu(textField.getText());
+					// prvo praznjenje
+					/*table.setModel(new UneditableTableModel(
+							new Object[][] {
+							},
+							new String[] {
+							 "Naziv", "Materijali", "Cijena"
+							}
+						));*/
+
+				} catch (Exception e) {
+					logger.debug(e.getMessage(), e);
+				} finally {
+					if (sess != null)
+						sess.close();
+				}
+				if (podaci != null)
+					PrikaziPodatke(podaci);
+			}
+
+			private void PrikaziPodatke(ArrayList<TipZahvataVM> zahvati) {
+				if (zahvati == null)
+					return;
+				
+				String[][] data = new String[zahvati.size()][];
+				for (int i = 0; i < zahvati.size(); i++) {
+					data[i] = TipZahvataVMtoObjectRow(zahvati.get(i));
+				}
+				
+				String[] columns = new String[] {"Naziv", "Materijali", "Cijena"
+				};
+				table.setModel(new UneditableTableModel(data, columns));
+				
+				
+				
+			}
+			private String[] TipZahvataVMtoObjectRow(TipZahvataVM z) {
+				
+				String[] r = { Long.toString(z.getId()), z.getNaziv(),
+						Double.toString(z.getCijena()) };
+				return r;
+			}
+			
+		});
+		
+		
+		
+		
+		
 		//ENIL: mijenjam ikonu, path
 		btnNewButton.setIcon(new ImageIcon("src/main/resources/SearchIcon.png"));
 		btnNewButton.setBounds(394, 20, 99, 20);
 		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnModifikacijaMaterijala = new JButton("Obri\u0161i");
-		btnModifikacijaMaterijala.setBounds(240, 299, 121, 23);
-		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
 		btnOdustani.setBounds(372, 299, 121, 23);
@@ -91,10 +155,23 @@ public class PrikazZahvataGUI {
 		JButton button = new JButton("Modifikacija cijene");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ModifikacijaZahvataGUI();
+			
+				Integer index = table.getSelectedRow();
+				if (index < 0) {
+					JOptionPane.showMessageDialog(frame,
+							"Odaberite pacijenta u tabeli", "Obavještenje",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+
+				new ModifikacijaZahvataGUI(podaci.get(index));
 			}
 		});
-		button.setBounds(85, 299, 145, 23);
+		button.setBounds(205, 299, 145, 23);
 		frame.getContentPane().add(button);
+		
+		JLabel lblPretraivanjePoImenu = new JLabel("Pretraživanje po imenu:");
+		lblPretraivanjePoImenu.setBounds(22, 23, 159, 14);
+		frame.getContentPane().add(lblPretraivanjePoImenu);
 	}
 }
