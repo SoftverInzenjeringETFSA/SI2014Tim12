@@ -39,7 +39,6 @@ public class PrikazPacijentaGUI {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextPane textPane;
-	private long pacijentId;
 	private DateFormat dateFormat;
 	static final Logger logger = Logger
 			.getLogger(ModifikacijaPacijentaGUI.class);
@@ -55,8 +54,6 @@ public class PrikazPacijentaGUI {
 		initialize();
 
 		dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-		pacijentId = pacijentVM.getId();
 
 		textField.setText(pacijentVM.getImePrezime());
 		textField_2.setText(pacijentVM.getBrojTelefona());
@@ -76,13 +73,10 @@ public class PrikazPacijentaGUI {
 				.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmPrikazPacijenta.setResizable(false);
 		frmPrikazPacijenta.setTitle("Prikaz pacijenta");
-		frmPrikazPacijenta.setBounds(100, 100, 384, 610);
+		frmPrikazPacijenta.setBounds(100, 100, 384, 660);
 		frmPrikazPacijenta
 				.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmPrikazPacijenta.setLocationRelativeTo(null);
-		JPanel panel = new JPanel();
-		frmPrikazPacijenta.getContentPane()
-				.add(panel, BorderLayout.NORTH);
 
 		JPanel panel_1 = new JPanel();
 		frmPrikazPacijenta.getContentPane().add(panel_1,
@@ -117,7 +111,7 @@ public class PrikazPacijentaGUI {
 		panel_1.add(lblDatumRodjenja);
 
 		JButton btnZatvori = new JButton("Odustani");
-		btnZatvori.setBounds(104, 529, 157, 23);
+		btnZatvori.setBounds(107, 589, 157, 23);
 		btnZatvori.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -136,7 +130,7 @@ public class PrikazPacijentaGUI {
 		panel_1.add(textPane);
 		
 		JScrollPane scrollPaneTermini = new JScrollPane();
-		scrollPaneTermini.setBounds(29, 388, 320, 128);
+		scrollPaneTermini.setBounds(29, 448, 320, 128);
 		panel_1.add(scrollPaneTermini);
 		
 		tableTermini = new JTable();
@@ -144,11 +138,19 @@ public class PrikazPacijentaGUI {
 		tableTermini.setFillsViewportHeight(true);
 		
 		JScrollPane scrollPanePosjete = new JScrollPane();
-		scrollPanePosjete.setBounds(29, 247, 320, 128);
+		scrollPanePosjete.setBounds(29, 285, 320, 128);
 		panel_1.add(scrollPanePosjete);
 		
 		tablePosjete = new JTable();
 		tablePosjete.setFillsViewportHeight(true);
 		scrollPanePosjete.setViewportView(tablePosjete);
+		
+		JLabel lblTermini = new JLabel("Termini");
+		lblTermini.setBounds(29, 426, 56, 16);
+		panel_1.add(lblTermini);
+		
+		JLabel lblPosjete = new JLabel("Posjete");
+		lblPosjete.setBounds(29, 263, 56, 16);
+		panel_1.add(lblPosjete);
 	}
 }
