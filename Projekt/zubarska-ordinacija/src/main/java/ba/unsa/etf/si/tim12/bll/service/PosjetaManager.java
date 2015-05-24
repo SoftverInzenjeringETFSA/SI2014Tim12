@@ -49,7 +49,7 @@ public class PosjetaManager {
 		
 		Pacijent pac = (Pacijent) session.get(Pacijent.class, posjeta.getPacijentId());
 		if(pac == null)
-			throw new PacijentNotFound();
+			throw new PacijentNotFound("Pacijent sa unesenim id-em ne postoji!");
 
 		p.setPacijentId(posjeta.getPacijentId());
 		p.setDoktor(posjeta.getDoktor());
@@ -62,7 +62,7 @@ public class PosjetaManager {
 		for(NoviObavljeniZahvatVM z: posjeta.getObavljeniZahvati())
 		{
 			if(!mngr.dodajNoviZahvat(z))
-				throw new Exception();
+				throw new Exception("Greska!Zahvat nije dodan!");
 		}
 		
 		t.commit();

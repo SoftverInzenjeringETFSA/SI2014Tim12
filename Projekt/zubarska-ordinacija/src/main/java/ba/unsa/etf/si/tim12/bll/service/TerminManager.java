@@ -25,7 +25,7 @@ public class TerminManager {
 		
 		Pacijent pac = (Pacijent) session.get(Pacijent.class, t.getPacijentId());
 		if(pac == null)
-			throw new PacijentNotFound();
+			throw new PacijentNotFound("Pacijent sa unesenim id-em ne postoji!");
 		
 		Termin termin = new Termin();
 		termin.setDoktor(t.getDoktor());

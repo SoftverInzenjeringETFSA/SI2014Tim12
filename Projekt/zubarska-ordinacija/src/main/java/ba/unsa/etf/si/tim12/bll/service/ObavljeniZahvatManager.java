@@ -47,7 +47,7 @@ class ObavljeniZahvatManager {
 			query = session.createQuery(hql);
 			query.setLong("id", m.getMaterijalId());
 			if(query.equals(0))
-				throw new MaterijalNotFound();
+				throw new MaterijalNotFound("Materijal sa unesenim id-em ne postoji!");
 			
 			mat.setKolicina(m.getKolicina());
 			mat.setMaterijalId(m.getMaterijalId());
