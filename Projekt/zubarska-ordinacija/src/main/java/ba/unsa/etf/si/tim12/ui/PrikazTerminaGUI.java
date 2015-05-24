@@ -83,7 +83,7 @@ public class PrikazTerminaGUI {
 			
 			if (ter.size() == 0)
 				return;
-			lista = ter;
+			lista = new ArrayList<TerminVM>();
 			
 			//JAVA :S
 			DefaultTableModel dm = (DefaultTableModel) table.getModel();
@@ -100,6 +100,7 @@ public class PrikazTerminaGUI {
 							continue; //preskoči ako pattern nije zadovoljen
 						//posto TerminManager nema metodu getPoDoktoru :P
 					}
+					lista.add(ter.get(i));
 					PacijentManager pm = new PacijentManager(sess);
 					PrikazPacijentaVM pvm = pm.dajPacijenta(ter.get(i).getPacijentId());
 					dm.addRow(new Object [] {sdf.format(ter.get(i).getVrijeme()), pvm.getImeIPrezime(), ter.get(i).getDoktor()});
@@ -204,7 +205,15 @@ public class PrikazTerminaGUI {
 		JButton btnDodajPosjetu = new JButton("Dodaj posjetu");
 		btnDodajPosjetu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Posjete();
+				if (table.getSelectedRows().length < 1)
+				{
+					JOptionPane.showMessageDialog(frame,
+							"Niste odabrali niti jedan termin!", "Obavještenje",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				new Posjete(lista.get(table.getSelectedRow()));
 				//nakon što doda, ponovo izlistaj termine 
 				IzlistajTermine("", null, null, true);
 			}
