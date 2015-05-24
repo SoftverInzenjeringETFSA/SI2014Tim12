@@ -48,6 +48,10 @@ public class IzvjestajUlazi {
 	private JSpinner spinnerOd;
 	private JSpinner spinnerDo;
 	private static final Logger logger = Logger.getLogger(IzvjestajUlazi.class);
+	private JTextField textFieldCijeneUk;
+	private JLabel lblTotal;
+	private JTextField textFieldPosjeteUk;
+	private JLabel lblUkupnoPosjeta;
 
 	/**
 	 * Create the application.
@@ -66,7 +70,7 @@ public class IzvjestajUlazi {
 		frame.setTitle("Finansijski izvještaj o svim ulazima");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 550, 364);
+		frame.setBounds(100, 100, 550, 406);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -91,8 +95,8 @@ public class IzvjestajUlazi {
 		lblPretraivanjePo.setBounds(22, 21, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
-		JButton btnModifikacijaMaterijala = new JButton("PrikaĹľi");
-		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
+		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
+		btnModifikacijaMaterijala.setBounds(266, 335, 121, 23);
 		btnModifikacijaMaterijala.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {				
 				Date datumOd = (Date) spinnerOd.getValue();
@@ -102,6 +106,10 @@ public class IzvjestajUlazi {
 					sesija = HibernateUtil.getSessionFactory().openSession();
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
 					FinancijskiUlazVM ulazi = izvjestaji.financijskiUlaz(datumOd, datumDo);
+					
+					textFieldCijeneUk.setText(Double.toString(ulazi.getUkupnaCijena()));
+					textFieldPosjeteUk.setText(Double.toString(ulazi.getUkupnoPosjeta()));
+					
 					ArrayList<FinancijskiUlazRowVM> redovi = ulazi.getListaFinancijskiUlazRowVM();
 					Object[][] data = new Object[redovi.size()][];
 					
@@ -128,7 +136,7 @@ public class IzvjestajUlazi {
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(404, 299, 121, 23);
+		btnOdustani.setBounds(404, 335, 121, 23);
 		btnOdustani.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -160,5 +168,23 @@ public class IzvjestajUlazi {
 		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
 		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
 		frame.getContentPane().add(spinnerDo);
+		
+		textFieldCijeneUk = new JTextField();
+		textFieldCijeneUk.setBounds(418, 274, 107, 23);
+		frame.getContentPane().add(textFieldCijeneUk);
+		textFieldCijeneUk.setColumns(10);
+		
+		lblTotal = new JLabel("Ukupno cijena:");
+		lblTotal.setBounds(315, 277, 91, 16);
+		frame.getContentPane().add(lblTotal);
+		
+		textFieldPosjeteUk = new JTextField();
+		textFieldPosjeteUk.setColumns(10);
+		textFieldPosjeteUk.setBounds(418, 303, 107, 23);
+		frame.getContentPane().add(textFieldPosjeteUk);
+		
+		lblUkupnoPosjeta = new JLabel("Ukupno posjeta:");
+		lblUkupnoPosjeta.setBounds(315, 306, 99, 16);
+		frame.getContentPane().add(lblUkupnoPosjeta);
 	}
 }

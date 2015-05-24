@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,12 +17,24 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import javax.swing.SpinnerDateModel;
+import javax.swing.table.TableModel;
 
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
+import ba.unsa.etf.si.tim12.bll.service.IzvjestajManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class IzvjestajPosjeteZahvati {
@@ -30,13 +43,9 @@ public class IzvjestajPosjeteZahvati {
 	private JTable table;
 	private JLabel lblOd;
 	private JLabel lblOddo;
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
-	private JComboBox comboBox_4;
-	private JComboBox comboBox_5;
-
+	private JSpinner spinnerOd;
+	private JSpinner spinnerDo;
+	private static final Logger logger = Logger.getLogger(IzvjestajPosjeteZahvati.class);
 
 	/**
 	 * Create the application.
@@ -65,13 +74,15 @@ public class IzvjestajPosjeteZahvati {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new UneditableTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Ime i prezime", "Zahvat", "Vrijeme posjete", "Cijena"
-			}
-		));
+		table.setFillsViewportHeight(true);
+		UneditableTableModel tableModel = new UneditableTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"ID", "Ime i prezime", "Zahvat", "Vrijeme posjete", "Cijena"
+				}
+			);
+		table.setModel(tableModel);
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
 		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
@@ -80,7 +91,24 @@ public class IzvjestajPosjeteZahvati {
 		lblPretraivanjePo.setBounds(22, 21, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
-		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
+		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
+		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Date datumOd = (Date) spinnerOd.getValue();
+				Date datumDo = (Date) spinnerDo.getValue();
+				Session sesija = null;
+				try {
+			
+				}
+				catch (Exception e1) {
+					logger.debug(e1.getMessage(), e1);
+				} 
+				finally {
+					if (sesija != null)
+						sesija.close();
+				}
+			}
+		});
 		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
@@ -104,28 +132,18 @@ public class IzvjestajPosjeteZahvati {
 		lblOddo.setBounds(297, 47, 27, 28);
 		frame.getContentPane().add(lblOddo);
 		
-		comboBox = new JComboBox();
-		comboBox.setBounds(46, 51, 49, 20);
-		frame.getContentPane().add(comboBox);
+		Calendar calendar = Calendar.getInstance();
+		Date initDate = calendar.getTime();
+		spinnerOd = new JSpinner();
+		spinnerOd.setModel(new SpinnerDateModel(new Date(-2208992399907L), null, null, Calendar.DAY_OF_YEAR));
+		spinnerOd.setEditor(new JSpinner.DateEditor(spinnerOd, "dd/MM/yyyy"));
+		spinnerOd.setBounds(73, 50, 171, 22);
+		frame.getContentPane().add(spinnerOd);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(105, 51, 49, 20);
-		frame.getContentPane().add(comboBox_1);
-		
-		comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(164, 51, 68, 20);
-		frame.getContentPane().add(comboBox_2);
-		
-		comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(334, 51, 49, 20);
-		frame.getContentPane().add(comboBox_3);
-		
-		comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(398, 51, 49, 20);
-		frame.getContentPane().add(comboBox_4);
-		
-		comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(457, 51, 68, 20);
-		frame.getContentPane().add(comboBox_5);
+		spinnerDo = new JSpinner();
+		spinnerDo.setBounds(354, 50, 171, 22);
+		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
+		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
+		frame.getContentPane().add(spinnerDo);
 	}
 }

@@ -38,6 +38,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JTextArea;
 
 
 public class IzvjestajMaterijali {
@@ -48,6 +49,7 @@ public class IzvjestajMaterijali {
 	private JLabel lblOddo;
 	private JSpinner spinnerOd;
 	private JSpinner spinnerDo;
+	private JTextArea textArea;
 	private static final Logger logger = Logger.getLogger(IzvjestajMaterijali.class);
 
 	/**
@@ -67,7 +69,7 @@ public class IzvjestajMaterijali {
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		
-		frame.setBounds(100, 100, 550, 364);
+		frame.setBounds(100, 100, 550, 389);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		MainForma.Prekini (frame);
@@ -103,6 +105,7 @@ public class IzvjestajMaterijali {
 					sesija = HibernateUtil.getSessionFactory().openSession();
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
 					PotMaterijaliVM materijali = izvjestaji.potroseniMaterijali(datumOd, datumDo);
+					textArea.setText(Double.toString(materijali.getUkupnaCijena()));
 					ArrayList<PotMaterijaliRowVM> redovi = materijali.getMaterijali();
 					Object[][] data = new Object[redovi.size()][];
 							
@@ -127,11 +130,11 @@ public class IzvjestajMaterijali {
 				}
 			}
 		});
-		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
+		btnModifikacijaMaterijala.setBounds(262, 318, 121, 23);
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(404, 299, 121, 23);
+		btnOdustani.setBounds(404, 318, 121, 23);
 		btnOdustani.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -163,5 +166,13 @@ public class IzvjestajMaterijali {
 		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
 		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
 		frame.getContentPane().add(spinnerDo);
+		
+		JLabel lblTotal = new JLabel("Total:");
+		lblTotal.setBounds(377, 288, 56, 16);
+		frame.getContentPane().add(lblTotal);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(435, 270, 90, 34);
+		frame.getContentPane().add(textArea);
 	}
 }

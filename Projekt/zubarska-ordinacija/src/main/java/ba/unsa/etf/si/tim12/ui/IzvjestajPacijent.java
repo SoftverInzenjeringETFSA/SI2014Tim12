@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JTextField;
 
 
 public class IzvjestajPacijent {
@@ -42,6 +43,8 @@ public class IzvjestajPacijent {
 	private JLabel lblPacijent;
 	private JComboBox comboBox;
 	private static final Logger logger = Logger.getLogger(IzvjestajPacijent.class);
+	private JTextField textField;
+	private JLabel lblUkupnoPosjeta;
 
 	/**
 	 * Create the application.
@@ -61,7 +64,7 @@ public class IzvjestajPacijent {
 		frame.setTitle("Izvje\u0161taj o obavljenim posjetama pacijenta");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 550, 364);
+		frame.setBounds(100, 100, 550, 400);
 		
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -84,7 +87,7 @@ public class IzvjestajPacijent {
 		scrollPane.setViewportView(table);
 		
 		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
-		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
+		btnModifikacijaMaterijala.setBounds(263, 329, 121, 23);
 		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
 			//TODO LUKA
 			public void actionPerformed(ActionEvent e) {
@@ -94,7 +97,7 @@ public class IzvjestajPacijent {
 		frame.getContentPane().add(btnModifikacijaMaterijala);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(404, 299, 121, 23);
+		btnOdustani.setBounds(404, 329, 121, 23);
 		btnOdustani.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -140,6 +143,15 @@ public class IzvjestajPacijent {
 			}
 		});
 		frame.getContentPane().add(comboBox);
+		
+		textField = new JTextField();
+		textField.setBounds(392, 275, 133, 23);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		lblUkupnoPosjeta = new JLabel("Ukupno posjeta");
+		lblUkupnoPosjeta.setBounds(290, 278, 94, 16);
+		frame.getContentPane().add(lblUkupnoPosjeta);
 	}
 	
 	
@@ -159,9 +171,8 @@ public class IzvjestajPacijent {
 			IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
 			PosjetePacijentaVM vm = izvjestaji.posjetePacijenta(pacijent.getId());
 			ArrayList<PosjetePacijentaRowVM> redovi = vm.getPosjete();
-			
-			Object[][] data = new Object[redovi.size()][]
-					;
+			textField.setText(Integer.toString(vm.getUkupnoPosjeta()));
+			Object[][] data = new Object[redovi.size()][];
 			for(int i = 0; i < redovi.size(); i++){
 				data[i] = new Object[]{ redovi.get(i).getOpisZahvata(), redovi.get(i).getDijagnoza(), 
 						redovi.get(i).getDoktor(),redovi.get(i).getVrijeme()};
