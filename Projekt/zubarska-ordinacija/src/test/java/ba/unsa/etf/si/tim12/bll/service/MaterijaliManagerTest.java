@@ -312,6 +312,11 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			n.setMjernaJedinica("kg");
 
 			boolean tmp = mManager.dodajNoviMaterijal(n);
+			String hq5 = "DELETE from Materijal t " +
+					"WHERE t.naziv = :Id";
+			Query p = sess.createQuery(hq5);
+			p.setString("Id", n.getNaziv());
+			p.executeUpdate();
 			assertEquals(tmp,true);
 			
 		} catch(Exception e){

@@ -173,15 +173,7 @@ public class IzvjestajPacijent {
 				columns
 			));
 			
-			JOptionPane.showMessageDialog(null, "ovdje");
-			
-			/*
-			for(int i = 0; i < redovi.size(); i++) {
-				table.getModel().setValueAt(redovi.get(i).getOpiszahvata(), i, 0);
-				table.getModel().setValueAt(redovi.get(i).getDijagnoza(), i, 1);
-				table.getModel().setValueAt(redovi.get(i).getDoktor(), i, 2);
-				table.getModel().setValueAt(redovi.get(i).getVrijeme(), i, 3);
-			}*/					
+			JOptionPane.showMessageDialog(null, "ovdje");				
 		}
 		catch (Exception e1) {
 			JOptionPane.showMessageDialog(frame, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);

@@ -103,13 +103,18 @@ public class IzvjestajUlazi {
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
 					FinancijskiUlazVM ulazi = izvjestaji.financijskiUlaz(datumOd, datumDo);
 					ArrayList<FinancijskiUlazRowVM> redovi = ulazi.getListaFinancijskiUlazRowVM();
-					for(int i = 0; i < redovi.size(); i++) {
-						table.getModel().setValueAt(redovi.get(i).getId(), i, 0);
-						table.getModel().setValueAt(redovi.get(i).getIme(), i, 1);
-						table.getModel().setValueAt(redovi.get(i).getImeZahvata(), i, 2);
-						table.getModel().setValueAt(redovi.get(i).getVrijemePosjete(), i, 3);
-						table.getModel().setValueAt(redovi.get(i).getCijena(), i, 4);
-					}					
+					Object[][] data = new Object[redovi.size()][];
+					
+					for(int i = 0; i < redovi.size(); i++){
+						data[i] = new Object[]{ redovi.get(i).getId(), redovi.get(i).getIme(), 
+								redovi.get(i).getImeZahvata(), redovi.get(i).getVrijemePosjete(), redovi.get(i).getCijena()};
+					}
+					
+					String[] columns = new String[]{"ID", "Ime i prezime", "Zahvat", "Vrijeme posjete", "Cijena"};
+					table.setModel(new UneditableTableModel(
+						data,
+						columns
+					));				
 				}
 				catch (Exception e1) {
 					logger.debug(e1.getMessage(), e1);

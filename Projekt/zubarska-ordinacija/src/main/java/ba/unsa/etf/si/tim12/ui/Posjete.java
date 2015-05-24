@@ -181,6 +181,13 @@ public class Posjete {
 				NoviObavljeniZahvatVM noviZahvat = new NoviObavljeniZahvatVM();
 				new DodavanjeZahvataGUI(noviZahvat);
 				JOptionPane.showMessageDialog(null, "" + noviZahvat.getZahvatId() + " -> " + noviZahvat.getMaterijali().size());
+				if(noviZahvat.getZahvatId() == 0)
+					return;
+				
+				else {
+					obavljeniZahvati.add(noviZahvat);
+				}
+				
 			}
 		});
 		btnDodajZahvat_1.setBounds(651, 191, 107, 23);

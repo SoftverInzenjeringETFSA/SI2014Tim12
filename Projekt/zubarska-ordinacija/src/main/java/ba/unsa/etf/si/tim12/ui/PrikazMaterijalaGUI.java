@@ -68,7 +68,7 @@ public class PrikazMaterijalaGUI {
 
 		JLabel lblPretraivanjePo = new JLabel(
 				"Pretra\u017Eivanje po imenu materijala:");
-		lblPretraivanjePo.setBounds(10, 21, 204, 19);
+		lblPretraivanjePo.setBounds(10, 21, 225, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 
 		textField = new JTextField();

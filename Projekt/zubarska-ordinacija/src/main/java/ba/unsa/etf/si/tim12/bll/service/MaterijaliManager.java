@@ -109,18 +109,15 @@ public class MaterijaliManager {
         //Vidi da li ovdje treba bacati Exception ili returnati FALSE 
 			if(!nesto.isEmpty() )
 				return false;
-			//throw new RuntimeException ("Materijal sa imenom već postoji!");
+		//throw new RuntimeException ("Materijal sa imenom već postoji!");
 		
 		
 		Materijal m = new Materijal();
-		System.out.println(m.getId());
 		m.setNaziv(NoviMaterijal.getNaziv());
 		m.setCijena(NoviMaterijal.getCijena());
 		m.setMjernaJedinica(NoviMaterijal.getMjernaJedinica());
 
 		session.save(m);
-		System.out.println(m.getId());
-
 		t.commit();
 		return true;
 		
