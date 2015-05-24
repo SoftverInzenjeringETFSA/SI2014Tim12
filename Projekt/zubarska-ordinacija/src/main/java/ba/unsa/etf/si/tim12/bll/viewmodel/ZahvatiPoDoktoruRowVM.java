@@ -3,11 +3,24 @@ package ba.unsa.etf.si.tim12.bll.viewmodel;
 import java.util.Date;
 
 public class ZahvatiPoDoktoruRowVM {
-	private long id;
+	private long id; //id zahvata obavljenog
 	private String imePrezime;
 	private String nazivZahvata;
 	private Date vrijemePosjete;
 	private double cijena;
+	
+	public ZahvatiPoDoktoruRowVM()
+	{
+		
+	}
+	public ZahvatiPoDoktoruRowVM(double cijena, long id, String imePrezime, String naziv, Date vrijeme)
+	{
+		this.setCijena(cijena);
+		this.setId(id);
+		this.setIme(imePrezime);
+		this.setNazivZahvata(naziv);
+		this.setVrijemePosjete(vrijeme);
+	}
 
 	public long getId() {
 		return id;
@@ -25,13 +38,7 @@ public class ZahvatiPoDoktoruRowVM {
 		this.imePrezime = ime;
 	}
 
-	public String getPrezime() {
-		return imePrezime;
-	}
-
-	public void setPrezime(String prezime) {
-		this.imePrezime = prezime;
-	}
+	
 
 	public String getNazivZahvata() {
 		return nazivZahvata;

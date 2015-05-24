@@ -90,6 +90,8 @@ public class TipZahvataManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		Transaction t = sess.beginTransaction();
+		
+		sess.delete(zahvat);
 				
 		String hql = "SELECT id FROM TipZahvata t " +
 				"WHERE t.naziv = :naziv";
@@ -118,6 +120,7 @@ public class TipZahvataManagerTest {
 			q.setLong("materijalId", m.getId());
 			q.executeUpdate();
 		}
+		
 		
 		t.commit();
 		

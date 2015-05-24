@@ -23,8 +23,8 @@ public class IzvjestajManager {
 	public ZahvatiPoDoktoruVM sviZahvatiPoDoktoru(String imeDoktora, Date vrijemeOd, Date vrijemeDo) {
 		
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruRowVM(z.id, pac.imeIPrezime, t.naziv, pos.vrijeme, z.cijena) "
-				+ "from posjeta pos, pacijent pac, obavljenizahvat z, tipzahvata t where pos.id = z.posjetaId and "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruRowVM(z.cijena, z.id, pac.imeIPrezime, t.naziv, pos.vrijeme) "
+				+ "from Posjeta pos, Pacijent pac, ObavljeniZahvat z, TipZahvata t where pos.id = z.posjetaId and "
 				+ "t.id = z.zahvatId and pac.id = pos.pacijentId and pos.doktor = :doktor and "
 				+ "pos.vrijeme BETWEEN :date1 AND :date2";
 		Query q = session.createQuery(hql);
@@ -35,7 +35,7 @@ public class IzvjestajManager {
 		ArrayList<ZahvatiPoDoktoruRowVM> rez = new ArrayList<ZahvatiPoDoktoruRowVM>(
 				q.list());
 		
-		hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoru(COUNT(distinct p.id), sum(z.cijena)) "
+		hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruVM(COUNT(distinct p.id), sum(z.cijena)) "
 				+ "FROM Posjeta p, ObavljeniZahvat z "
 				+ "WHERE p.doktor = :doktor and "
 				+ "z.posjetaId = p.id";
@@ -56,7 +56,7 @@ public class IzvjestajManager {
 	public FinancijskiUlazVM financijskiUlaz(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
 		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM(:vrijemeOd, :vrijemeDo, sum(z.cijena), count(DISTINCT p.id)"
-				+ " from obavljeniZahvat z, posjeta p where p.id = obavljeniZahvat.posjetaId "
+				+ " from ObavljeniZahvat z, Posjeta p where p.id = z.posjetaId "
 				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
 		Query q = session.createQuery(hql);
 		q.setDate("vrijemeOd", vrijemeOd);
@@ -68,9 +68,9 @@ public class IzvjestajManager {
 			rez = null;
 		
 		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazRowVM(z.id, pac.imeIPrezime, t.naziv, pos.vrijeme, z.cijena "
-				+ "from posjete pos, pacijent pac, tipzahvata t, obavljenizahvat z "
+				+ "from Posjeta pos, Pacijent pac, TipZahvata t, ObavljeniZahvat z "
 				+ "where pos.id = z.posjetaId and pac.id = pos.pacijentId and t.id = z.zahvatId "
-				+ "and pos.datum between :vrijemeOd and :vrijemeDo";
+				+ "and pos.vrijeme between :vrijemeOd and :vrijemeDo";
 		q = session.createQuery(hql);
 		q.setDate("vrijemeOd", vrijemeOd);
 		q.setDate("vrijemeDo", vrijemeDo);
@@ -86,7 +86,7 @@ public class IzvjestajManager {
 	public PotMaterijaliVM potroseniMaterijali(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
 		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM(:vrijemeOd, :vrijemeDo, sum(m.cijena)) "
-				+ "from materijal m, utrosenimaterijal u, obavljeni zahvat o, posjeta p "
+				+ "from Materijal m, UtroseniMaterijal u, ObavljeniZahvat o, Posjeta p "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
 				+ "and p.vrijeme BETWEEN :vrijemeOd AND :vrijemeDo";
 		Query q = session.createQuery(hql);
@@ -104,7 +104,7 @@ public class IzvjestajManager {
 			return rez;
 		
 		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.cijena, u.kolicina, m.mjernaJedinica, m.naziv, u.kolicina*m.cijena)"
-				+ "from materijal m, utrosenimaterijal u, posjeta p, obavljenizahvat o "
+				+ "from Materijal m, UtroseniMaterijal u, Posjeta p, ObavljeniZahvat o "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
 				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
 		
@@ -126,7 +126,7 @@ public class IzvjestajManager {
 
 		
 		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM(pac.id, pac.imeIPrezime, count(DISTINCT pos.id) "
-				+ "from pacijent pac, posjeta pos where pos.pacijentId = pac.id and pac.id = :id)";
+				+ "from Pacijent pac, Posjeta pos where pos.pacijentId = pac.id and pac.id = :id)";
 		Query q = session.createQuery(hql);
 		q.setLong("id", idPacijenta);	
 		
@@ -134,7 +134,7 @@ public class IzvjestajManager {
 		PosjetePacijentaVM rez = (PosjetePacijentaVM) q.list().get(0);
 		
 		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaRowVM(p.dijagnoza, p.doktor, t.opis, p.vrijeme)"
-				+ "from posjeta p, pacijent pac, tipzahvata t, obavljenizahvat o "
+				+ "from Posjeta p, Pacijent pac, TipZahvata t, ObavljeniZahvat o "
 				+ "where p.id = o.posjetaId and t.id = o.zahvatId and pac.id = p.pacijentId and pac.id = :id";
 		q = session.createQuery(hql);
 		q.setLong("id", idPacijenta);
@@ -149,14 +149,14 @@ public class IzvjestajManager {
 	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
 		Transaction t = session.beginTransaction();
 		
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(vrijeme, count(DISTINCT id) from posjeta "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(vrijeme, count(DISTINCT id) from Posjeta "
 				+ "where vrijeme = :datum)";
 		Query q = session.createQuery(hql);
 		q.setDate("datum", vrijeme);
 		OdradjenePosjeteVM posjete = (OdradjenePosjeteVM) q.list().get(0);
 		
 		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme)"
-				+ "from posjeta pos, pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
+				+ "from Posjeta pos, Pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
 		q = session.createQuery(hql);
 		q.setDate("datum", vrijeme);
 		
