@@ -2,6 +2,7 @@ package ba.unsa.etf.si.tim12.bll.service;
 import java.util.List;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.*;
+import ba.unsa.etf.si.tim12.dal.domainmodel.Materijal;
 
 import java.util.ArrayList;
 
@@ -93,6 +94,37 @@ public class MaterijaliManager {
 		t.commit();	
 		return materijali;	
 		
+	}
+	
+	public boolean dodajNoviMaterijal(NoviMaterijalVM NoviMaterijal)
+	{
+		Transaction t = session.beginTransaction();
+		
+		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) "
+				+ "FROM Materijal p WHERE p.naziv= :NoviMaterijal";		
+        Query q = session.createQuery(hql);
+        q.setString("NoviMaterijal",NoviMaterijal.getNaziv());
+		
+        List<MaterijalVM> nesto =  (List<MaterijalVM>) q.list();
+        //Vidi da li ovdje treba bacati Exception ili returnati FALSE 
+			if(!nesto.isEmpty() )
+				return false;
+			//throw new RuntimeException ("Materijal sa imenom već postoji!");
+		
+		
+		Materijal m = new Materijal();
+		System.out.println(m.getId());
+		m.setNaziv(NoviMaterijal.getNaziv());
+		m.setCijena(NoviMaterijal.getCijena());
+		m.setMjernaJedinica(NoviMaterijal.getMjernaJedinica());
+
+		session.save(m);
+		System.out.println(m.getId());
+
+		t.commit();
+		return true;
+		
+
 	}
 
 }

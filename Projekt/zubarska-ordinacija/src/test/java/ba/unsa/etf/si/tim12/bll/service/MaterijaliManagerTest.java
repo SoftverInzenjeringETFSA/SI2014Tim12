@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ba.unsa.etf.si.tim12.MaterijalNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.NoviMaterijalVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataMaterijalVM;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
@@ -297,6 +298,59 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 
 	}
 	
+	@Test
+	public void dodajNoviMaterijal()  throws Exception {
+		Session sess = null;
+		
+		try{
+			sess = HibernateUtil.getSessionFactory().openSession();
+			
+			MaterijaliManager mManager = new MaterijaliManager(sess);
+			NoviMaterijalVM n = new NoviMaterijalVM();
+			n.setNaziv("MaterijalNovi1");
+			n.setCijena(25);
+			n.setMjernaJedinica("kg");
+
+			boolean tmp = mManager.dodajNoviMaterijal(n);
+			assertEquals(tmp,true);
+			
+		} catch(Exception e){
+			e.printStackTrace();
+			throw e;
+			
+		} finally {
+			if(sess != null)
+				sess.close();
+		}
+
+	}
+	
+	@Test
+	public void dodajPostojeciMaterijal()  throws Exception {
+		Session sess = null;
+		
+		try{
+			sess = HibernateUtil.getSessionFactory().openSession();
+			
+			MaterijaliManager mManager = new MaterijaliManager(sess);
+			NoviMaterijalVM n = new NoviMaterijalVM();
+			n.setNaziv(materijal.getNaziv());
+			n.setCijena(25);
+			n.setMjernaJedinica("kg");
+			
+			boolean tmp = mManager.dodajNoviMaterijal(n);
+			assertFalse(tmp);
+			
+		} catch(Exception e){
+			e.printStackTrace();
+			throw e;
+			
+		} finally {
+			if(sess != null)
+				sess.close();
+		}
+
+	}
 	 private long NadjiSlobodanIDTipaZahvata() {
 			
 			Session sess = HibernateUtil.getSessionFactory().openSession();

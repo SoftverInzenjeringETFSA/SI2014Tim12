@@ -4,7 +4,15 @@ public class NoviMaterijalVM {
 	private String naziv;
 	private String mjernaJedinica;
 	private double cijena;
-
+	
+	public NoviMaterijalVM( String naziv,String mjernaJedinica,double cijena) {	
+	this.cijena=cijena;
+	this.naziv=naziv;
+	this.mjernaJedinica=mjernaJedinica;
+}
+public NoviMaterijalVM() {
+	
+}
 	public String getNaziv() {
 		return naziv;
 	}
