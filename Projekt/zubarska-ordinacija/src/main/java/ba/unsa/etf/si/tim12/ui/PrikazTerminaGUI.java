@@ -25,6 +25,8 @@ import org.hibernate.Session;
 import ba.unsa.etf.si.tim12.bll.service.MaterijaliManager;
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.service.TerminManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTermin;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
@@ -50,21 +52,18 @@ public class PrikazTerminaGUI {
 	private JButton btnNewButton;
 	private JTable table;
 	private JTextField textField_1;
-    private Date now = new Date();
-    private Date noww = new Date();
-    final SpinnerDateModel model1 = new SpinnerDateModel(noww, null, noww,
-            Calendar.DAY_OF_WEEK);	    
-	JSpinner spinner = new JSpinner(model1);
-    final SpinnerDateModel model2 = new SpinnerDateModel(now, null, now,
-            Calendar.DAY_OF_WEEK);
-    JSpinner spinner_1 = new JSpinner(model2);
+
 	static final Logger logger = Logger.getLogger(PrikazTerminaGUI.class);
 	ArrayList<TerminVM> lista = null;
+	private JTextField textField;
+	private JTextField textField_2;
 	/**
 	 * Create the application.
 	 */
 	public PrikazTerminaGUI() {
 		initialize();
+		textField.setText("1-1-2000");
+		textField_2.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 		frame.setVisible(true);
 		IzlistajTermine("", new Date(), new Date(), true);
 	}
@@ -220,30 +219,45 @@ public class PrikazTerminaGUI {
 		});
 		btnDodajPosjetu.setBounds(210, 291, 140, 23);
 		frame.getContentPane().add(btnDodajPosjetu);
-        now = new Date();
-        noww = new Date();
-        
-        try {
-			noww = new SimpleDateFormat("YYYY").parse("2000");
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-	    JSpinner.DateEditor editor1 = new JSpinner.DateEditor(spinner,
-	    		"dd-MM-YYYY");
-	    spinner.setEditor(editor1);
-		spinner.setBounds(166, 24, 192, 20);
-		frame.getContentPane().add(spinner);
-	    
-	    		
-	    JSpinner.DateEditor editor2 = new JSpinner.DateEditor(spinner_1,"dd-MM-YYYY");
-		spinner_1.setEditor(editor2);
-		spinner_1.setBounds(166, 54, 192, 20);
-		frame.getContentPane().add(spinner_1);
+
+		
+		textField = new JTextField();
+		textField.setBounds(166, 24, 120, 20);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(166, 54, 120, 20);
+		frame.getContentPane().add(textField_2);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-					IzlistajTermine(textField_1.getText().toLowerCase(),
-							(Date)spinner.getValue(), (Date)spinner_1.getValue(), false);
+				
+				try
+				{
+					String s1 = textField.getText();
+					String s2 = textField_2.getText();
+					Date d1 = null, d2 = null;			
+					SimpleDateFormat sd = new SimpleDateFormat("d-M-yyyy");
+					sd.setLenient(false);
+					d1 = sd.parse(s1);
+					d2 = sd.parse(s2);
+					if (d1.compareTo(d2) > 0)
+					{
+						JOptionPane.showMessageDialog(null, "Datum 'od' je poslije datuma 'do'!", 
+								"Greška!", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					IzlistajTermine(textField_1.getText().toLowerCase(), d1, d2, false);
+				}
+				catch(ParseException e){
+					
+					JOptionPane.showMessageDialog(null, "Unesite datum u formatu dd-mm-gggg (primjer: 12-5-2015)", 
+							"Greška!", JOptionPane.ERROR_MESSAGE);
+					
+				}
+
 			}
 		});
 	}
