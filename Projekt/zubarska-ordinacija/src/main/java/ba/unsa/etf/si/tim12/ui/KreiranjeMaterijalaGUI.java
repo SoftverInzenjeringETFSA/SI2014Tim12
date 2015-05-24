@@ -124,6 +124,11 @@ public class KreiranjeMaterijalaGUI {
 		panel_1.add(btnKreiraj);
 		
 		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmDodavanjeMaterijala.dispose();
+			}
+		});
 		btnOdustani.setBounds(29, 124, 127, 23);
 		panel_1.add(btnOdustani);
 		

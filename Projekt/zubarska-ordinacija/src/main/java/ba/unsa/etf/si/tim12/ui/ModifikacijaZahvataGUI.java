@@ -115,6 +115,11 @@ public class ModifikacijaZahvataGUI {
 		panel_1.add(btnKreiraj);
 		
 		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmModifikacijaZahvata.dispose();
+			}
+		});
 		btnOdustani.setBounds(25, 95, 157, 23);
 		panel_1.add(btnOdustani);
 	}
