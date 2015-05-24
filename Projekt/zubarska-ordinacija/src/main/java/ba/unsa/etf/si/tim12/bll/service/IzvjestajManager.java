@@ -148,19 +148,21 @@ public class IzvjestajManager {
 
 	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(datum, count(*) from posjeta "
-				+ "where datum = :datum)";
+		
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(vrijeme, count(DISTINCT id) from posjeta "
+				+ "where vrijeme = :datum)";
 		Query q = session.createQuery(hql);
 		q.setDate("datum", vrijeme);
-		OdradjenePosjeteVM posjete;
-		if(!q.list().isEmpty())
-			posjete = (OdradjenePosjeteVM) q.list().get(0);
-		else posjete = null;
-		t.commit();
-		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.datum)"
+		OdradjenePosjeteVM posjete = (OdradjenePosjeteVM) q.list().get(0);
+		
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme)"
 				+ "from posjeta pos, pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
+		Query q = session.createQuery(hql);
+		q.setDate("datum", vrijeme);
+		
 		ArrayList<OdradjenePosjeteRowVM> posjeteRed = new ArrayList<OdradjenePosjeteRowVM>(q.list());
 		t.commit();
+		
 		posjete.setOdradjenePosjete(posjeteRed);
 		return posjete;
 	}
