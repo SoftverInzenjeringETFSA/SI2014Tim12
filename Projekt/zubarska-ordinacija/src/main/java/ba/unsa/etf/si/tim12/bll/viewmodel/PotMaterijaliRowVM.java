@@ -7,7 +7,23 @@ public class PotMaterijaliRowVM {
 	private String mjernaJedinica;
 	private double kolicina;
 	private double ukupnaCijena;
+	
+	public PotMaterijaliRowVM(){
+		
+	}
+	
+	public PotMaterijaliRowVM(long idMaterijala, double jedinicnaCijena, double kolicina, String mjernaJedinica, String nazivMaterijala, double ukupnaCijena){
+		this.setIdMaterijala(idMaterijala);
+		this.setJedinicnaCijena(jedinicnaCijena);
+		this.setKolicina(kolicina);
+		this.setMjernaJedinica(mjernaJedinica);
+		this.setNazivMaterijala(nazivMaterijala);
+		this.setUkupnaCijena(ukupnaCijena);
+	}
+	
+	//(m.id, m.cijena, u.kolicina, m.mjernaJedinica, m.naziv, u.kolicina*m.cijena)
 
+	
 	public long getIdMaterijala() {
 		return idMaterijala;
 	}

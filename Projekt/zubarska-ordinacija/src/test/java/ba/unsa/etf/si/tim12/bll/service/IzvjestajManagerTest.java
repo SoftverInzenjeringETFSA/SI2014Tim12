@@ -190,9 +190,7 @@ public class IzvjestajManagerTest {
 			IzvjestajManager mngr = new IzvjestajManager(session);
 			PotMaterijaliVM materijali = mngr.potroseniMaterijali(vrijemeOd, vrijemeDo);
 			assertEquals(m.getCijena() * u.getKolicina(), materijali.getUkupnaCijena(), 0.0002);
-			//Object row =  (PotMaterijaliRowVM) materijali.getMaterijali().get(0);
-			// WTFFF
-			//assertEquals(Long.valueOf(m.getId()), Long.valueOf(row.getIdMaterijala()));
+			assertEquals(Long.valueOf(m.getId()), Long.valueOf(materijali.getMaterijali().get(0).getIdMaterijala()));
 		}
 		catch(Exception e)
 		{

@@ -119,6 +119,10 @@ public class IzvjestajManager {
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
 				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
 		
+		q = session.createQuery(hql);
+		q.setDate("vrijemeOd", vrijemeOd);
+		q.setDate("vrijemeDo", vrijemeDo);
+		
 		ArrayList<PotMaterijaliRowVM> r = new ArrayList<PotMaterijaliRowVM>(q.list());
 		
 		t.commit();
