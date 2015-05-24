@@ -100,6 +100,13 @@ public class KreiranjeMaterijalaGUI {
 		JButton btnKreiraj = new JButton("Kreiraj");
 		btnKreiraj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (materijal.getText().isEmpty()) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+						"Unesite naziv materijala", "Greška!",
+						JOptionPane.INFORMATION_MESSAGE);} else
+				if (Double.parseDouble(jed_cijena.getText())<0) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+						"Unijeli ste negativnu cijenu", "Greška!",
+						JOptionPane.INFORMATION_MESSAGE);}
+				else {
 				Session sess = null;
 				// dodavanje pretrazenih materijala u tabelu
 				try {
@@ -116,6 +123,7 @@ public class KreiranjeMaterijalaGUI {
 				} finally {
 					if (sess != null)
 						sess.close();
+				}
 				}
 			}
 			
