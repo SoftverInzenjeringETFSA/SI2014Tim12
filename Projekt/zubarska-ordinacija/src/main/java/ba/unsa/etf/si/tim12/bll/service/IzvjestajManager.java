@@ -18,31 +18,42 @@ public class IzvjestajManager {
 		this.session = session;
 	}
 
-	public ZahvatiPoDoktoruVM sviZahvatiPoDoktoru(String imeDoktora) {
+	public ZahvatiPoDoktoruVM sviZahvatiPoDoktoru(String imeDoktora, Date vrijemeOd, Date vrijemeDo) {
 		imeDoktora = "%" + imeDoktora.trim() + "%";
 		Transaction t = session.beginTransaction();
-		String hql = "select new ZahvatiPoDoktoruRowVM(z.id, pac.imeIPrezime, t.naziv, pos.datum, z.cijena) "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruRowVM(z.id, pac.imeIPrezime, t.naziv, pos.vrijeme, z.cijena) "
 				+ "from posjeta pos, pacijent pac, obavljenizahvat z, tipzahvata t where pos.id = z.posjetaId and "
-				+ "t.id = z.zahvatId and pac.id = pos.pacijentId and pos.doktor like :doktor";
+				+ "t.id = z.zahvatId and pac.id = pos.pacijentId and pos.doktor like :doktor and "
+				+ "pos.vrijeme BETWEEN :date1 AND :date2";
 		Query q = session.createQuery(hql);
 		q.setParameter("doktor", imeDoktora);
+		q.setDate("date1", vrijemeOd);
+		q.setDate("date2", vrijemeDo);
+		
 		ArrayList<ZahvatiPoDoktoruRowVM> rez = new ArrayList<ZahvatiPoDoktoruRowVM>(
 				q.list());
-		t.commit();
-		hql = "select new ZahvatiPoDoktoruVM(pos.doktor, min(pos.datum), max(pos.datum), sum(z.cijena), count(pos.id) "
-				+ "from posjeta pos, obavljenizahvat z where pos.doktor like :doktor and pos.id = z.posjetaId";
+		
+		hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoru(COUNT(distinct p.id), sum(z.cijena)) "
+				+ "FROM Posjeta p, ObavljeniZahvat z "
+				+ "WHERE p.doktor LIKE :doktor and "
+				+ "z.posjetaId = p.id";
 		q = session.createQuery(hql);
-		// q.setParameter("doktor", imeDoktora); TODO: valjda ga ne treba opet setovati?
-		ZahvatiPoDoktoruVM rezultat = (ZahvatiPoDoktoruVM) q.list().get(0);
-		t.commit();
-		rezultat.setZahvati(rez);
+		q.setParameter("doktor", imeDoktora);
+		List<Object> r = q.list();
+				
+	      ZahvatiPoDoktoruVM rezultat = (ZahvatiPoDoktoruVM) r.get(0);
+	      rezultat.setDoktor(imeDoktora);
+	      rezultat.setVrijemeDo(vrijemeDo);
+	      rezultat.setVrijemeOd(vrijemeOd);
+	      rezultat.setZahvati(rez);
+	    
+	    t.commit();
 		return rezultat;
 	}
 	
-	//TODO: provjeri t.commit() i treba li nova sesija - Emina
 	public FinancijskiUlazVM financijskiUlaz(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new FinancijskiUlazVM(:vrijemeOd, :vrijemeDo, sum(z.cijena), count(p.id)"
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM(:vrijemeOd, :vrijemeDo, sum(z.cijena), count(p.id)"
 				+ " from obavljeniZahvat z, posjeta p where p.id = obavljeniZahvat.posjetaId "
 				+ "and p.datum between :vrijemeOd and :vrijemeDo";
 		Query q = session.createQuery(hql);
@@ -54,19 +65,21 @@ public class IzvjestajManager {
 		else
 			rez = null;
 		t.commit();
-		hql = "select new FinancijskiUlazRowVM(pos.id, pac.imeIPrezime, t.naziv, pos.datum, z.cijena "
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazRowVM(pos.id, pac.imeIPrezime, t.naziv, pos.datum, z.cijena "
 				+ "from posjete pos, pacijent pac, tipzahvata t, obavljenizahvat z "
 				+ "where pos.id = z.posjetaid and pac.id = pos.pacijentid and tipzahvataid = z.zahvatid "
 				+ "and pos.datum between :vrijemeOd and :vrijemeDo";
 		ArrayList<FinancijskiUlazRowVM> r = new ArrayList<FinancijskiUlazRowVM>(q.list());
-		t.commit();
+		
 		rez.setFinancijskiUlazRowVM(r);
+		
+		t.commit();
 		return rez;
 	}
 
 	public PotMaterijaliVM potroseniMaterijali(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new PotMaterijaliVM(:vrijemeOd, :vrijemeDo, sum(m.cijena)) "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM(:vrijemeOd, :vrijemeDo, sum(m.cijena)) "
 				+ "from materijal m, utrosenimaterijal u, obavljeni zahvat o, posjeta p "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId";
 		Query q = session.createQuery(hql);
@@ -78,7 +91,7 @@ public class IzvjestajManager {
 		else
 			rez = null;
 		t.commit();
-		hql = "select new PotMaterijaliRowVM(m.id, m.naziv, m.cijena, m.mjernaJedinica, u.kolicina, u.kolicina*m.cijena)"
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.naziv, m.cijena, m.mjernaJedinica, u.kolicina, u.kolicina*m.cijena)"
 				+ "from materijal m, utrosenimaterijal u, posjeta p, obavljenizahvat o "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
 				+ "and p.datum between :vrijemeOd and :vrijemeDo";
@@ -90,7 +103,7 @@ public class IzvjestajManager {
 
 	public PosjetePacijentaVM posjetePacijenta(long idPacijenta) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new PosjetePacijentaVM(pac.imeIPrezime, pac.id, count(*) "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM(pac.imeIPrezime, pac.id, count(*) "
 				+ "from pacijent pac, posjeta pos where pos.pacijentId = pac.id and pac.id = :id)";
 		Query q = session.createQuery(hql);
 		q.setLong("id", idPacijenta);	
@@ -100,7 +113,7 @@ public class IzvjestajManager {
 		else
 			rez = null;
 		t.commit();
-		hql = "select new PosjetePacijentaRowVM(t.naziv, p.dijagnoza, p.doktor, p.datum)"
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaRowVM(t.naziv, p.dijagnoza, p.doktor, p.datum)"
 				+ "from posjeta p, pacijent pac, tipzahvata z, obavljenizahvat o "
 				+ "where p.id = o.posjetaId and t.id = o.zahvatId and pac.id = p.pacijentId and pac.id = :id";
 		ArrayList<PosjetePacijentaRowVM> r = new ArrayList<PosjetePacijentaRowVM>(q.list());
@@ -111,7 +124,7 @@ public class IzvjestajManager {
 
 	public OdradjenePosjeteVM odradjenePosjetePoDanu(Date vrijeme) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new OdradjenePosjeteVM(datum, count(*) from posjeta "
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(datum, count(*) from posjeta "
 				+ "where datum = :datum)";
 		Query q = session.createQuery(hql);
 		q.setDate("datum", vrijeme);
@@ -120,7 +133,7 @@ public class IzvjestajManager {
 			posjete = (OdradjenePosjeteVM) q.list().get(0);
 		else posjete = null;
 		t.commit();
-		hql = "select new OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.datum)"
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.datum)"
 				+ "from posjeta pos, pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
 		ArrayList<OdradjenePosjeteRowVM> posjeteRed = new ArrayList<OdradjenePosjeteRowVM>(q.list());
 		t.commit();
