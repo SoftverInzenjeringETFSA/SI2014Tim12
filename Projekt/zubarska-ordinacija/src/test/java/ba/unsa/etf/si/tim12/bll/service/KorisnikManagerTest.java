@@ -152,7 +152,7 @@ public class KorisnikManagerTest {
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
 		int rezultat = kManager.promjeniPassword(model);
-		assertFalse(rezultat != 0);
+		assertTrue(rezultat != 0);
 		
 		sess.close();
 	}
@@ -170,7 +170,7 @@ public class KorisnikManagerTest {
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
 		int rezultat = kManager.promjeniPassword(model);
-		assertFalse(rezultat != 0);
+		assertTrue(rezultat != 0);
 		
 		sess.close();
 	}
@@ -188,7 +188,7 @@ public class KorisnikManagerTest {
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
 		int rezultat = kManager.promjeniPassword(model);
-		assertFalse(rezultat != 0);
+		assertTrue(rezultat != 0);
 		
 		sess.close();
 	}

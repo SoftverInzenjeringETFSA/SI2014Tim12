@@ -3,7 +3,7 @@ package ba.unsa.etf.si.tim12.bll.viewmodel;
 public class NoviOZahvatMaterijalVM {
 	private long materijalId;
 	private double kolicina;
-
+	
 	public long getMaterijalId() {
 		return materijalId;
 	}

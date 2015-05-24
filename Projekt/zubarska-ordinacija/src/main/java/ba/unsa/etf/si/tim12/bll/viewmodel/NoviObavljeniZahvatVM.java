@@ -7,7 +7,8 @@ public class NoviObavljeniZahvatVM {
 	private long zahvatId;
 	private double cijena;
 	private ArrayList<NoviOZahvatMaterijalVM> materijali;
-
+	private String zahvatime;
+	
 	public NoviObavljeniZahvatVM() {
 		materijali = new ArrayList<NoviOZahvatMaterijalVM>();
 	}
@@ -42,5 +43,13 @@ public class NoviObavljeniZahvatVM {
 
 	public void setMaterijali(ArrayList<NoviOZahvatMaterijalVM> materijali) {
 		this.materijali = materijali;
+	}
+
+	public String getZahvatime() {
+		return zahvatime;
+	}
+
+	public void setZahvatime(String zahvatime) {
+		this.zahvatime = zahvatime;
 	}
 }
