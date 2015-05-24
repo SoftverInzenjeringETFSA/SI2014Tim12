@@ -19,6 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.SpinnerDateModel;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -103,14 +104,19 @@ public class IzvjestajMaterijali {
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
 					PotMaterijaliVM materijali = izvjestaji.potroseniMaterijali(datumOd, datumDo);
 					ArrayList<PotMaterijaliRowVM> redovi = materijali.getMaterijali();
-					for(int i = 0; i < redovi.size(); i++) {
-						table.getModel().setValueAt(redovi.get(i).getIdMaterijala(), i, 0);
-						table.getModel().setValueAt(redovi.get(i).getNazivMaterijala(), i, 1);
-						table.getModel().setValueAt(redovi.get(i).getJedinicnaCijena(), i, 2);
-						table.getModel().setValueAt(redovi.get(i).getMjernaJedinica(), i, 3);
-						table.getModel().setValueAt(redovi.get(i).getKolicina(), i, 4);
-						table.getModel().setValueAt(redovi.get(i).getUkupnaCijena(), i, 5);
-					}					
+					Object[][] data = new Object[redovi.size()][];
+							
+					for(int i = 0; i < redovi.size(); i++){
+						data[i] = new Object[]{ redovi.get(i).getIdMaterijala(), redovi.get(i).getNazivMaterijala(), 
+								redovi.get(i).getJedinicnaCijena(),redovi.get(i).getMjernaJedinica(), redovi.get(i).getKolicina(),
+								redovi.get(i).getUkupnaCijena()};
+					}
+					
+					String[] columns = new String[]{"ID", "Materijal", "Jed. cijena", "M. jedinica", "Količina", "Ukupna cijena"};
+					table.setModel(new UneditableTableModel(
+						data,
+						columns
+					));				
 				}
 				catch (Exception e1) {
 					logger.debug(e1.getMessage(), e1);

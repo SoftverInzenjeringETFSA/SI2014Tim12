@@ -97,7 +97,7 @@ public class IzvjestajPosjeteDSM {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Ime", "Prezime", "Doktor", "Vrijeme posjete"
+				"ID", "Ime i prezime", "Doktor", "Vrijeme posjete"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -118,14 +118,19 @@ public class IzvjestajPosjeteDSM {
 					sesija = HibernateUtil.getSessionFactory().openSession();
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
 					OdradjenePosjeteVM posjete = izvjestaji.odradjenePosjetePoDanu((Date) spinnerOd.getValue());
-					ArrayList<OdradjenePosjeteRowVM> redovi = posjete.getOdradjenePosjete();
-					((DefaultTableModel) table.getModel()).addRow(new Object[]{"Column 1", "Column 2", "Column 3", "Column 4"});
-					for(int i = 0; i < redovi.size(); i++) {						
-						table.getModel().setValueAt(redovi.get(i).getId(), i, 0);
-						table.getModel().setValueAt(redovi.get(i).getIme(), i, 1);
-						table.getModel().setValueAt(redovi.get(i).getDoktor(), i, 2);
-						table.getModel().setValueAt(redovi.get(i).getVrijeme(), i, 3);
-					}					
+					ArrayList<OdradjenePosjeteRowVM> redovi = posjete.getOdradjenePosjete();					
+					Object[][] data = new Object[redovi.size()][];
+					
+					for(int i = 0; i < redovi.size(); i++){
+						data[i] = new Object[]{ redovi.get(i).getId(), redovi.get(i).getIme(), 
+								redovi.get(i).getDoktor(),redovi.get(i).getVrijeme()};
+					}
+					
+					String[] columns = new String[]{"ID", "Ime i prezime", "Doktor", "Vrijeme posjete"};
+					table.setModel(new UneditableTableModel(
+						data,
+						columns
+					));
 				}
 				catch (Exception e1) {
 					logger.debug(e1.getMessage(), e1);
