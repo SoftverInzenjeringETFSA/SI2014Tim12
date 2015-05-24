@@ -9,11 +9,6 @@ public class ZahvatiPoDoktoruVM {
 	private double ukupnaCijena;
 	private int ukupnoPosjeta;
 	private ArrayList<ZahvatiPoDoktoruRowVM> zahvati;
-	
-	public ZahvatiPoDoktoruVM(int brPosjeta, double Cijena){
-		this.setUkupnoPosjeta(brPosjeta);
-		this.setUkupnaCijena(Cijena);
-	}
 
 	public ZahvatiPoDoktoruVM(String doktor, Date vrijemeOd, Date vrijemeDo,
 			double ukupnaCijena, int ukupnoPosjeta) {

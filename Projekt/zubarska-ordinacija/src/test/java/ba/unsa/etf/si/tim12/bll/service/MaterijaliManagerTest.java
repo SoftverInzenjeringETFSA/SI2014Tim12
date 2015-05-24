@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import ba.unsa.etf.si.tim12.MaterijalNotFound;
 import ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM;
-import ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataMaterijalVM;
 import ba.unsa.etf.si.tim12.dal.domainmodel.*;
 
 import org.hibernate.Query;
@@ -25,8 +24,7 @@ public class MaterijaliManagerTest {
 	private UtroseniMaterijal u;
 	private ObavljeniZahvat o;
 	private TipZahvata z;
-	private MaterijalTipZahvata mtz;
-	
+
 	@Before
 	public void setUp() throws Exception {
         Session sess = HibernateUtil.getSessionFactory().openSession();
@@ -57,11 +55,7 @@ public class MaterijaliManagerTest {
 		u.setObavljeniZahvatId(o.getId());
 		sess.save(u);
 
-		mtz = new MaterijalTipZahvata();
-		mtz.setMaterijalId(materijal.getId());
-		mtz.setTipZahvataId(z.getId());
-		mtz.setKolicina(3.33);
-		sess.save(mtz);
+		
 		
 		t.commit();
 
@@ -89,7 +83,6 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 		sess.delete(u);
 		sess.delete(o);
 		sess.delete(z);
-		sess.delete(mtz);
 		t.commit();
 		
 		sess.close();
@@ -153,13 +146,12 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
 			
-			ArrayList<TipZahvataMaterijalVM> l = mManager.nadjiPoTipuZahvata(z.getId());
+			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(z.getId());
 
-			assertEquals(materijal.getNaziv() , l.get(0).getMaterijalIme());
-			assertEquals(mtz.getKolicina(), l.get(0).getKolicina(), 0.00001);
-			assertEquals(z.getId(), l.get(0).getTipZahvataId());
-			assertEquals(materijal.getId(), l.get(0).getMaterijalId());
-			assertEquals(materijal.getMjernaJedinica(), l.get(0).getMjernaJedinica());
+			
+			
+			assertEquals(materijal.getNaziv() , l.get(0).getNaziv());
+			
 			
 		} catch(Exception e){
 			e.printStackTrace();
@@ -180,7 +172,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 			sess = HibernateUtil.getSessionFactory().openSession();
 			
 			MaterijaliManager mManager = new MaterijaliManager(sess);
-			ArrayList<TipZahvataMaterijalVM> l = mManager.nadjiPoTipuZahvata(NadjiSlobodanIDTipaZahvata());	
+			ArrayList<MaterijalVM> l = mManager.nadjiPoTipuZahvata(NadjiSlobodanIDTipaZahvata());	
 			
 			assertTrue(l.isEmpty());
 			
