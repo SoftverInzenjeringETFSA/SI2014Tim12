@@ -265,6 +265,12 @@ public class KreiranjeZahvataGUI {
 	}
 	
 	private void DodajMaterijal() {
+		if(textKolicina.getText().isEmpty() ){
+			JOptionPane.showMessageDialog(frmKreiranjeZahvata, "Unesite količinu", 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		if(!(comboBoxMaterijal.getSelectedItem() instanceof MaterijalVM )){
 			JOptionPane.showMessageDialog(frmKreiranjeZahvata, "Odaberite materijal", 
 					"Greška!", JOptionPane.ERROR_MESSAGE);
@@ -291,9 +297,15 @@ public class KreiranjeZahvataGUI {
 			return;
 		}
 		
+		if(textCijena.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Unesite cijenu materijala",
+					"Greška", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		if (Double.parseDouble(textCijena.getText())<0) {JOptionPane.showMessageDialog(null,
 				"Unijeli ste negativnu cijenu", "Greška!",
-				JOptionPane.ERROR_MESSAGE);} else {
+				JOptionPane.ERROR_MESSAGE); return;} else {
 			
 		Session sess = null;
 				
