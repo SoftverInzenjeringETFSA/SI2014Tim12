@@ -89,6 +89,7 @@ Session sess = HibernateUtil.getSessionFactory().openSession();
 		sess.delete(u);
 		sess.delete(o);
 		sess.delete(z);
+		sess.delete(mtz);
 		t.commit();
 		
 		sess.close();
