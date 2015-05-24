@@ -274,6 +274,7 @@ public class KreiranjeZahvataGUI {
 		MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
 		TipZahvataMaterijalVM m = new TipZahvataMaterijalVM();
 		m.setMaterijalId(vm.getId());
+		m.setMaterijalIme(vm.getMjernaJedinica());
 		
 		dataMaterijali.add(m);
 		
@@ -291,9 +292,8 @@ public class KreiranjeZahvataGUI {
 			return;
 		}
 		
-		if (Double.parseDouble(textCijena.getText())<0) {JOptionPane.showMessageDialog(null,
-				"Unijeli ste negativnu cijenu", "Greška!",
-				JOptionPane.ERROR_MESSAGE);} else {
+		
+		
 			
 		Session sess = null;
 				
@@ -313,6 +313,9 @@ public class KreiranjeZahvataGUI {
 			vm.setNaziv(naziv);
 			
 			vm.setCijena(Double.parseDouble(textCijena.getText()));
+			if (Double.parseDouble(textCijena.getText())<0) {
+				throw new Exception("Unijeli ste negativnu cijenu zahata.");
+			}
 			vm.setOpis(textOpis.getText());
 			
 			vm.setMaterijali(new ArrayList<NoviTipZahvataMaterijalVM>());
@@ -362,9 +365,6 @@ public class KreiranjeZahvataGUI {
 			if(sess != null)
 				sess.close();
 		}
-				}
-		
-		
-
 	}
+	
 }

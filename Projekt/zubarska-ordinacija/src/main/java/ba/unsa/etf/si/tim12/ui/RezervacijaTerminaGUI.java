@@ -183,7 +183,7 @@ public class RezervacijaTerminaGUI {
 			TerminManager tManager = new TerminManager(sess);
 			tManager.dodajNoviTermin(vm);
 			
-			JOptionPane.showMessageDialog(dlgR, "Uspjenšno registiran termin", 
+			JOptionPane.showMessageDialog(dlgR, "Uspješno registiran termin", 
 					"Obavještenje!", JOptionPane.INFORMATION_MESSAGE);
 			Resetiraj();
 		}catch(ParseException e){

@@ -418,7 +418,7 @@ public class DodavanjeZahvataGUI {
 		MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
 		TipZahvataMaterijalVM m = new TipZahvataMaterijalVM();
 		m.setMaterijalId(vm.getId());
-		
+		m.setMaterijalIme(vm.getNaziv());
 		dataMaterijali.add(m);
 		
 		((CijeneEditableTM) tableMaterijali.getModel()).addRow(new Object[]{vm.getNaziv(), textKolicina.getText()});
