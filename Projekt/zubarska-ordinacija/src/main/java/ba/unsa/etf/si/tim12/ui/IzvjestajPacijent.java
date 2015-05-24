@@ -89,7 +89,6 @@ public class IzvjestajPacijent {
 		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
 		btnModifikacijaMaterijala.setBounds(263, 329, 121, 23);
 		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
-			//TODO LUKA
 			public void actionPerformed(ActionEvent e) {
 				PrikaziIzvjestaj();
 			}
@@ -178,13 +177,11 @@ public class IzvjestajPacijent {
 						redovi.get(i).getDoktor(),redovi.get(i).getVrijeme()};
 			}
 			
-			String[] columns = new String[]{"Opis zahvata", "Dijagnoza", "Doktor32", "Vrijeme posjete"};
+			String[] columns = new String[]{"Opis zahvata", "Dijagnoza", "Doktor", "Vrijeme posjete"};
 			table.setModel(new UneditableTableModel(
 				data,
 				columns
-			));
-			
-			JOptionPane.showMessageDialog(null, "ovdje");				
+			));			
 		}
 		catch (Exception e1) {
 			JOptionPane.showMessageDialog(frame, e1.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
