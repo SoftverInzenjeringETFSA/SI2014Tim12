@@ -40,7 +40,10 @@ public class loginGUI {
 	private JLabel lblLozinka;
 	private JPasswordField passwordField;
 	private JTextField textField;
-	private String username;
+	//Enil:
+	//Mijenjam ovo u static, mora biti da bih mogao provjeriti username iz drugih formu
+	//npr. iz PasswordMgr forme (da provjerim jel stari password tačan)
+	private static String username;
 	private static final Logger logger = Logger.getLogger(loginGUI.class);
 
 	/**
@@ -50,6 +53,10 @@ public class loginGUI {
 		initialize();
 		frmPrijava.setVisible(true);
 		frmPrijava.requestFocus();
+	}
+	public static String DajUsername()
+	{
+		return username;
 	}
 
 	/**
@@ -139,7 +146,7 @@ public class loginGUI {
 			lgvm.setUsername(textField.getText());
 			lgvm.setPassword(new String(passwordField.getPassword()));
 
-			this.username = lgvm.getUsername();
+			username = lgvm.getUsername();
 
 			return m.provjeriPassword(lgvm);
 		} catch (Exception e) {
@@ -150,4 +157,5 @@ public class loginGUI {
 				sess.close();
 		}
 	}
+
 }

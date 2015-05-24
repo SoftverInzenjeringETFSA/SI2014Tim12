@@ -38,12 +38,12 @@ public class KorisnikManager {
 		return model.getPassword().equals((String) l.get(0));
 	}
 	
-	
-	public boolean promjeniPassword(PromjenaPasswordaVM model) throws Exception {
+	//mijenjam KorisnikManager::PromijeniPassword (Enil)
+	public int promjeniPassword(PromjenaPasswordaVM model) throws Exception {
 		
 		//Ponovljeni password nije uredu
 		if(model.getNoviPass() != model.getPonovoNoviPass())
-			return false;
+			return 1;
 		
 		model.setStariPass(HashPassword(model.getStariPass()));
 		
@@ -57,17 +57,17 @@ public class KorisnikManager {
 		Korisnik korisnik = (Korisnik) q.uniqueResult();
 		if(korisnik == null){ //Nije pronadjen korisnik s ovim usernameom
 			t.rollback();
-			return false;
+			return 2;
 		} else if (!korisnik.getPassword().equals(model.getStariPass())){
 			//Stari password nije isti
 			t.rollback();
-			return false;
+			return 3;
 		} else {
 			//promijeni password i spremi promjene
 			korisnik.setPassword(HashPasswordNoTransaction(model.getNoviPass()));
 			session.update(korisnik);
 			t.commit();
-			return true;
+			return 0;
 		}
 	}
 	

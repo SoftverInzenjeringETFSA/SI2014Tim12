@@ -51,7 +51,7 @@ public class MaterijaliManager {
 	}
 	
 	
-	public ArrayList<TipZahvataMaterijalVM> nadjiPoTipuZahvata(long tipZahvataId) {
+	public ArrayList<MaterijalVM> nadjiPoTipuZahvata(long tipZahvataId) {
 
 		
 		Transaction t = session.beginTransaction();
@@ -59,14 +59,14 @@ public class MaterijaliManager {
 		//jer za JOIN bi sve tri klase biti poveza i napraviti
 		//poseban konstruktor koji bi vracao sta se tacno hoce ovom metodom
 		//String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) FROM  Materijal p,UtroseniMaterijal u INNER JOIN ObavljeniZahvat o ON  u.obavljeniZahvatId = o.zahvatId WHERE p.id=u.materijalId AND u.obavljeniZahvatId= :tipZahvataId";		Query q = session.createQuery(hql);
-		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.TipZahvataMaterijalVM(m.id, m.naziv, m.mjernaJedinica, mt.tipZahvataId, mt.kolicina) "
-				+ "FROM  Materijal m, MaterijalTipZahvata mt "
-				+ "WHERE m.id= mt.materijalId AND mt.tipZahvataId = :tipZahvataId";		
+		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.MaterijalVM(p.id, p.naziv, p.mjernaJedinica,p.cijena) "
+				+ "FROM  Materijal p,UtroseniMaterijal u, ObavljeniZahvat o  "
+				+ "WHERE  u.obavljeniZahvatId = o.id AND p.id=u.materijalId AND o.zahvatId= :tipZahvataId";		
 		Query q = session.createQuery(hql);
 		q.setLong("tipZahvataId", tipZahvataId);
 		
-		List<TipZahvataMaterijalVM> nesto =  (List<TipZahvataMaterijalVM>) q.list();
-		ArrayList<TipZahvataMaterijalVM> materijali = new ArrayList<TipZahvataMaterijalVM>(nesto);
+		List<MaterijalVM> nesto =  (List<MaterijalVM>) q.list();
+		ArrayList<MaterijalVM> materijali = new ArrayList<MaterijalVM>(nesto);
 	
 		t.commit();	
 		return materijali;	
