@@ -131,6 +131,16 @@ public class loginGUI {
 		frmPrijava.getContentPane().add(textField);
 		frmPrijava.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		frmPrijava.getRootPane().setDefaultButton(prijavaBtn);
+		
+		JButton btnZatvori = new JButton("Zatvori");
+		btnZatvori.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		btnZatvori.setActionCommand("OK");
+		btnZatvori.setBounds(10, 86, 79, 23);
+		frmPrijava.getContentPane().add(btnZatvori);
 	}
 
 	// Implemetirati funkciju za prijavu
@@ -158,5 +168,4 @@ public class loginGUI {
 				sess.close();
 		}
 	}
-
 }
