@@ -52,6 +52,7 @@ public class PrikazTerminaGUI {
 	private JButton btnNewButton;
 	private JTable table;
 	private JTextField textField_1;
+	private DefaultTableModel dt;
 
 	static final Logger logger = Logger.getLogger(PrikazTerminaGUI.class);
 	ArrayList<TerminVM> lista = null;
@@ -79,18 +80,17 @@ public class PrikazTerminaGUI {
 			if (!svi)
 				ter = tm.nadjiPoVremenu(p,  k);
 			else ter = tm.dajSveTermine();
-			
 			if (ter.size() == 0)
 				return;
 			lista = new ArrayList<TerminVM>();
 			
 			//JAVA :S
-			DefaultTableModel dm = (DefaultTableModel) table.getModel();
+			DefaultTableModel dm = dt;
 			int rowCount = dm.getRowCount();
 			for (int i = rowCount - 1; i >= 0; i--) {
 			    dm.removeRow(i);
 			}
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY HH:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			for (int i = 0; i < ter.size(); ++i)
 				{
 					if (!pattern.trim().equals("")) //ima i neki pattern pretrage po doktoru
@@ -105,6 +105,8 @@ public class PrikazTerminaGUI {
 					dm.addRow(new Object [] {sdf.format(ter.get(i).getVrijeme()), pvm.getImeIPrezime(), ter.get(i).getDoktor()});
 				}
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					e.getMessage(), "nesto", JOptionPane.ERROR_MESSAGE);
 			logger.debug(e.getMessage(), e);
 		} finally {
 			if (sess != null)
@@ -141,13 +143,8 @@ public class PrikazTerminaGUI {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new UneditableTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Vrijeme", "Pacijent", "Doktor"
-			}
-		));
+		dt = new DefaultTableModel(new String [] {"Vrijeme", "Pacijent", "Doktor"}, 0);
+		table.setModel(dt);
 		scrollPane.setViewportView(table);
 		
 		JLabel lblDoktor = new JLabel("Doktor:");
