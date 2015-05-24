@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,15 +13,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SpinnerDateModel;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.App;
+import ba.unsa.etf.si.tim12.bll.service.IzvjestajManager;
+import ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaRowVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM;
+import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class IzvjestajPosjeteDSM {
@@ -28,16 +43,12 @@ public class IzvjestajPosjeteDSM {
 	private JTable table;
 	private JLabel lblOd;
 	private JLabel lblOddo;
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
-	private JComboBox comboBox_4;
-	private JComboBox comboBox_5;
 	private JLabel lblVrstaPregleda;
 	private JComboBox comboBox_6;
-	
+	private JSpinner spinnerOd;
+	private JSpinner spinnerDo;	
 	final static Logger logger = Logger.getLogger(IzvjestajPosjeteDSM.class);
+	
 	/**
 	 * Launch the application.
 	 */
@@ -81,6 +92,7 @@ public class IzvjestajPosjeteDSM {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setFillsViewportHeight(true);
 		table.setModel(new UneditableTableModel(
 			new Object[][] {
 			},
@@ -96,15 +108,32 @@ public class IzvjestajPosjeteDSM {
 		lblPretraivanjePo.setBounds(22, 57, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
-		JButton btnModifikacijaMaterijala = new JButton("Prika\u017Ei");
+		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
 		btnModifikacijaMaterijala.setBounds(262, 299, 121, 23);
 		btnModifikacijaMaterijala.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame,
-					    "Nije implementirano.",
-					    "Obavje�tenje",
-					    JOptionPane.INFORMATION_MESSAGE);
+				Session sesija = null;
+				try {
+					sesija = HibernateUtil.getSessionFactory().openSession();
+					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
+					OdradjenePosjeteVM posjete = izvjestaji.odradjenePosjetePoDanu((Date) spinnerOd.getValue());
+					ArrayList<OdradjenePosjeteRowVM> redovi = posjete.getOdradjenePosjete();
+					((DefaultTableModel) table.getModel()).addRow(new Object[]{"Column 1", "Column 2", "Column 3", "Column 4"});
+					for(int i = 0; i < redovi.size(); i++) {						
+						table.getModel().setValueAt(redovi.get(i).getId(), i, 0);
+						table.getModel().setValueAt(redovi.get(i).getIme(), i, 1);
+						table.getModel().setValueAt(redovi.get(i).getDoktor(), i, 2);
+						table.getModel().setValueAt(redovi.get(i).getVrijeme(), i, 3);
+					}					
+				}
+				catch (Exception e1) {
+					logger.debug(e1.getMessage(), e1);
+				} 
+				finally {
+					if (sesija != null)
+						sesija.close();
+				}			
 			}
 		});
 		frame.getContentPane().add(btnModifikacijaMaterijala);
@@ -127,32 +156,8 @@ public class IzvjestajPosjeteDSM {
 		frame.getContentPane().add(lblOd);
 		
 		lblOddo = new JLabel("Do:");
-		lblOddo.setBounds(294, 83, 27, 28);
+		lblOddo.setBounds(315, 83, 27, 28);
 		frame.getContentPane().add(lblOddo);
-		
-		comboBox = new JComboBox();
-		comboBox.setBounds(60, 87, 49, 20);
-		frame.getContentPane().add(comboBox);
-		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(127, 87, 49, 20);
-		frame.getContentPane().add(comboBox_1);
-		
-		comboBox_2 = new JComboBox<Object>();
-		comboBox_2.setBounds(196, 87, 68, 20);
-		frame.getContentPane().add(comboBox_2);
-		
-		comboBox_3 = new JComboBox<Object>();
-		comboBox_3.setBounds(334, 87, 49, 20);
-		frame.getContentPane().add(comboBox_3);
-		
-		comboBox_4 = new JComboBox<Object>();
-		comboBox_4.setBounds(398, 87, 49, 20);
-		frame.getContentPane().add(comboBox_4);
-		
-		comboBox_5 = new JComboBox<Object>();
-		comboBox_5.setBounds(457, 87, 68, 20);
-		frame.getContentPane().add(comboBox_5);
 		
 		lblVrstaPregleda = new JLabel("Vrsta pregleda:");
 		lblVrstaPregleda.setBounds(22, 24, 110, 14);
@@ -160,7 +165,21 @@ public class IzvjestajPosjeteDSM {
 		
 		comboBox_6 = new JComboBox<Object>();
 		comboBox_6.setModel(new DefaultComboBoxModel<Object>(new String[] {"Dnevni", "Sedmi\u010Dni", "Mjese\u010Dni"}));
-		comboBox_6.setBounds(132, 18, 94, 20);
+		comboBox_6.setBounds(132, 21, 94, 20);
 		frame.getContentPane().add(comboBox_6);
+		
+		Calendar calendar = Calendar.getInstance();
+		Date initDate = calendar.getTime();
+		spinnerOd = new JSpinner();
+		spinnerOd.setModel(new SpinnerDateModel(new Date(-2208992399907L), null, null, Calendar.DAY_OF_YEAR));
+		spinnerOd.setEditor(new JSpinner.DateEditor(spinnerOd, "dd/MM/yyyy"));
+		spinnerOd.setBounds(61, 86, 171, 22);
+		frame.getContentPane().add(spinnerOd);
+		
+		spinnerDo = new JSpinner();
+		spinnerDo.setBounds(354, 86, 171, 22);
+		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
+		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
+		frame.getContentPane().add(spinnerDo);
 	}
 }
