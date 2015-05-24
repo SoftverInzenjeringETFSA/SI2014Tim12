@@ -155,7 +155,7 @@ public class PrikazZahvataGUI {
 		btnOdustani.setBounds(372, 299, 121, 23);
 		frame.getContentPane().add(btnOdustani);
 		
-		JButton btnIzmeniCjenuZa = new JButton("Izmeni cjenu za zahvat");
+		JButton btnIzmeniCjenuZa = new JButton("Izmjeni cjenu za zahvat");
 		btnIzmeniCjenuZa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
