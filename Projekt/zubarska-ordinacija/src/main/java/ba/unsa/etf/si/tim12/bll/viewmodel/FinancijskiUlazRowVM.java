@@ -3,11 +3,24 @@ package ba.unsa.etf.si.tim12.bll.viewmodel;
 import java.util.Date;
 
 public class FinancijskiUlazRowVM {
-	private long id;
+	private long id; //ovo je kao id od obavljenog zahvata -> bespotrebno ali eto
 	private String imeIPrezime;
 	private String imeZahvata;
 	private Date vrijemePosjete;
 	private double cijena;
+	
+	public FinancijskiUlazRowVM(){
+		
+	}
+
+	public FinancijskiUlazRowVM(long zahvatId, String imeIPrezime, String imeZahvata, Date vrijemePosjete, double cijena){
+		this.setCijena(cijena);
+		this.setId(zahvatId);
+		this.setIme(imeIPrezime);
+		this.setImeZahvata(imeZahvata);
+		this.setVrijemePosjete(vrijemePosjete);
+	}
+	
 
 	public long getId() {
 		return id;
