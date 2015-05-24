@@ -12,8 +12,7 @@ public class OdradjenePosjeteVM {
 		odradjenePosjete = new ArrayList<OdradjenePosjeteRowVM>();
 	}
 
-	public OdradjenePosjeteVM(Date vrijeme, long ukupnoPosjeta) {
-		this.vrijeme = new Date(vrijeme.getTime());
+	public OdradjenePosjeteVM(long ukupnoPosjeta) {
 		this.ukupnoPosjeta = (int) ukupnoPosjeta;
 	}
 

@@ -2,12 +2,14 @@ package ba.unsa.etf.si.tim12.bll.service;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PosjetePacijentaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM;
@@ -221,10 +223,34 @@ public class IzvjestajManagerTest {
 				session.close();
 		}
 	}
-/*
 	@Test
-	public void testOdradjenePosjetePoDanu() {
-		fail("Not yet implemented");
+	public void testOdradjenePosjetePoDanu() throws Exception {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			IzvjestajManager mngr = new IzvjestajManager(session);
+			SimpleDateFormat format = new SimpleDateFormat();
+			String DateToStr = format.format(vrijeme);
+			
+			String d = ("Default pattern: " + DateToStr);
+			
+			
+			 
+
+			OdradjenePosjeteVM posjete = mngr.odradjenePosjetePoDanu(vrijeme);
+			d = posjete.getVrijeme().toString();
+			DateToStr = format.format(posjete.getVrijeme());
+			assertEquals(0, posjete.getUkupnoPosjeta());
+			//assertEquals(p.getId(), posjete.getOdradjenePosjete().get(0).getId());
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally{
+			if(session != null)
+				session.close();
+		}
 	}
-*/
+
 }

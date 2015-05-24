@@ -33,7 +33,7 @@ class ObavljeniZahvatManager {
 		
 		ObavljeniZahvat z = new ObavljeniZahvat();
 		z.setCijena(zahvat.getCijena());
-		z.setId(zahvat.getZahvatId());
+		z.setZahvatId(zahvat.getZahvatId());
 		z.setPosjetaId(zahvat.getPosjetaId());
 
 		session.save(z);

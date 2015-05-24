@@ -7,7 +7,22 @@ public class OdradjenePosjeteRowVM {
 	private String imePrezime;
 	private String doktor;
 	private Date vrijeme;
-
+	
+	public OdradjenePosjeteRowVM()
+	{
+		
+	}
+	
+	//(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme)
+	public OdradjenePosjeteRowVM(long id, String imePrezime, String doktor, Date vrijeme)
+	{
+		this.setDoktor(doktor);
+		this.setId(id);
+		this.setIme(imePrezime);
+		this.setVrijeme(vrijeme);
+		
+	}
+	
 	public long getId() {
 		return id;
 	}
