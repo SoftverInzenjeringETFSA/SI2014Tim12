@@ -38,6 +38,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.NovaPosjetaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviObavljeniZahvatVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviPacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
@@ -59,6 +60,16 @@ public class Posjete {
 	public Posjete() {
 		initialize();
 		ResetujPolja();
+		
+		dlgPosjeteRegistracija.setVisible(true);
+	}
+	public Posjete(TerminVM termin) {
+		initialize();
+		ResetujPolja();
+		
+		textFieldDoktor.setText(termin.getDoktor());
+		textFieldVrijeme.setText(formater.format(termin.getVrijeme()));
+		
 		
 		dlgPosjeteRegistracija.setVisible(true);
 	}
