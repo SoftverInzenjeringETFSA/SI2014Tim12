@@ -5,8 +5,6 @@ import ba.unsa.etf.si.tim12.dal.domainmodel.Korisnik;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
@@ -44,8 +42,7 @@ public class KorisnikManager {
 	public int promjeniPassword(PromjenaPasswordaVM model) throws Exception {
 		
 		//Ponovljeni password nije uredu
-		//Enil: dodao sam poređenje preko .equals, inače nikad nisu isti bili :)
-		if(!model.getNoviPass().equals(model.getPonovoNoviPass()))
+		if(model.getNoviPass() != model.getPonovoNoviPass())
 			return 1;
 		
 		model.setStariPass(HashPassword(model.getStariPass()));

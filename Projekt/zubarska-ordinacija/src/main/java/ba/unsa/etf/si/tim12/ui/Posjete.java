@@ -90,7 +90,7 @@ public class Posjete {
 				SwingUtilities.invokeLater(new Runnable() {
 					
 					public void run() {
-						OsvjeziComboBox();
+						OsvjeziComboBox(true);
 					}
 				});
 			}
@@ -99,14 +99,14 @@ public class Posjete {
 				SwingUtilities.invokeLater(new Runnable() {
 					
 					public void run() {
-						OsvjeziComboBox();
+						OsvjeziComboBox(true);
 					}
 				});
 				
 			}
 			
 			public void changedUpdate(DocumentEvent e) {
-				
+				//This never happens
 			}
 		});
 		dlgPosjeteRegistracija.getContentPane().add(comboBoxPacijent);
@@ -178,7 +178,9 @@ public class Posjete {
 		JButton btnDodajZahvat_1 = new JButton("Dodaj zahvat");
 		btnDodajZahvat_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new DodavanjeZahvataGUI();
+				NoviObavljeniZahvatVM noviZahvat = new NoviObavljeniZahvatVM();
+				new DodavanjeZahvataGUI(noviZahvat);
+			
 			}
 		});
 		btnDodajZahvat_1.setBounds(651, 191, 107, 23);
@@ -202,7 +204,7 @@ public class Posjete {
 		dlgPosjeteRegistracija.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{comboBoxPacijent, textFieldUkCijena, btnDodajPosjetu, lblInformacijeOPacijentu, separator_pacijent, lblPacijent, lblDijagnoza, lblInformacijeOZahvatu, separator_zahvat, lblUkupnaCijena, dlgPosjeteRegistracija.getContentPane()}));
 	}
 	
-	private void OsvjeziComboBox() {
+	private void OsvjeziComboBox(boolean expand) {
 		Session sess = null;
 		
 		try {
@@ -223,7 +225,10 @@ public class Posjete {
 				}
 				
 				DefaultComboBoxModel model = new DefaultComboBoxModel(array); //(DefaultComboBoxModel) comboBoxPacijent.getModel();
-				comboBoxPacijent.setModel(model);	
+				comboBoxPacijent.setModel(model);
+				
+				if(expand)
+					comboBoxPacijent.getUI().setPopupVisible(comboBoxPacijent, true);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(dlgPosjeteRegistracija, e.getMessage(), 
@@ -238,12 +243,16 @@ public class Posjete {
 	}
 	
 	private void ResetujPolja(){
-		comboBoxPacijent.setModel(new DefaultComboBoxModel());
+		OsvjeziComboBox(false); 
 		textFieldDoktor.setText("");
 		textFieldVrijeme.setText("dd-mm-gggg hh:mm");
-		textFieldUkCijena.setText("");
+		PrikaziUkupnuCijenu(0.0);
 		textPane.setText("");
 		obavljeniZahvati = new ArrayList<NoviObavljeniZahvatVM>();
+	}
+	
+	private void PrikaziUkupnuCijenu(double cijena){
+		textFieldUkCijena.setText(Double.toString(Math.round(100*cijena)/100));
 	}
 	
 	private void DodajPosjetu() {

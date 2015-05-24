@@ -19,6 +19,7 @@ import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
+import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 
 import java.awt.Dialog.ModalityType;
@@ -29,6 +30,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
@@ -50,12 +52,12 @@ public class PrikazPacijentaGUI {
 	 * 
 	 * @param pacijentVM
 	 */
-	public PrikazPacijentaGUI(PacijentVM pacijentVM) {
+	public PrikazPacijentaGUI(PrikazPacijentaVM pacijentVM) {
 		initialize();
 
 		dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-		textField.setText(pacijentVM.getImePrezime());
+		textField.setText(pacijentVM.getImeIPrezime());
 		textField_2.setText(pacijentVM.getBrojTelefona());
 		textField_3.setText(dateFormat.format(pacijentVM.getDatumRodjenja()));
 		textPane.setText(pacijentVM.getOpis());

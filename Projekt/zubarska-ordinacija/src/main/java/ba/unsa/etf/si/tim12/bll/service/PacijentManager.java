@@ -109,7 +109,8 @@ public class PacijentManager {
 		pacijentIme = "%" + pacijentIme + "%";
 		Transaction t = session.beginTransaction();
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM(p.id, p.imeIPrezime, "+
-				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime like :imePrezime";
+				"p.datumRodjenja, p.telefon, p.opis) FROM Pacijent p WHERE p.imeIPrezime like :imePrezime " +
+				"ORDER BY p.imeIPrezime asc";
 		Query query = session.createQuery(hql);
 		query.setString("imePrezime", pacijentIme);
 		List<PacijentVM> rezultati = query.list();
