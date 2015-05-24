@@ -102,10 +102,10 @@ public class KreiranjeMaterijalaGUI {
 			public void actionPerformed(ActionEvent e) {
 				if (materijal.getText().isEmpty()) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
 						"Unesite naziv materijala", "Greška!",
-						JOptionPane.INFORMATION_MESSAGE);} else
+						JOptionPane.ERROR_MESSAGE);} else
 				if (Double.parseDouble(jed_cijena.getText())<0) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
 						"Unijeli ste negativnu cijenu", "Greška!",
-						JOptionPane.INFORMATION_MESSAGE);}
+						JOptionPane.ERROR_MESSAGE);}
 				else {
 				Session sess = null;
 				// dodavanje pretrazenih materijala u tabelu

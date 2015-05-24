@@ -93,7 +93,7 @@ public class ModifikacijaZahvataGUI {
 						.showMessageDialog(frmModifikacijaZahvata,
 								"Zahvat ne postoji",
 								"Greška!",
-								JOptionPane.INFORMATION_MESSAGE);}
+								JOptionPane.ERROR_MESSAGE);}
 					// prvo praznjenje
 					/*table.setModel(new UneditableTableModel(
 							new Object[][] {

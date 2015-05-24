@@ -162,8 +162,8 @@ public class PrikazZahvataGUI {
 				Integer index = table.getSelectedRow();
 				if (index < 0) {
 					JOptionPane.showMessageDialog(frame,
-							"Odaberite pacijenta u tabeli", "Obavještenje",
-							JOptionPane.INFORMATION_MESSAGE);
+							"Odaberite zahvat u tabeli", "Obavještenje",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				
 

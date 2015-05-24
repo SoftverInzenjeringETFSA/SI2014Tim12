@@ -290,6 +290,10 @@ public class KreiranjeZahvataGUI {
 					"Greška", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
+		if (Double.parseDouble(textCijena.getText())<0) {JOptionPane.showMessageDialog(null,
+				"Unijeli ste negativnu cijenu", "Greška!",
+				JOptionPane.ERROR_MESSAGE);} else {
 			
 		Session sess = null;
 				
@@ -330,6 +334,7 @@ public class KreiranjeZahvataGUI {
 				
 				
 			}
+		
 			
 			
 			if(tzManager.dodajNoviTip(vm)){
@@ -357,6 +362,7 @@ public class KreiranjeZahvataGUI {
 			if(sess != null)
 				sess.close();
 		}
+				}
 		
 		
 
