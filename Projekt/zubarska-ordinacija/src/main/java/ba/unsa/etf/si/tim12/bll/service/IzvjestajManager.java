@@ -157,7 +157,7 @@ public class IzvjestajManager {
 		
 		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme)"
 				+ "from posjeta pos, pacijent pac where pac.id = pos.pacijentId and pos.datum = :datum";
-		Query q = session.createQuery(hql);
+		q = session.createQuery(hql);
 		q.setDate("datum", vrijeme);
 		
 		ArrayList<OdradjenePosjeteRowVM> posjeteRed = new ArrayList<OdradjenePosjeteRowVM>(q.list());
