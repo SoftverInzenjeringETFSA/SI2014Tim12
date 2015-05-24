@@ -41,10 +41,7 @@ import java.util.Date;
 public class IzvjestajPosjeteDSM {
 	private JDialog frame;
 	private JTable table;
-	private JLabel lblOd;
-	private JLabel lblOddo;
 	private JSpinner spinnerOd;
-	private JSpinner spinnerDo;	
 	final static Logger logger = Logger.getLogger(IzvjestajPosjeteDSM.class);
 	
 	/**
@@ -77,7 +74,7 @@ public class IzvjestajPosjeteDSM {
 	private void initialize() {		
 		frame = new JDialog();
 		MainForma.Prekini(frame);
-		frame.setTitle("Izvje\u0161taj o posjetama");
+		frame.setTitle("Izvještaj o posjetama po danu");
 		frame.setModalityType(ModalityType.APPLICATION_MODAL);
 		frame.setResizable(false);
 		
@@ -102,7 +99,7 @@ public class IzvjestajPosjeteDSM {
 		table.getColumnModel().getColumn(0).setMinWidth(2);
 		scrollPane.setViewportView(table);
 		
-		JLabel lblPretraivanjePo = new JLabel("Odaberite vremenski interval:");
+		JLabel lblPretraivanjePo = new JLabel("Odaberite dan:");
 		lblPretraivanjePo.setBounds(22, 13, 204, 19);
 		frame.getContentPane().add(lblPretraivanjePo);
 		
@@ -154,26 +151,12 @@ public class IzvjestajPosjeteDSM {
 		});
 		frame.getContentPane().add(btnOdustani);
 		
-		lblOd = new JLabel("Od:");
-		lblOd.setBounds(22, 39, 27, 28);
-		frame.getContentPane().add(lblOd);
-		
-		lblOddo = new JLabel("Do:");
-		lblOddo.setBounds(315, 39, 27, 28);
-		frame.getContentPane().add(lblOddo);
-		
 		Calendar calendar = Calendar.getInstance();
 		Date initDate = calendar.getTime();
 		spinnerOd = new JSpinner();
 		spinnerOd.setModel(new SpinnerDateModel(new Date(-2208992399907L), null, null, Calendar.DAY_OF_YEAR));
 		spinnerOd.setEditor(new JSpinner.DateEditor(spinnerOd, "dd/MM/yyyy"));
-		spinnerOd.setBounds(61, 42, 171, 22);
+		spinnerOd.setBounds(22, 45, 171, 22);
 		frame.getContentPane().add(spinnerOd);
-		
-		spinnerDo = new JSpinner();
-		spinnerDo.setBounds(354, 42, 171, 22);
-		spinnerDo.setModel(new SpinnerDateModel(initDate, null, null, Calendar.DAY_OF_YEAR));
-		spinnerDo.setEditor(new JSpinner.DateEditor(spinnerDo, "dd/MM/yyyy"));
-		frame.getContentPane().add(spinnerDo);
 	}
 }

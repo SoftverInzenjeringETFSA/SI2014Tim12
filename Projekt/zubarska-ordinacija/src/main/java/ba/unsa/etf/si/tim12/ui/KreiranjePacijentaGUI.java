@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
@@ -38,6 +39,8 @@ public class KreiranjePacijentaGUI {
 	private JTextField textField_3;
 	private JTextPane textPane;
 	private DateFormat dateFormat;
+	private static final Logger logger = Logger.getLogger(KreiranjePacijentaGUI.class);
+	
 	/**
 	 * Create the application.
 	 */
@@ -94,6 +97,10 @@ public class KreiranjePacijentaGUI {
 		btnKreiraj.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				
+				if(textField.getText().length()<3) {JOptionPane.showMessageDialog(null,
+						"Unesite najmanje tri slova imena i prezimena", "Greška!",
+						JOptionPane.ERROR_MESSAGE); return;}
 
 				Session sess = null;
 				try {
@@ -137,12 +144,12 @@ public class KreiranjePacijentaGUI {
 					JOptionPane.showMessageDialog(frmRegistracijaNovogPacijenta,
 							"Datum unesite u formatu: dd-mm-ggg", "Greška!",
 							JOptionPane.ERROR_MESSAGE);
-					//logger.debug("Pogrešno unesen datum", e1);
+					logger.debug("Pogrešno unesen datum", e1);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(frmRegistracijaNovogPacijenta,
 							e2.getMessage(), "Greška!",
 							JOptionPane.ERROR_MESSAGE);
-					//logger.debug("Greška", e2);
+					logger.debug("Greška", e2);
 				} finally {
 					if (sess != null && sess.isOpen())
 						sess.close();
