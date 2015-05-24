@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class UneditableTableModel extends DefaultTableModel {
 
 	public UneditableTableModel() {
@@ -25,6 +26,7 @@ public class UneditableTableModel extends DefaultTableModel {
 		
 	}
 
+	
 	public UneditableTableModel(Vector columnNames, int rowCount) {
 		super(columnNames, rowCount);
 		
@@ -42,4 +44,8 @@ public class UneditableTableModel extends DefaultTableModel {
 		
 		return false;
 	}
+	
+    public Class getColumnClass(int c) {
+        return getValueAt(0, c).getClass();
+    }
 }
