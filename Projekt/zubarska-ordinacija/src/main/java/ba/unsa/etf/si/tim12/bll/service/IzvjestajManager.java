@@ -85,23 +85,33 @@ public class IzvjestajManager {
 		Transaction t = session.beginTransaction();
 		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM(:vrijemeOd, :vrijemeDo, sum(m.cijena)) "
 				+ "from materijal m, utrosenimaterijal u, obavljeni zahvat o, posjeta p "
-				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId";
+				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
+				+ "and p.vrijeme BETWEEN :vrijemeOd AND :vrijemeDo";
 		Query q = session.createQuery(hql);
 		q.setDate("vrijemeOd", vrijemeOd);
 		q.setDate("vrijemeDo", vrijemeDo);		
-		PotMaterijaliVM rez;
+		
+		PotMaterijaliVM rez = new PotMaterijaliVM();
+		rez.setUkupnaCijena(0);
+		rez.setVrijemeDo(vrijemeDo);
+		rez.setVrijemeOd(vrijemeOd);
+		
 		if (!q.list().isEmpty())
 			rez = (PotMaterijaliVM) q.list().get(0);
 		else
-			rez = null;
-		t.commit();
-		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.naziv, m.cijena, m.mjernaJedinica, u.kolicina, u.kolicina*m.cijena)"
+			return rez;
+		
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.cijena, u.kolicina, m.mjernaJedinica, m.naziv, u.kolicina*m.cijena)"
 				+ "from materijal m, utrosenimaterijal u, posjeta p, obavljenizahvat o "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
-				+ "and p.datum between :vrijemeOd and :vrijemeDo";
+				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
+		
 		ArrayList<PotMaterijaliRowVM> r = new ArrayList<PotMaterijaliRowVM>(q.list());
+		
 		t.commit();
+		
 		rez.setMaterijali(r);
+		
 		return rez;
 	}
 
