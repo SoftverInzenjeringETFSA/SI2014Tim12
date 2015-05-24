@@ -151,8 +151,8 @@ public class KorisnikManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
-		boolean rezultat = kManager.promjeniPassword(model);
-		assertFalse(rezultat);
+		int rezultat = kManager.promjeniPassword(model);
+		assertFalse(rezultat != 0);
 		
 		sess.close();
 	}
@@ -169,8 +169,8 @@ public class KorisnikManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
-		boolean rezultat = kManager.promjeniPassword(model);
-		assertFalse(rezultat);
+		int rezultat = kManager.promjeniPassword(model);
+		assertFalse(rezultat != 0);
 		
 		sess.close();
 	}
@@ -187,8 +187,8 @@ public class KorisnikManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
-		boolean rezultat = kManager.promjeniPassword(model);
-		assertFalse(rezultat);
+		int rezultat = kManager.promjeniPassword(model);
+		assertFalse(rezultat != 0);
 		
 		sess.close();
 	}
@@ -205,8 +205,8 @@ public class KorisnikManagerTest {
 		Session sess = HibernateUtil.getSessionFactory().openSession();
 		
 		KorisnikManager kManager = new KorisnikManager(sess);
-		boolean rezultat = kManager.promjeniPassword(model);
-		assertTrue(rezultat);
+		int rezultat = kManager.promjeniPassword(model);
+		assertTrue(rezultat == 0);
 		
 		Transaction t = sess.beginTransaction();
 		
