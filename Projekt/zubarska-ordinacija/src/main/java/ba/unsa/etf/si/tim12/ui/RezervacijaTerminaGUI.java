@@ -8,7 +8,7 @@ import org.jdesktop.swingx.JXMonthView;
 
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.service.TerminManager;
-import ba.unsa.etf.si.tim12.bll.service.TerminManagerTest;
+//import ba.unsa.etf.si.tim12.bll.service.TerminManagerTest;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTermin;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
