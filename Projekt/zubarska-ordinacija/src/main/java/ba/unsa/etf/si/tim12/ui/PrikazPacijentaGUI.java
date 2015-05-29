@@ -88,10 +88,11 @@ public class PrikazPacijentaGUI {
 	private void initialize() {
 		frmPrikazPacijenta = new JDialog();
 		MainForma.Prekini(frmPrikazPacijenta);
+		frmPrikazPacijenta.setTitle("Prikaz pacijenta");
+		
 		frmPrikazPacijenta
 				.setModalityType(ModalityType.APPLICATION_MODAL);
 		frmPrikazPacijenta.setResizable(false);
-		frmPrikazPacijenta.setTitle("Prikaz pacijenta");
 		frmPrikazPacijenta.setBounds(100, 100, 384, 660);
 		frmPrikazPacijenta
 				.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

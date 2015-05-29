@@ -274,7 +274,7 @@ public class KreiranjeZahvataGUI {
 		MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
 		TipZahvataMaterijalVM m = new TipZahvataMaterijalVM();
 		m.setMaterijalId(vm.getId());
-		m.setMaterijalIme(vm.getMjernaJedinica());
+		m.setMaterijalIme(vm.getNaziv());
 		
 		dataMaterijali.add(m);
 		
@@ -335,7 +335,7 @@ public class KreiranjeZahvataGUI {
 					throw new Exception("Unesite decimalan broj za količinu materijala " + dataMaterijali.get(i).getMaterijalIme());
 				}
 				
-				
+				vm.getMaterijali().add(novi);
 			}
 		
 			
