@@ -86,36 +86,34 @@ public class ModifikacijaZahvataGUI {
 						"Unesite cijenu", "Greška!",
 						JOptionPane.ERROR_MESSAGE); return;}
 				
-				if (Double.parseDouble(textField.getText())<0) {JOptionPane.showMessageDialog(null,
-						"Unešena cijena je negativna", "Greška!",
-						JOptionPane.ERROR_MESSAGE); return;}
 				
 				Session sess = null;
 				// dodavanje pretrazenih materijala u tabelu
 				try {
+					if (Double.parseDouble(textField.getText())<0) {JOptionPane.showMessageDialog(null,
+							"Unešena cijena je negativna", "Greška!",
+							JOptionPane.ERROR_MESSAGE); return;}
+					
 					sess = HibernateUtil.getSessionFactory().openSession();
 					TipZahvataManager m = new TipZahvataManager(sess);
-					boolean promjenjena = m.promijeniCijenuZahvata(id,  Long.parseLong(textField.getText()));
+					boolean promjenjena = m.promijeniCijenuZahvata(id,  Double.parseDouble(textField.getText()));
 					if(promjenjena) { JOptionPane
 						.showMessageDialog(frmModifikacijaZahvata,
 								"Cijena uspješno promjenjena",
 								"Obavještenje",
 								JOptionPane.INFORMATION_MESSAGE);}
 					else {JOptionPane
-						.showMessageDialog(frmModifikacijaZahvata,
-								"Zahvat ne postoji",
-								"Greška!",
+						.showMessageDialog(frmModifikacijaZahvata, "Zahvat ne postoji",	"Greška!",
 								JOptionPane.ERROR_MESSAGE);}
-					// prvo praznjenje
-					/*table.setModel(new UneditableTableModel(
-							new Object[][] {
-							},
-							new String[] {
-							 "Naziv", "Materijali", "Cijena"
-							}
-						));*/
-
-				} catch (Exception e2) {
+					
+					frmModifikacijaZahvata.dispose();
+				} catch (NumberFormatException e1){
+					JOptionPane
+					.showMessageDialog(frmModifikacijaZahvata,"Unesite decimalan broj za cijenu",
+							"Greška!",	JOptionPane.ERROR_MESSAGE);
+					
+					logger.debug(e1.getMessage(), e1);
+				}catch (Exception e2) {
 					logger.debug(e2.getMessage(), e2);
 				} finally {
 					if (sess != null)

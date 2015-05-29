@@ -132,6 +132,7 @@ public class KreiranjeZahvataGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				KreirajZahvat();
 			}
+			
 
 		});
 		panel_1.add(btnKreiraj);

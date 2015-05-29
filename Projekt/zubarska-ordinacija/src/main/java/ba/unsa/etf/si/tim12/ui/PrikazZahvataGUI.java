@@ -88,53 +88,8 @@ public class PrikazZahvataGUI {
 		btnNewButton = new JButton("Pretra\u017Ei");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Session sess = null;
-				// dodavanje pretrazenih materijala u tabelu
-				try {
-					sess = HibernateUtil.getSessionFactory().openSession();
-					TipZahvataManager m = new TipZahvataManager(sess);
-					podaci = m.nadjiPoImenu(textField.getText());
-					// prvo praznjenje
-					/*table.setModel(new UneditableTableModel(
-							new Object[][] {
-							},
-							new String[] {
-							 "Naziv", "Materijali", "Cijena"
-							}
-						));*/
-
-				} catch (Exception e) {
-					logger.debug(e.getMessage(), e);
-				} finally {
-					if (sess != null)
-						sess.close();
-				}
-				if (podaci != null)
-					PrikaziPodatke(podaci);
+				OsvjeziTabelu();
 			}
-
-			private void PrikaziPodatke(ArrayList<TipZahvataVM> zahvati) {
-				if (zahvati == null)
-					return;
-				
-				String[][] data = new String[zahvati.size()][];
-				for (int i = 0; i < zahvati.size(); i++) {
-					data[i] = TipZahvataVMtoObjectRow(zahvati.get(i));
-				}
-				
-				String[] columns = new String[] {"Id", "Naziv", "Cijena"
-				};
-				table.setModel(new UneditableTableModel(data, columns));
-				
-				
-				
-			}
-			private String[] TipZahvataVMtoObjectRow(TipZahvataVM z) { 
-				String[] r = { Long.toString(z.getId()), z.getNaziv(),
-						Double.toString(z.getCijena()) };
-				return r;
-			}
-			
 		});
 		
 		
@@ -166,8 +121,8 @@ public class PrikazZahvataGUI {
 							JOptionPane.ERROR_MESSAGE);
 				}
 				
-
 				new ModifikacijaZahvataGUI(podaci.get(index));
+				OsvjeziTabelu();
 			}
 		});
 		btnIzmeniCjenuZa.setBounds(150, 299, 200, 23);
@@ -176,5 +131,45 @@ public class PrikazZahvataGUI {
 		JLabel lblPretraivanjePoImenu = new JLabel("Pretraživanje po imenu:");
 		lblPretraivanjePoImenu.setBounds(22, 23, 159, 14);
 		frame.getContentPane().add(lblPretraivanjePoImenu);
+	}
+	
+	private void PrikaziPodatke(ArrayList<TipZahvataVM> zahvati) {
+		if (zahvati == null)
+			return;
+		
+		String[][] data = new String[zahvati.size()][];
+		for (int i = 0; i < zahvati.size(); i++) {
+			data[i] = TipZahvataVMtoObjectRow(zahvati.get(i));
+		}
+		
+		String[] columns = new String[] {"Id", "Naziv", "Cijena"
+		};
+		table.setModel(new UneditableTableModel(data, columns));
+		
+	}
+	
+	private String[] TipZahvataVMtoObjectRow(TipZahvataVM z) { 
+		String[] r = { Long.toString(z.getId()), z.getNaziv(),
+				Double.toString(z.getCijena()) };
+		return r;
+	}
+	
+	private void OsvjeziTabelu() {
+		Session sess = null;
+		// dodavanje pretrazenih materijala u tabelu
+		try {
+			sess = HibernateUtil.getSessionFactory().openSession();
+			TipZahvataManager m = new TipZahvataManager(sess);
+			podaci = m.nadjiPoImenu(textField.getText());
+
+		} catch (Exception e) {
+			logger.debug(e.getMessage(), e);
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+		if (podaci != null)
+			PrikaziPodatke(podaci);
+		
 	}
 }
