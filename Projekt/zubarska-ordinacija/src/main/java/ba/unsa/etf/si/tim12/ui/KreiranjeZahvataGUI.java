@@ -125,7 +125,7 @@ public class KreiranjeZahvataGUI {
 		lblPrezime.setBounds(10, 204, 86, 20);
 		panel_1.add(lblPrezime);
 		
-		JButton btnKreiraj = new JButton("Kreiraj zahvat");
+		JButton btnKreiraj = new JButton("Kreiraj");
 		btnKreiraj.setBounds(225, 330, 109, 23);
 		btnKreiraj.addActionListener(new ActionListener() {
 			
