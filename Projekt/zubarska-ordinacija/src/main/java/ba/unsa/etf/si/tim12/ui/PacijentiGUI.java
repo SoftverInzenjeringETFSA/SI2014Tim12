@@ -93,6 +93,8 @@ public class PacijentiGUI {
 		btnNoviPacijent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new KreiranjePacijentaGUI();
+				if(podaci != null)
+					Pretrazi();
 			}
 		});
 		// btnNoviPacijent.setIcon(new
@@ -111,10 +113,11 @@ public class PacijentiGUI {
 					JOptionPane.showMessageDialog(frame,
 							"Odaberite pacijenta u tabeli", "Obavještenje",
 							JOptionPane.INFORMATION_MESSAGE);
+					return;
 				}
 
 				new ModifikacijaPacijentaGUI(podaci.get(index));
-
+				PrikaziPodatke(podaci);
 			}
 		});
 		toolBar.add(btnModifikacijaPacijenta);
@@ -127,10 +130,11 @@ public class PacijentiGUI {
 					JOptionPane.showMessageDialog(frame,
 							"Odaberite pacijenta u tabeli", "Obavještenje",
 							JOptionPane.INFORMATION_MESSAGE);
+					return;
 				}
 				PacijentVM pp = podaci.get(index);
 				Session sess = null;
-				podaci = null;
+				//podaci = null;
 				try {
 					String opcija = (String) comboBox.getSelectedItem();
 					String text = textField.getText();
@@ -139,7 +143,7 @@ public class PacijentiGUI {
 					PacijentManager pm = new PacijentManager(sess);
 					PrikazPacijentaVM pvm = pm.dajPacijenta(pp.getId());
 					new PrikazPacijentaGUI(pvm);
-					}
+				}
 				catch (Exception er) {
 
 					logger.debug(er.getMessage(), er);
@@ -150,6 +154,7 @@ public class PacijentiGUI {
 					if (sess != null)
 						sess.close();
 				}
+				PrikaziPodatke(podaci);
 			}
 		});
 		toolBar.add (BtnInfo);
@@ -178,54 +183,58 @@ public class PacijentiGUI {
 		btnNewButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-
-				Session sess = null;
-				podaci = null;
-				try {
-					String opcija = (String) comboBox.getSelectedItem();
-					String text = textField.getText();
-
-					sess = HibernateUtil.getSessionFactory().openSession();
-					PacijentManager pManager = new PacijentManager(sess);
-					if (opcija.equals("Imenu i prezimenu")) {
-						podaci = pManager.nadjiPoImenu(text);
-					} else if (opcija.equals("ID-u")) {
-
-						podaci = pManager.nadjiPoIdu(Integer.parseInt(text));
-
-					} else if (opcija.equals("Opisu")) {
-
-						podaci = pManager.nadjiPoOpisu(text);
-
-					} else {
-						JOptionPane.showMessageDialog(frame,
-								"Odaberite način pretrage", "Obavještenje",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-				} catch (NumberFormatException ex) {
-
-					JOptionPane.showMessageDialog(frame,
-							"Za pretraživanje unesite broj", "Greška",
-							JOptionPane.ERROR_MESSAGE);
-
-				} catch (Exception er) {
-
-					logger.debug(er.getMessage(), er);
-					JOptionPane.showMessageDialog(frame, er.getMessage(),
-							"Greška", JOptionPane.INFORMATION_MESSAGE);
-
-				} finally {
-					if (sess != null)
-						sess.close();
-				}
-
-				if (podaci != null)
-					PrikaziPodatke(podaci);
-
+				Pretrazi();
 			}
 
 		});
 		frame.getContentPane().add(btnNewButton);
+	}
+
+	protected void Pretrazi() {
+
+		Session sess = null;
+		podaci = null;
+		try {
+			String opcija = (String) comboBox.getSelectedItem();
+			String text = textField.getText();
+
+			sess = HibernateUtil.getSessionFactory().openSession();
+			PacijentManager pManager = new PacijentManager(sess);
+			if (opcija.equals("Imenu i prezimenu")) {
+				podaci = pManager.nadjiPoImenu(text);
+			} else if (opcija.equals("ID-u")) {
+
+				podaci = pManager.nadjiPoIdu(Integer.parseInt(text));
+
+			} else if (opcija.equals("Opisu")) {
+
+				podaci = pManager.nadjiPoOpisu(text);
+
+			} else {
+				JOptionPane.showMessageDialog(frame,
+						"Odaberite način pretrage", "Obavještenje",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (NumberFormatException ex) {
+
+			JOptionPane.showMessageDialog(frame,
+					"Za pretraživanje unesite broj", "Greška",
+					JOptionPane.ERROR_MESSAGE);
+
+		} catch (Exception er) {
+
+			logger.debug(er.getMessage(), er);
+			JOptionPane.showMessageDialog(frame, er.getMessage(),
+					"Greška", JOptionPane.INFORMATION_MESSAGE);
+
+		} finally {
+			if (sess != null)
+				sess.close();
+		}
+
+		if (podaci != null)
+			PrikaziPodatke(podaci);
+
 	}
 
 	private void PrikaziPodatke(ArrayList<PacijentVM> pacijenti) {

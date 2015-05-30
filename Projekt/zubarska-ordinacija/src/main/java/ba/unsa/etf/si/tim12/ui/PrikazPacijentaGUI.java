@@ -24,6 +24,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.PosjetaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -107,7 +108,7 @@ public class PrikazPacijentaGUI {
 		textField.setBounds(153, 31, 196, 20);
 		panel_1.add(textField);
 		textField.setColumns(10);
-		
+		textField.setEditable(false);
 
 		JLabel lblImeIPrezime = new JLabel("Ime i prezime:");
 		lblImeIPrezime.setBounds(29, 31, 86, 20);
@@ -117,10 +118,13 @@ public class PrikazPacijentaGUI {
 		textField_2.setColumns(10);
 		textField_2.setBounds(153, 73, 196, 20);
 		panel_1.add(textField_2);
-
+		textField_2.setEditable(false);
+		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
 		textField_3.setBounds(153, 106, 196, 20);
+		textField_3.setEditable(false);
+		
 		panel_1.add(textField_3);
 
 		JLabel lblBrojTelefona = new JLabel("Broj telefona:");
@@ -148,13 +152,14 @@ public class PrikazPacijentaGUI {
 
 		textPane = new JTextPane();
 		textPane.setBounds(153, 144, 196, 90);
+		textPane.setEditable(false);
 		panel_1.add(textPane);
 		
 		JScrollPane scrollPaneTermini = new JScrollPane();
 		scrollPaneTermini.setBounds(29, 448, 320, 128);
 		panel_1.add(scrollPaneTermini);
 		
-		dt2 = new DefaultTableModel(new String [] {"Doktor", "Vrijeme", "Otkazan?"}, 0);
+		dt2 = new UneditableTableModel(new String [] {"Doktor", "Vrijeme", "Otkazan?"}, 0);
 		tableTermini = new JTable(dt2);
 		scrollPaneTermini.setViewportView(tableTermini);
 		tableTermini.setFillsViewportHeight(true);
@@ -163,7 +168,7 @@ public class PrikazPacijentaGUI {
 		scrollPanePosjete.setBounds(29, 285, 320, 128);
 		panel_1.add(scrollPanePosjete);
 		
-		dt1 = new DefaultTableModel(new String [] {"Doktor", "Dijagnoza", "Vrijeme"}, 0);
+		dt1 = new UneditableTableModel(new String [] {"Doktor", "Dijagnoza", "Vrijeme"}, 0);
 		tablePosjete = new JTable(dt1);
 		tablePosjete.setFillsViewportHeight(true);
 		scrollPanePosjete.setViewportView(tablePosjete);

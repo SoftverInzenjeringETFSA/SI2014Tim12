@@ -20,6 +20,7 @@ import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviPacijentVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.Validator;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -38,7 +39,7 @@ public class KreiranjePacijentaGUI {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextPane textPane;
-	private DateFormat dateFormat;
+	private String dateFormat;
 	private static final Logger logger = Logger.getLogger(KreiranjePacijentaGUI.class);
 	
 	/**
@@ -46,7 +47,7 @@ public class KreiranjePacijentaGUI {
 	 */
 	public KreiranjePacijentaGUI() {
 		initialize();
-		dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		dateFormat = "dd-MM-yyyy";
 		frmRegistracijaNovogPacijenta.setVisible(true);
 		
 	}
@@ -106,14 +107,17 @@ public class KreiranjePacijentaGUI {
 				try {
 					String imeIPrezime = textField.getText();
 					String brojTelefona = textField_2.getText();
-					Date datumRodjenja = dateFormat.parse(textField_3.getText());
+					Date datumRodjenja = Validator.ValidAndParse(dateFormat, textField_3.getText());
 					String opis = textPane.getText();
 
 					if(imeIPrezime.isEmpty())
 						throw new Exception("Morate unijeti ime i prezime!");
 					if(brojTelefona.isEmpty())
 						throw new Exception("Morate unijeti broj telefona!");
-					
+					if(!Validator.isPhoneNumber(brojTelefona))
+						throw new Exception("Broj telefona mora imati minimalno 6 cifara i ne smije imati drugih znakova osim početnog +");
+					if(datumRodjenja.after(new Date()))
+						throw new Exception("Nije moguć datum rođenja u budućnosti.");
 					
 					NoviPacijentVM pacijent = new NoviPacijentVM();
 					pacijent.setImeIPrezime(imeIPrezime);
@@ -142,7 +146,7 @@ public class KreiranjePacijentaGUI {
 
 				} catch (ParseException e1) {
 					JOptionPane.showMessageDialog(frmRegistracijaNovogPacijenta,
-							"Datum unesite u formatu: dd-mm-ggg", "Greška!",
+							e1.getMessage(), "Greška!",
 							JOptionPane.ERROR_MESSAGE);
 					logger.debug("Pogrešno unesen datum", e1);
 				} catch (Exception e2) {

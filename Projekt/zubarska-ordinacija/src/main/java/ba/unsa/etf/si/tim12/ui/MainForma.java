@@ -134,7 +134,7 @@ public class MainForma {
 				"Tab za manipulaciju podacima o pacijentima");
 		p3.setLayout(new MigLayout("", "[123px][][]", "[23px][][]"));
 
-		JButton btnPacijenti = new JButton("Prikaz pacijenta");
+		JButton btnPacijenti = new JButton("Prikaz pacijenata");
 		btnPacijenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PacijentiGUI();

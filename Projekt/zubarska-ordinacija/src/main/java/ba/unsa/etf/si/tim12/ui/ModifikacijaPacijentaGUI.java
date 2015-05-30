@@ -20,6 +20,7 @@ import org.hibernate.Session;
 import ba.unsa.etf.si.tim12.bll.service.PacijentManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.Validator;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ModifikacijaPacijentaGUI {
@@ -37,8 +39,9 @@ public class ModifikacijaPacijentaGUI {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextPane textPane;
-	private long pacijentId;
-	private DateFormat dateFormat;
+	//private long pacijentId;
+	private String dateFormat;
+	private PacijentVM pacijent;
 	static final Logger logger = Logger
 			.getLogger(ModifikacijaPacijentaGUI.class);
 
@@ -50,15 +53,17 @@ public class ModifikacijaPacijentaGUI {
 	public ModifikacijaPacijentaGUI(PacijentVM pacijentVM) {
 		initialize();
 
-		dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-		pacijentId = pacijentVM.getId();
+		dateFormat = "dd-MM-yyyy";
+		
+		//pacijentId = pacijentVM.getId();
 
 		textField.setText(pacijentVM.getImePrezime());
 		textField_2.setText(pacijentVM.getBrojTelefona());
-		textField_3.setText(dateFormat.format(pacijentVM.getDatumRodjenja()));
+		textField_3.setText(Validator.formatDate(dateFormat, pacijentVM.getDatumRodjenja()));
 		textPane.setText(pacijentVM.getOpis());
 
+		pacijent = pacijentVM;
+		
 		frmModifikacijaPacijenta.setVisible(true);
 	}
 
@@ -126,17 +131,20 @@ public class ModifikacijaPacijentaGUI {
 				try {
 					String imeIPrezime = textField.getText();
 					String brojTelefona = textField_2.getText();
-					Date datumRodjenja = dateFormat.parse(textField_3.getText());
+					Date datumRodjenja = Validator.ValidAndParse(dateFormat, textField_3.getText());
+					
 					String opis = textPane.getText();
 
 					if(imeIPrezime.isEmpty())
 						throw new Exception("Morate unijeti ime i prezime!");
 					if(brojTelefona.isEmpty())
 						throw new Exception("Morate unijeti broj telefona!");
-					
-					
-					PacijentVM pacijent = new PacijentVM();
-					pacijent.setId(pacijentId);
+					if(!Validator.isPhoneNumber(brojTelefona))
+						throw new Exception("Broj telefona mora imati minimalno 6 cifara i ne smije imati drugih znakova osim početnog +");
+					if(datumRodjenja.after(new Date()))
+						throw new Exception("Nije moguć datum rođenja u budućnosti.");
+					//PacijentVM pacijent = new PacijentVM();
+					//pacijent.setId(pacijentId);
 					pacijent.setImePrezime(imeIPrezime);
 					pacijent.setBrojTelefona(brojTelefona);
 					pacijent.setDatumRodjenja(datumRodjenja);
@@ -153,6 +161,9 @@ public class ModifikacijaPacijentaGUI {
 								"Pacijent uspješno modificiran",
 								"Obavještenje",
 								JOptionPane.INFORMATION_MESSAGE);
+						
+						frmModifikacijaPacijenta.dispatchEvent(new WindowEvent(
+								frmModifikacijaPacijenta, WindowEvent.WINDOW_CLOSING));
 					} else {
 						JOptionPane.showMessageDialog(frmModifikacijaPacijenta,
 								"Pacijent ne postoji", "Greška!",
@@ -161,7 +172,7 @@ public class ModifikacijaPacijentaGUI {
 
 				} catch (ParseException e1) {
 					JOptionPane.showMessageDialog(frmModifikacijaPacijenta,
-							"Datum unesite u formatu: dd-mm-yyyy", "Greška!",
+							e1.getMessage(), "Greška!",
 							JOptionPane.ERROR_MESSAGE);
 					logger.debug("Pogrešno unesen datum", e1);
 				} catch (Exception e2) {
