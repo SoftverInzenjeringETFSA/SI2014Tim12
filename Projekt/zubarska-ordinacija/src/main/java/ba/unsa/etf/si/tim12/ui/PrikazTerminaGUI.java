@@ -101,6 +101,8 @@ public class PrikazTerminaGUI {
 					}
 					lista.add(ter.get(i));
 					PacijentManager pm = new PacijentManager(sess);
+					long h = ter.get(i).getPacijentId();
+					System.out.println(h);
 					PrikazPacijentaVM pvm = pm.dajPacijenta(ter.get(i).getPacijentId());
 					dm.addRow(new Object [] {sdf.format(ter.get(i).getVrijeme()), pvm.getImeIPrezime(), ter.get(i).getDoktor()});
 				}

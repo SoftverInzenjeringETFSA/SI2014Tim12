@@ -13,14 +13,14 @@ public class TerminVM {
 	{
 		
 	}
-	
+	//t.id, t.doktor, t.vrijeme, t.otkazano, t.pacijentId)
 	public TerminVM(long id, String doktor, Date vrijeme, boolean otkazan, long pacijentId)
 	{
 		setId(id);
 		setDoktor(doktor);
 		setVrijeme(vrijeme);
 		setOtkazan(otkazan);
-		
+		setPacijentId(pacijentId);
 	}
 
 	public long getId() {
