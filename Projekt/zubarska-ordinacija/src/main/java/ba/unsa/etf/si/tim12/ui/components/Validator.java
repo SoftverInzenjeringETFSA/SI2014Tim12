@@ -36,7 +36,8 @@ public class Validator {
 		return phone.matches("^\\+??\\d{6,}$");
 	}
 	
-	public static void ValidateName(String text) throws Exception{
+	
+	public static void ValidateName(String text, boolean minimu3Letters) throws Exception{
 		if(text.length() < 3)
 			throw new Exception("Ime mora imati najmanje 3 karaktera");
 		if(!text.matches("^[a-zA-Z \\.ćĆčČšŠđŠžŽ]*$"))
@@ -45,6 +46,5 @@ public class Validator {
 			throw new Exception("Ime ne može imati duple razmake.");
 		if(text.matches("^.*([\\. ]\\.).*$"))
 			throw new Exception("Ime ne može imati duplu tačku.");
-		
 	}
 }
