@@ -42,6 +42,7 @@ import ba.unsa.etf.si.tim12.bll.viewmodel.PrikazPacijentaVM;
 import ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
 import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
+import ba.unsa.etf.si.tim12.ui.components.Validator;
 
 public class Posjete {
 
@@ -319,7 +320,22 @@ public class Posjete {
 				
 				return;
 			}
-			
+			Date d = null;
+			try {
+			d = Validator.ValidAndParse ("d-M-yyyy HH:mm", textFieldVrijeme.getText());
+			}
+			catch (ParseException ee)
+			{
+				JOptionPane.showMessageDialog(dlgPosjeteRegistracija, ee.getMessage(), 
+						"Greška!", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if (d.after(new Date()))
+			{
+				JOptionPane.showMessageDialog(dlgPosjeteRegistracija, "Ne možete registrirati posjetu u budućnosti!?", 
+						"Greška!", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			NovaPosjetaVM posjeta = new NovaPosjetaVM();
 			
 			posjeta.setPacijentId(((PacijentVM) comboBoxPacijent.getSelectedItem()).getId());
@@ -337,11 +353,10 @@ public class Posjete {
 			PosjetaManager pManager = new PosjetaManager(sess);
 			
 			pManager.dodajNovuPosjetu(posjeta);
-			ResetujPolja();
-			OsvjeziTable();
 			
 			JOptionPane.showMessageDialog(dlgPosjeteRegistracija, "Uspješno dodana posjeta", 
 					"Obavještenje", JOptionPane.INFORMATION_MESSAGE);
+			ResetujPolja();
 		}  catch (ParseException e1) {
 			JOptionPane.showMessageDialog(dlgPosjeteRegistracija,
 					"Datum unesite u formatu: dd-mm-gggg hh:mm. (dani-mjeseci-godine sati:minute)", "Greška!",
