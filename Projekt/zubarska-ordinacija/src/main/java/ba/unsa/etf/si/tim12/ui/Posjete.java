@@ -253,6 +253,7 @@ public class Posjete {
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(202);
 		table.getColumnModel().getColumn(1).setPreferredWidth(80);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		dlgPosjeteRegistracija.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{comboBoxPacijent, textFieldUkCijena, btnDodajPosjetu, lblInformacijeOPacijentu, separator_pacijent, lblPacijent, lblDijagnoza, lblInformacijeOZahvatu, separator_zahvat, lblUkupnaCijena, dlgPosjeteRegistracija.getContentPane()}));
 	}

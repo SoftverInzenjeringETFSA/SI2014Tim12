@@ -64,6 +64,7 @@ public class PrikazMaterijalaGUI {
 		table.getColumnModel().getColumn(0).setPreferredWidth(29);
 		table.getColumnModel().getColumn(1).setPreferredWidth(91);
 		table.getColumnModel().getColumn(1).setMinWidth(2);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 
 		JLabel lblPretraivanjePo = new JLabel(

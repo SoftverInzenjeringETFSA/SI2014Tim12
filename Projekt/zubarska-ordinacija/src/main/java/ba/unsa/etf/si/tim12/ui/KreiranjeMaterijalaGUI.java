@@ -100,23 +100,30 @@ public class KreiranjeMaterijalaGUI {
 		JButton btnKreiraj = new JButton("Kreiraj");
 		btnKreiraj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (jed_cijena.getText().isEmpty()) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+				if (jed_cijena.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
 						"Unesite cijenu", "Greška!",
-						JOptionPane.ERROR_MESSAGE); return;}
+						JOptionPane.ERROR_MESSAGE); 
+					return;
+				}
 				
-				if (materijal.getText().isEmpty()) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+				if (materijal.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
 						"Unesite naziv materijala", "Greška!",
-						JOptionPane.ERROR_MESSAGE); return;} else
-				if (Double.parseDouble(jed_cijena.getText())<0) {JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
-						"Unijeli ste negativnu cijenu", "Greška!",
-						JOptionPane.ERROR_MESSAGE); return;}
-				
-		
-				
-				else {
+						JOptionPane.ERROR_MESSAGE); 
+					return;
+				} 
+			
 				Session sess = null;
 				// dodavanje pretrazenih materijala u tabelu
 				try {
+					if (Double.parseDouble(jed_cijena.getText())<0) {
+						JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+						"Unijeli ste negativnu cijenu", "Greška!",
+						JOptionPane.ERROR_MESSAGE); 
+						return;
+					}
+					
 					sess = HibernateUtil.getSessionFactory().openSession();
 					MaterijaliManager m = new MaterijaliManager(sess);
 					String jedinica= (String) comboBox.getSelectedItem();
@@ -125,13 +132,18 @@ public class KreiranjeMaterijalaGUI {
 					if (dodan) { JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
 							"Uspješno dodan materijal", "Obavještenje",
 							JOptionPane.INFORMATION_MESSAGE); }
+				} catch (NumberFormatException e1){ 
+					JOptionPane.showMessageDialog(frmDodavanjeMaterijala,
+							"Unesite decimalan broj za cijenu.", "Greška!",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
 					logger.debug(e2.getMessage(), e2);
 				} finally {
 					if (sess != null)
 						sess.close();
 				}
-				}
+				materijal.setText("");
+				jed_cijena.setText("");
 			}
 			
 		});

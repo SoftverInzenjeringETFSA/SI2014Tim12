@@ -97,6 +97,7 @@ public class IzvjestajPosjeteDSM {
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
 		table.getColumnModel().getColumn(0).setMinWidth(2);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
 		JLabel lblPretraivanjePo = new JLabel("Odaberite dan:");
