@@ -47,7 +47,7 @@ public class KreiranjePacijentaGUI {
 	 */
 	public KreiranjePacijentaGUI() {
 		initialize();
-		dateFormat = "dd-MM-yyyy";
+		dateFormat = "d-M-yyyy";
 		frmRegistracijaNovogPacijenta.setVisible(true);
 		
 	}
@@ -112,6 +112,7 @@ public class KreiranjePacijentaGUI {
 
 					if(imeIPrezime.isEmpty())
 						throw new Exception("Morate unijeti ime i prezime!");
+					Validator.ValidateName(imeIPrezime);
 					if(brojTelefona.isEmpty())
 						throw new Exception("Morate unijeti broj telefona!");
 					if(!Validator.isPhoneNumber(brojTelefona))
