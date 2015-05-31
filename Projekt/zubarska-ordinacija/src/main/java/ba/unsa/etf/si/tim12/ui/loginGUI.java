@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
@@ -40,6 +41,7 @@ public class loginGUI {
 	private JLabel lblLozinka;
 	private JPasswordField passwordField;
 	private JTextField textField;
+	private boolean uspjelaPrijava = false;
 	//Enil:
 	//Mijenjam ovo u static, mora biti da bih mogao provjeriti username iz drugih formu
 	//npr. iz PasswordMgr forme (da provjerim jel stari password tačan)
@@ -70,11 +72,13 @@ public class loginGUI {
 			public void keyPressed(KeyEvent evt) {
 				if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (Prijava()) {
+						uspjelaPrijava = true;
 						frmPrijava.dispatchEvent(new WindowEvent(frmPrijava,
 								WindowEvent.WINDOW_CLOSING));
 						frmPrijava.setVisible(false);
 						frmPrijava.dispose();
 					} else {
+						uspjelaPrijava = false;
 						JOptionPane.showMessageDialog(frmPrijava,
 								"Prijava nije uspjela", "Obavještenje",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -86,7 +90,19 @@ public class loginGUI {
 		frmPrijava.setResizable(false);
 		frmPrijava.setTitle("Prijava");
 		frmPrijava.setBounds(100, 100, 307, 149);
-		frmPrijava.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		//frmPrijava.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		frmPrijava.addWindowListener(new WindowListener() {
+			public void windowOpened(WindowEvent arg0) {}
+			public void windowIconified(WindowEvent arg0) {}
+			public void windowDeiconified(WindowEvent arg0) {}
+			public void windowDeactivated(WindowEvent arg0){}
+			public void windowClosing(WindowEvent arg0) { 
+				if(!uspjelaPrijava)
+					System.exit(0);
+			}
+			public void windowClosed(WindowEvent arg0) {}
+			public void windowActivated(WindowEvent arg0) {}
+		});
 		frmPrijava.getContentPane().setLayout(null);
 		frmPrijava.setLocationRelativeTo(null);
 
@@ -94,11 +110,13 @@ public class loginGUI {
 		prijavaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Prijava()) {
+					uspjelaPrijava = true;
 					frmPrijava.dispatchEvent(new WindowEvent(frmPrijava,
 							WindowEvent.WINDOW_CLOSING));
 					frmPrijava.setVisible(false);
 					frmPrijava.dispose();
 				} else {
+					uspjelaPrijava = false;
 					JOptionPane.showMessageDialog(frmPrijava,
 							"Prijava nije uspjela", "Obavještenje",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -140,7 +158,8 @@ public class loginGUI {
 		});
 		btnZatvori.setActionCommand("OK");
 		btnZatvori.setBounds(10, 86, 79, 23);
-		frmPrijava.getContentPane().add(btnZatvori);
+		//Ispraljven UIS issue, ako zatreba moze se lako button vratiti
+		//frmPrijava.getContentPane().add(btnZatvori);
 	}
 
 	// Implemetirati funkciju za prijavu

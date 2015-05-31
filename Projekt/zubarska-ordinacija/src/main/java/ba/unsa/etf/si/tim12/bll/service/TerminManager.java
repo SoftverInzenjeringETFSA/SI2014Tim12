@@ -69,7 +69,7 @@ public class TerminManager {
 		
 		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM(t.id, t.doktor, t.vrijeme, t.otkazano, t.pacijentId) "
 				+ "from Termin t "
-				+ "where t.vrijeme BETWEEN :date1 AND :date2";
+				+ "where t.vrijeme BETWEEN :date1 AND :date2 and t.otkazano = false";
 		Query q = session.createQuery(hql);
 		q.setDate("date1", date1);
 		q.setDate("date2", date2);
@@ -98,7 +98,7 @@ public class TerminManager {
 	
 	public ArrayList<TerminVM> dajSveTermine(){
 		String hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM(t.id, t.doktor, "+
-				"t.vrijeme, t.otkazano, t.pacijentId) FROM Termin t ";
+				"t.vrijeme, t.otkazano, t.pacijentId) FROM Termin t WHERE t.otkazano = false ";
 		Query query = session.createQuery(hql);
 		return new ArrayList<TerminVM>(query.list());
 	}
