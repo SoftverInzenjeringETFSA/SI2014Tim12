@@ -313,7 +313,7 @@ public class Posjete {
 	private void DodajPosjetu() {
 		Session sess = null;
 		try {
-			
+			Validator.ValidateNameDoktor(textFieldDoktor.getText(), true);
 			if(!(comboBoxPacijent.getSelectedItem() instanceof PacijentVM)){
 				JOptionPane.showMessageDialog(dlgPosjeteRegistracija, "Niste odabrali pacijenta!", 
 						"Greška!", JOptionPane.ERROR_MESSAGE);

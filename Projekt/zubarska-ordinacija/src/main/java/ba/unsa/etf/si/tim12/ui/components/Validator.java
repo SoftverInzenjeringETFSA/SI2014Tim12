@@ -47,4 +47,15 @@ public class Validator {
 		if(text.matches("^.*([\\. ]\\.).*$"))
 			throw new Exception("Ime ne može imati duplu tačku.");
 	}
+	
+	public static void ValidateNameDoktor(String text, boolean minimu3Letters) throws Exception{
+		if(text.length() < 3)
+			throw new Exception("Ime doktora mora imati najmanje 3 karaktera");
+		if(!text.matches("^[a-zA-Z \\.ćĆčČšŠđŠžŽ]*$"))
+			throw new Exception("Ime doktora može imati samo slova, razmake i tačke.");
+		if(text.matches("^.*[ ]{2,}.*$"))
+			throw new Exception("Ime doktora ne može imati duple razmake.");
+		if(text.matches("^.*([\\. ]\\.).*$"))
+			throw new Exception("Ime doktora ne može imati duplu tačku.");
+	}
 }
