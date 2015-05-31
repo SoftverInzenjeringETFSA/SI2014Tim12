@@ -271,7 +271,31 @@ public class KreiranjeZahvataGUI {
 					"Greška!", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		try {
+			String t = textKolicina.getText();
+			if (t.trim().equals(""))
+			{
+				JOptionPane.showMessageDialog(frmKreiranjeZahvata, "Nije popunjeno polje 'Količina'!", 
+						"Greška!", JOptionPane.ERROR_MESSAGE);
+				return;	
+			}
+			
+			double kolicina = Double.parseDouble(t);
+			if (kolicina < 0)
+			{
+				JOptionPane.showMessageDialog(frmKreiranjeZahvata, "Količina ne može biti negativna'!", 
+						"Greška!", JOptionPane.ERROR_MESSAGE);
+				return;	
+			}				
+		}
+		catch (NumberFormatException ee)
+		{
+			JOptionPane.showMessageDialog(frmKreiranjeZahvata, "Za količinu nije odabran validan broj!", 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+			return;	
 		
+		}
+				
 		MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
 		TipZahvataMaterijalVM m = new TipZahvataMaterijalVM();
 		m.setMaterijalId(vm.getId());
