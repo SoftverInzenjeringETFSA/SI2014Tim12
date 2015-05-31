@@ -78,6 +78,7 @@ public class PrikazZahvataGUI {
 				"ID", "Naziv", "Cijena"
 			}
 		));
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
 		textField = new JTextField();

@@ -145,8 +145,9 @@ public class PrikazTerminaGUI {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		dt = new DefaultTableModel(new String [] {"Vrijeme", "Pacijent", "Doktor"}, 0);
+		dt = new UneditableTableModel(new String [] {"Vrijeme", "Pacijent", "Doktor"}, 0);
 		table.setModel(dt);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
 		JLabel lblDoktor = new JLabel("Doktor:");
@@ -186,6 +187,9 @@ public class PrikazTerminaGUI {
 					}
 					
 				} catch (Exception e) {
+					JOptionPane.showMessageDialog(frame,
+							e.getMessage(), "Greška",
+							JOptionPane.INFORMATION_MESSAGE);
 					logger.debug(e.getMessage(), e);
 				} finally {
 					if (sess != null)

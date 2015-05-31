@@ -84,6 +84,8 @@ public class IzvjestajPacijent {
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
 		table.getColumnModel().getColumn(0).setMinWidth(2);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		
 		scrollPane.setViewportView(table);
 		
 		JButton btnModifikacijaMaterijala = new JButton("Prikaži");
