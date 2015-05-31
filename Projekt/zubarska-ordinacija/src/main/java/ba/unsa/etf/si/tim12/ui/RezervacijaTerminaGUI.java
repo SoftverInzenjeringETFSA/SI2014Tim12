@@ -179,6 +179,12 @@ public class RezervacijaTerminaGUI {
 						"Greška!", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			if (vrijeme.before(new Date()))
+			{
+				JOptionPane.showMessageDialog(dlgR, "Ne možete rezervirati termin u prošlosti!", 
+						"Greška!", JOptionPane.ERROR_MESSAGE);
+				return;	
+			}
 			PacijentVM pacijent = (PacijentVM) comboBoxPacijent.getSelectedItem();
 			
 			
