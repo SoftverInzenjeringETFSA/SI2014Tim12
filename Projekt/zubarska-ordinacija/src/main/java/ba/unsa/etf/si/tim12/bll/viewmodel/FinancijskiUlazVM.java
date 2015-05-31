@@ -10,8 +10,7 @@ public class FinancijskiUlazVM {
 	private int ukupnoPosjeta;
 	private ArrayList<FinancijskiUlazRowVM> listaFinancijskiUlazRowVM;
 
-	public FinancijskiUlazVM(double ukupnaCijena, long ukupnoPosjeta) {
-		this.ukupnaCijena = ukupnaCijena;
+	public FinancijskiUlazVM(long ukupnoPosjeta) {
 		this.ukupnoPosjeta = (int) ukupnoPosjeta;
 		listaFinancijskiUlazRowVM = new ArrayList<FinancijskiUlazRowVM>();
 	}
