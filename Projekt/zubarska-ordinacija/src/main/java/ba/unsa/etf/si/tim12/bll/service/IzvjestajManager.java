@@ -24,31 +24,59 @@ public class IzvjestajManager {
 	public ZahvatiPoDoktoruVM sviZahvatiPoDoktoru(String imeDoktora, Date vrijemeOd, Date vrijemeDo) {
 		
 		Transaction t = session.beginTransaction();
+		
+		Calendar calendar =  new GregorianCalendar();
+		calendar.setTime(vrijemeOd);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date1 = new java.sql.Date(calendar.getTime().getTime());
+		
+		calendar.setTime(vrijemeDo);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date2 = new java.sql.Date(calendar.getTime().getTime());
+		
 		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruRowVM(z.cijena, z.id, pac.imeIPrezime, t.naziv, pos.vrijeme) "
 				+ "from Posjeta pos, Pacijent pac, ObavljeniZahvat z, TipZahvata t where pos.id = z.posjetaId and "
 				+ "t.id = z.zahvatId and pac.id = pos.pacijentId and pos.doktor = :doktor and "
 				+ "pos.vrijeme BETWEEN :date1 AND :date2";
 		Query q = session.createQuery(hql);
 		q.setParameter("doktor", imeDoktora);
-		q.setDate("date1", vrijemeOd);
-		q.setDate("date2", vrijemeDo);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
 		
 		ArrayList<ZahvatiPoDoktoruRowVM> rez = new ArrayList<ZahvatiPoDoktoruRowVM>(
 				q.list());
 		
-		hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruVM(COUNT(distinct p.id), sum(z.cijena)) "
-				+ "FROM Posjeta p, ObavljeniZahvat z "
-				+ "WHERE p.doktor = :doktor and "
-				+ "z.posjetaId = p.id";
+		hql = "Select new ba.unsa.etf.si.tim12.bll.viewmodel.ZahvatiPoDoktoruVM(COUNT(distinct p.id)) "
+				+ "FROM Posjeta p "
+				+ "WHERE p.doktor = :doktor";
+		
 		q = session.createQuery(hql);
 		q.setParameter("doktor", imeDoktora);
 		List<Object> r = q.list();
+		
+
+		double cijena = 0;
+		
+		for(ZahvatiPoDoktoruRowVM z : rez){
+		 cijena = cijena + z.getCijena();	
+		}
 				
 	      ZahvatiPoDoktoruVM rezultat = (ZahvatiPoDoktoruVM) r.get(0);
 	      rezultat.setDoktor(imeDoktora);
 	      rezultat.setVrijemeDo(vrijemeDo);
 	      rezultat.setVrijemeOd(vrijemeOd);
 	      rezultat.setZahvati(rez);
+	      rezultat.setUkupnaCijena(cijena);
 	    
 	    t.commit();
 		return rezultat;
@@ -56,12 +84,35 @@ public class IzvjestajManager {
 	
 	public FinancijskiUlazVM financijskiUlaz(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM(sum(z.cijena), count(DISTINCT p.id))"
-				+ " from ObavljeniZahvat z, Posjeta p where p.id = z.posjetaId "
-				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
+		
+		Calendar calendar =  new GregorianCalendar();
+		calendar.setTime(vrijemeOd);		
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date1 = new java.sql.Date(calendar.getTime().getTime());
+		
+		calendar.setTime(vrijemeDo);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date2 = new java.sql.Date(calendar.getTime().getTime());
+		
+		
+		
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.FinancijskiUlazVM(count(DISTINCT p.id))"
+				+ " from Posjeta p "
+				+ "where p.vrijeme between :vrijemeOd and :vrijemeDo";
 		Query q = session.createQuery(hql);
-		q.setDate("vrijemeOd", vrijemeOd);
-		q.setDate("vrijemeDo", vrijemeDo);
+		q.setParameter("vrijemeOd", date1);
+		q.setParameter("vrijemeDo", date2);
+		
 		FinancijskiUlazVM rez = new FinancijskiUlazVM();
 		rez.setUkupnaCijena(0);
 		rez.setUkupnoPosjeta(0);
@@ -80,12 +131,19 @@ public class IzvjestajManager {
 				+ "where pos.id = z.posjetaId and pac.id = pos.pacijentId and t.id = z.zahvatId "
 				+ "and pos.vrijeme between :vrijemeOd and :vrijemeDo";
 		q = session.createQuery(hql);
-		q.setDate("vrijemeOd", vrijemeOd);
-		q.setDate("vrijemeDo", vrijemeDo);
+		q.setParameter("vrijemeOd", date1);
+		q.setParameter("vrijemeDo", date2);
 		
 		ArrayList<FinancijskiUlazRowVM> r = new ArrayList<FinancijskiUlazRowVM>(q.list());
 		
+		double cijena = 0;
+		
+		for(FinancijskiUlazRowVM f : r){
+		 cijena = cijena + f.getCijena();	
+		}
+		
 		rez.setFinancijskiUlazRowVM(r);
+		rez.setUkupnaCijena(cijena);
 		
 		t.commit();
 		return rez;
@@ -93,42 +151,54 @@ public class IzvjestajManager {
 
 	public PotMaterijaliVM potroseniMaterijali(Date vrijemeOd, Date vrijemeDo) {
 		Transaction t = session.beginTransaction();
-		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliVM(sum(m.cijena * u.kolicina)) "
-				+ "from Materijal m, UtroseniMaterijal u, ObavljeniZahvat o, Posjeta p "
-				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
-				+ "and p.vrijeme BETWEEN :vrijemeOd AND :vrijemeDo";
-		Query q = session.createQuery(hql);
-		q.setDate("vrijemeOd", vrijemeOd);
-		q.setDate("vrijemeDo", vrijemeDo);		
+
+		Calendar calendar =  new GregorianCalendar();
+		calendar.setTime(vrijemeOd);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date1 = new java.sql.Date(calendar.getTime().getTime());
+		
+		calendar.setTime(vrijemeDo);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date2 = new java.sql.Date(calendar.getTime().getTime());
+		
 		
 		PotMaterijaliVM rez = new PotMaterijaliVM();
-		rez.setUkupnaCijena(0);
 		rez.setVrijemeDo(vrijemeDo);
 		rez.setVrijemeOd(vrijemeOd);
-		
-		if (!q.list().isEmpty())
-			rez = (PotMaterijaliVM) q.list().get(0);
-		else
-			return rez;
-		
-
-		rez.setVrijemeDo(vrijemeDo);
-		rez.setVrijemeOd(vrijemeOd);
-		
-		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.cijena, u.kolicina, m.mjernaJedinica, m.naziv, u.kolicina*m.cijena)"
+				
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.PotMaterijaliRowVM(m.id, m.cijena, u.kolicina, m.mjernaJedinica, m.naziv, u.kolicina*m.cijena)"
 				+ "from Materijal m, UtroseniMaterijal u, Posjeta p, ObavljeniZahvat o "
 				+ "where m.id = u.materijalId and o.id = u.obavljeniZahvatId and p.id = o.posjetaId "
 				+ "and p.vrijeme between :vrijemeOd and :vrijemeDo";
 		
-		q = session.createQuery(hql);
-		q.setDate("vrijemeOd", vrijemeOd);
-		q.setDate("vrijemeDo", vrijemeDo);
+		Query q = session.createQuery(hql);
+		q.setParameter("vrijemeOd", date1);
+		q.setParameter("vrijemeDo", date2);
+		
 		
 		ArrayList<PotMaterijaliRowVM> r = new ArrayList<PotMaterijaliRowVM>(q.list());
 		
 		t.commit();
 		
+         double cijena = 0;
+		
+		for(PotMaterijaliRowVM m : r){
+		 cijena = cijena + m.getUkupnaCijena();	
+		}
+		
+		
 		rez.setMaterijali(r);
+		rez.setUkupnaCijena(cijena);
 		
 		return rez;
 	}
@@ -167,17 +237,7 @@ public class IzvjestajManager {
 		
 		Calendar calendar =  new GregorianCalendar();
 		calendar.setTime(vrijeme);
-		//"dd/MM/yy HH:mm a"
-		
-		//SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		
-		//Date date = f.parse(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 00:00");
-        //Date date2 = f.parse(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 23:59");
-        
-        //String date1 = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 00:00";
-        //String date2 = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH)+ " 23:59";
-        
-		
+	
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);

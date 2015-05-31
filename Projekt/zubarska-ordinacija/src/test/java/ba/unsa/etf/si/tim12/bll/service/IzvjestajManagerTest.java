@@ -86,8 +86,8 @@ public class IzvjestajManagerTest {
 			Calendar date2 = new GregorianCalendar();
 			date1.setTime(vrijeme);
 			date2.setTime(vrijeme);
-			date1.set(Calendar.MONTH, date1.get(Calendar.MONTH) - 1);
-			date2.set(Calendar.MONTH, date2.get(Calendar.MONTH) + 1);
+			date1.add(Calendar.HOUR_OF_DAY,  - 1);
+			date2.add(Calendar.HOUR_OF_DAY,  1);
 
 			vrijemeOd = date1.getTime();
 			vrijemeDo = date2.getTime();

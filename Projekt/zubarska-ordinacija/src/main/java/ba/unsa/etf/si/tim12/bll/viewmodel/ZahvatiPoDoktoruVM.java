@@ -11,9 +11,8 @@ public class ZahvatiPoDoktoruVM {
 	private ArrayList<ZahvatiPoDoktoruRowVM> zahvati;
 	
 	
-	public ZahvatiPoDoktoruVM(long ukupnoPosjeta, double ukupnaCijena) {
+	public ZahvatiPoDoktoruVM(long ukupnoPosjeta) {
 		this.setUkupnoPosjeta((int) ukupnoPosjeta);
-		this.setUkupnaCijena(ukupnaCijena);
 		zahvati = new ArrayList<ZahvatiPoDoktoruRowVM>();
 	}
 
