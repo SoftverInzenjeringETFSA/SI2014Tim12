@@ -12,6 +12,7 @@ import ba.unsa.etf.si.tim12.bll.service.TerminManager;
 import ba.unsa.etf.si.tim12.bll.viewmodel.NoviTermin;
 import ba.unsa.etf.si.tim12.bll.viewmodel.PacijentVM;
 import ba.unsa.etf.si.tim12.dal.HibernateUtil;
+import ba.unsa.etf.si.tim12.ui.components.Validator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -167,9 +168,17 @@ public class RezervacijaTerminaGUI {
 		}
 		
 		try{
-			DateFormat form2 = new SimpleDateFormat("hh-MM-yyyy");
-			
-			Date vrijeme = formater.parse(form2.format(monthView.getSelectionDate()) + " " + textVrijeme.getText());
+			DateFormat form2 = new SimpleDateFormat("d-M-yyyy");
+			Date vrijeme = null;
+			try {
+			vrijeme = Validator.ValidAndParse("d-M-yyyy HH:mm", form2.format(monthView.getSelectionDate()) + " " + textVrijeme.getText());
+			}
+			catch (ParseException ee)
+			{
+				JOptionPane.showMessageDialog(dlgR, ee.getMessage(), 
+						"Greška!", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			PacijentVM pacijent = (PacijentVM) comboBoxPacijent.getSelectedItem();
 			
 			
