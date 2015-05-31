@@ -274,6 +274,51 @@ public class IzvjestajManager {
 		return posjete;
 	}
 	
+	public OdradjenePosjeteVM odradjenePosjete(Date vrijemeOd, Date vrijemeDo) throws Exception {
+		Transaction t = session.beginTransaction();
+		
+		Calendar calendar =  new GregorianCalendar();
+		calendar.setTime(vrijemeOd);
+	
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		java.sql.Date date1 = new java.sql.Date(calendar.getTime().getTime());
+		
+		calendar.setTime(vrijemeDo);
+		
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 0);
+    	java.sql.Date date2 = new java.sql.Date(calendar.getTime().getTime());
+
+		String hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteVM(count(DISTINCT id)) from Posjeta "
+				+ "where vrijeme BETWEEN :date1 AND :date2)";
+		Query q = session.createQuery(hql);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
+		
+		
+		OdradjenePosjeteVM posjete = (OdradjenePosjeteVM) q.list().get(0);
+		posjete.setVrijeme(vrijemeOd);
+		posjete.setVrijemeDo(vrijemeDo);
+		
+		hql = "select new ba.unsa.etf.si.tim12.bll.viewmodel.OdradjenePosjeteRowVM(pos.id, pac.imeIPrezime, pos.doktor, pos.vrijeme) "
+				+ "from Posjeta pos, Pacijent pac where pac.id = pos.pacijentId and pos.vrijeme BETWEEN :date1 AND :date2";
+		q = session.createQuery(hql);
+		q.setParameter("date1", date1);
+		q.setParameter("date2", date2);
+		
+		ArrayList<OdradjenePosjeteRowVM> posjeteRed = new ArrayList<OdradjenePosjeteRowVM>(q.list());
+		t.commit();
+		
+		posjete.setOdradjenePosjete(posjeteRed);
+		return posjete;
+	}
+	
 	
 
 }

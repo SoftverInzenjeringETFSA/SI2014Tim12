@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class OdradjenePosjeteVM {
 	private Date vrijeme;
+	private Date vrijemeDo;
 	private int ukupnoPosjeta;
 	private ArrayList<OdradjenePosjeteRowVM> odradjenePosjete;
 
@@ -19,9 +20,17 @@ public class OdradjenePosjeteVM {
 	public Date getVrijeme() {
 		return vrijeme;
 	}
+	
+	public Date getVrijemeDo() {
+		return vrijemeDo;
+	}
 
 	public void setVrijeme(Date vrijeme) {
 		this.vrijeme = new Date(vrijeme.getTime());
+	}
+	
+	public void setVrijemeDo(Date vrijeme) {
+		this.vrijemeDo = new Date(vrijeme.getTime());
 	}
 
 	public int getUkupnoPosjeta() {

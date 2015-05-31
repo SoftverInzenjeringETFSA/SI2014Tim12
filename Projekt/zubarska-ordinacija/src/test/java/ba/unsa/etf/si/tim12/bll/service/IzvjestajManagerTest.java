@@ -229,17 +229,32 @@ public class IzvjestajManagerTest {
 		try{
 			session = HibernateUtil.getSessionFactory().openSession();
 			IzvjestajManager mngr = new IzvjestajManager(session);
-			SimpleDateFormat format = new SimpleDateFormat();
-			String DateToStr = format.format(vrijeme);
-			
-			String d = ("Default pattern: " + DateToStr);
-			
 			
 			 
 
 			OdradjenePosjeteVM posjete = mngr.odradjenePosjetePoDanu(vrijeme);
-			d = posjete.getVrijeme().toString();
-			DateToStr = format.format(posjete.getVrijeme());
+		assertEquals(1, posjete.getUkupnoPosjeta());
+			assertEquals(p.getId(), posjete.getOdradjenePosjete().get(0).getId());
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		finally{
+			if(session != null)
+				session.close();
+		}
+	}
+	@Test
+	public void testOdradjenePosjete() throws Exception {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			IzvjestajManager mngr = new IzvjestajManager(session);	
+			
+			 
+
+			OdradjenePosjeteVM posjete = mngr.odradjenePosjete(vrijemeOd, vrijemeDo);
 			assertEquals(1, posjete.getUkupnoPosjeta());
 			assertEquals(p.getId(), posjete.getOdradjenePosjete().get(0).getId());
 		}
