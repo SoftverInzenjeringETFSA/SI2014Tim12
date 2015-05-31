@@ -353,10 +353,11 @@ public class Posjete {
 			PosjetaManager pManager = new PosjetaManager(sess);
 			
 			pManager.dodajNovuPosjetu(posjeta);
-			
+			ResetujPolja();
+			OsvjeziTable();
 			JOptionPane.showMessageDialog(dlgPosjeteRegistracija, "Uspješno dodana posjeta", 
 					"Obavještenje", JOptionPane.INFORMATION_MESSAGE);
-			ResetujPolja();
+			
 		}  catch (ParseException e1) {
 			JOptionPane.showMessageDialog(dlgPosjeteRegistracija,
 					"Datum unesite u formatu: dd-mm-gggg hh:mm. (dani-mjeseci-godine sati:minute)", "Greška!",
