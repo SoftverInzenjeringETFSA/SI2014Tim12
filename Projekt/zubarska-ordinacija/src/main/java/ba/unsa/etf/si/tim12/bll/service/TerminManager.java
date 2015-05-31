@@ -60,12 +60,19 @@ public class TerminManager {
 	public  ArrayList<TerminVM> nadjiPoVremenu(Date vrijemePoc, Date vrijemeKraj) {
 		Transaction t = session.beginTransaction();
 		
+		Calendar calendar =  new GregorianCalendar();
+		calendar.setTime(vrijemePoc);
+		java.sql.Date date1 = new java.sql.Date(calendar.getTime().getTime());
+		
+		calendar.setTime(vrijemeKraj);
+		java.sql.Date date2 = new java.sql.Date(calendar.getTime().getTime());
+		
 		String hql ="Select new ba.unsa.etf.si.tim12.bll.viewmodel.TerminVM(t.id, t.doktor, t.vrijeme, t.otkazano, t.pacijentId) "
 				+ "from Termin t "
 				+ "where t.vrijeme BETWEEN :date1 AND :date2";
 		Query q = session.createQuery(hql);
-		q.setDate("date1", vrijemePoc);
-		q.setDate("date2", vrijemeKraj);
+		q.setDate("date1", date1);
+		q.setDate("date2", date2);
 	  
 	    ArrayList<TerminVM> lista1 = new ArrayList<TerminVM>(q.list());
 	    

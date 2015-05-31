@@ -240,8 +240,8 @@ public class IzvjestajManagerTest {
 			OdradjenePosjeteVM posjete = mngr.odradjenePosjetePoDanu(vrijeme);
 			d = posjete.getVrijeme().toString();
 			DateToStr = format.format(posjete.getVrijeme());
-			assertEquals(0, posjete.getUkupnoPosjeta());
-			//assertEquals(p.getId(), posjete.getOdradjenePosjete().get(0).getId());
+			assertEquals(1, posjete.getUkupnoPosjeta());
+			assertEquals(p.getId(), posjete.getOdradjenePosjete().get(0).getId());
 		}
 		catch(Exception e)
 		{
