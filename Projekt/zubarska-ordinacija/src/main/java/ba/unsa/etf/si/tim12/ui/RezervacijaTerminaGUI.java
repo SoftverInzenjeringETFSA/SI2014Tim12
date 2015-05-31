@@ -168,6 +168,7 @@ public class RezervacijaTerminaGUI {
 		}
 		
 		try{
+			Validator.ValidateNameDoktor(textDoktor.getText(), true);
 			DateFormat form2 = new SimpleDateFormat("d-M-yyyy");
 			Date vrijeme = null;
 			try {
