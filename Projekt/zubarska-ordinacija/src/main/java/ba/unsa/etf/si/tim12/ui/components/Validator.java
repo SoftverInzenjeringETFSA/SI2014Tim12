@@ -40,7 +40,7 @@ public class Validator {
 	public static void ValidateName(String text, boolean minimu3Letters) throws Exception{
 		if(text.length() < 3)
 			throw new Exception("Ime mora imati najmanje 3 karaktera");
-		if(!text.matches("^[a-zA-Z \\.ćĆčČšŠđŠžŽ]*$"))
+		if(!text.matches("^[a-zA-Z \\.ćĆčČšŠđĐŠžŽ]*$"))
 			throw new Exception("Ime može imati samo slova, razmake i tačke.");
 		if(text.matches("^.*[ ]{2,}.*$"))
 			throw new Exception("Ime ne može imati duple razmake.");

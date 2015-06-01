@@ -53,7 +53,7 @@ public class Posjete {
 	private JTable table;
 	private JComboBox comboBoxPacijent;
 	private JTextPane textPane;
-	private DateFormat formater = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+	private String formater = "dd-MM-yyyy HH:mm";
 	private ArrayList<NoviObavljeniZahvatVM> obavljeniZahvati;
 		
 	/**
@@ -70,7 +70,7 @@ public class Posjete {
 		ResetujPolja();
 		
 		textFieldDoktor.setText(termin.getDoktor());
-		textFieldVrijeme.setText(formater.format(termin.getVrijeme()));
+		textFieldVrijeme.setText(Validator.formatDate(formater, termin.getVrijeme()));
 		
 		PostaviUsera(termin.getPacijentId());
 		
@@ -322,7 +322,7 @@ public class Posjete {
 			}
 			Date d = null;
 			try {
-			d = Validator.ValidAndParse ("d-M-yyyy HH:mm", textFieldVrijeme.getText());
+			d = Validator.ValidAndParse (formater, textFieldVrijeme.getText());
 			}
 			catch (ParseException ee)
 			{
@@ -344,7 +344,7 @@ public class Posjete {
 			if(posjeta.getDoktor().isEmpty())
 				throw new Exception("Morate unijeti ime doktora.");
 			
-			posjeta.setVrijeme(formater.parse(textFieldVrijeme.getText()));
+			posjeta.setVrijeme(Validator.ValidAndParse(formater, textFieldVrijeme.getText()));
 			posjeta.setDijagnoza(textPane.getText());
 			
 			posjeta.setObavljeniZahvati(obavljeniZahvati);

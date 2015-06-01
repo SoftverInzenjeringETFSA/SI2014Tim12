@@ -47,7 +47,7 @@ public class KreiranjePacijentaGUI {
 	 */
 	public KreiranjePacijentaGUI() {
 		initialize();
-		dateFormat = "d-M-yyyy";
+		dateFormat = "dd-MM-yyyy";
 		frmRegistracijaNovogPacijenta.setVisible(true);
 		
 	}
