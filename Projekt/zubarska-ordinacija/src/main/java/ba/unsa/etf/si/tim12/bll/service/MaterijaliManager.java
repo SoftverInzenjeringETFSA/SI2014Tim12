@@ -42,10 +42,23 @@ public class MaterijaliManager {
         Query q = session.createQuery(hql);
 		q.setParameter("id",id);
 
-        int result = q.executeUpdate();
+		int result = q.executeUpdate();
         if (result == 0) {
 	        return false;
-	    }	
+	    }
+		
+		hql = "DELETE MaterijalTipZahvata WHERE materijalId = :id";
+		q = session.createQuery(hql);
+		q.setParameter("id",id);
+
+		q.executeUpdate();	
+
+		hql = "DELETE UtroseniMaterijal WHERE materijalId = :id";
+		q = session.createQuery(hql);
+		q.setParameter("id",id);
+
+		q.executeUpdate();	
+
 
         t.commit();
         return true;

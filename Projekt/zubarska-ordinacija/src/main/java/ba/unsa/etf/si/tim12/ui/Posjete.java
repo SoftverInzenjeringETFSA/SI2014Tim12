@@ -63,7 +63,9 @@ public class Posjete {
 		initialize();
 		ResetujPolja();
 		
+		textFieldVrijeme.setText(Validator.formatDate(formater, new Date()));
 		dlgPosjeteRegistracija.setVisible(true);
+		
 	}
 	public Posjete(TerminVM termin) {
 		initialize();
