@@ -4,11 +4,13 @@
 <hibernate-configuration>
  <session-factory name="">
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tim12</property>
+ 
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+ 
   <property name="hibernate.hbm2ddl.auto">update</property>
+  <!-- <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tim12</property>
   <property name="hibernate.connection.username">EtfSI2014</property>
-  <property name="hibernate.connection.password">2014SIEtf</property>
+  <property name="hibernate.connection.password">2014SIEtf</property> -->
   <property name="hibernate.connection.CharSet">utf8</property>
   <property name="hibernate.connection.characterEncoding">utf-8</property>
   <property name="hibernate.connection.useUnicode">true</property>

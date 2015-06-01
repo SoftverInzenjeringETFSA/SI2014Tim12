@@ -186,7 +186,12 @@ public class TerminManagerTest {
 			ArrayList<TerminVM> termini = mng.nadjiPoVremenu(date1.getTime(), date2.getTime());
 			System.out.println("Evo ih: " + termini.size());
 			assertTrue(!termini.isEmpty());
-			assertEquals(dodaniTermini.get(0).getId(), termini.get(0).getId());
+			boolean any = false;
+			for (TerminVM terminVM : termini) {
+				if(terminVM.getId() == dodaniTermini.get(0).getId())
+					any = true;
+			}
+			assertTrue(any);
 		}
 		catch(Exception e){
 			throw e;
