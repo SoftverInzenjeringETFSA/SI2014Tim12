@@ -31,8 +31,10 @@ import java.awt.JobAttributes;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.swing.JTextField;
 
 
@@ -166,6 +168,8 @@ public class IzvjestajPacijent {
 		
 		Session sesija = null;
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		
 		try {
 			sesija = HibernateUtil.getSessionFactory().openSession();
 			
@@ -176,7 +180,7 @@ public class IzvjestajPacijent {
 			Object[][] data = new Object[redovi.size()][];
 			for(int i = 0; i < redovi.size(); i++){
 				data[i] = new Object[]{ redovi.get(i).getOpisZahvata(), redovi.get(i).getDijagnoza(), 
-						redovi.get(i).getDoktor(),redovi.get(i).getVrijeme()};
+						redovi.get(i).getDoktor(),sdf.format(redovi.get(i).getVrijeme())};
 			}
 			
 			String[] columns = new String[]{"Opis zahvata", "Dijagnoza", "Doktor", "Vrijeme posjete"};

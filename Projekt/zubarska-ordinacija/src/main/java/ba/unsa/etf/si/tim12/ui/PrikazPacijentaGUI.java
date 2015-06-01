@@ -64,7 +64,7 @@ public class PrikazPacijentaGUI {
 		initialize();
 
 		dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		textField.setText(pacijentVM.getImeIPrezime());
 		textField_2.setText(pacijentVM.getBrojTelefona());
 		textField_3.setText(dateFormat.format(pacijentVM.getDatumRodjenja()));
@@ -73,12 +73,12 @@ public class PrikazPacijentaGUI {
 		ArrayList<TerminVM>  ter = pacijentVM.getTermini();
 		for (int i = 0; i < pos.size(); ++i)
 		{
-			dt1.addRow(new Object [] {pos.get(i).getDoktor(), pos.get(i).getDijagnoza(), df.format(pos.get(i).getVrijeme())});
+			dt1.addRow(new Object [] {pos.get(i).getDoktor(), pos.get(i).getDijagnoza(), sdf.format(pos.get(i).getVrijeme())});
 		}
 		for (int i = 0; i < ter.size(); ++i)
 		{
 			dt2.addRow(new Object [] {ter.get(i).getDoktor(), 
-					df.format(ter.get(i).getVrijeme()), ter.get(i).isOtkazan() ? "da" : "ne"});
+					sdf.format(ter.get(i).getVrijeme()), ter.get(i).isOtkazan() ? "da" : "ne"});
 		}
 		frmPrikazPacijenta.setVisible(true);
 	}

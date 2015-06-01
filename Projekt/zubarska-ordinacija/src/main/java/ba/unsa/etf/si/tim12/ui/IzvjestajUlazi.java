@@ -34,6 +34,7 @@ import javax.swing.SpinnerDateModel;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
@@ -103,6 +104,7 @@ public class IzvjestajUlazi {
 				Date datumOd = (Date) spinnerOd.getValue();
 				Date datumDo = (Date) spinnerDo.getValue();
 				Session sesija = null;
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 				try {
 					sesija = HibernateUtil.getSessionFactory().openSession();
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
@@ -114,9 +116,11 @@ public class IzvjestajUlazi {
 					ArrayList<FinancijskiUlazRowVM> redovi = ulazi.getListaFinancijskiUlazRowVM();
 					Object[][] data = new Object[redovi.size()][];
 					
+					
+					
 					for(int i = 0; i < redovi.size(); i++){
 						data[i] = new Object[]{ redovi.get(i).getId(), redovi.get(i).getIme(), 
-								redovi.get(i).getImeZahvata(), redovi.get(i).getVrijemePosjete(), redovi.get(i).getCijena()};
+								redovi.get(i).getImeZahvata(), sdf.format(redovi.get(i).getVrijemePosjete()), redovi.get(i).getCijena()};
 					}
 					
 					String[] columns = new String[]{"ID", "Ime i prezime", "Zahvat", "Vrijeme posjete", "Cijena"};

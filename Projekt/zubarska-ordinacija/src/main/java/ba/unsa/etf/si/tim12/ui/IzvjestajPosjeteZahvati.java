@@ -34,6 +34,7 @@ import ba.unsa.etf.si.tim12.ui.components.UneditableTableModel;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -103,7 +104,8 @@ public class IzvjestajPosjeteZahvati {
 			public void actionPerformed(ActionEvent arg0) {
 				Date datumOd = (Date) spinnerOd.getValue();
 				Date datumDo = (Date) spinnerDo.getValue();
-				Session sesija = null;
+				Session sesija = null;				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 				try {
 					sesija = HibernateUtil.getSessionFactory().openSession();
 					IzvjestajManager izvjestaji = new IzvjestajManager(sesija);
@@ -116,7 +118,7 @@ public class IzvjestajPosjeteZahvati {
 								redovi.get(i).getId(),
 								redovi.get(i).getIme(), 
 								redovi.get(i).getNazivZahvata(),
-								redovi.get(i).getVrijemePosjete(),
+								sdf.format(redovi.get(i).getVrijemePosjete()),
 								redovi.get(i).getCijena()
 								};
 					}
