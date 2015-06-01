@@ -179,7 +179,14 @@ public class loginGUI {
 			username = lgvm.getUsername();
 
 			return m.provjeriPassword(lgvm);
+		} catch(ExceptionInInitializerError e){
+			JOptionPane.showMessageDialog(null, "Greška pri povezivanju s bazom", 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
+			return false;
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), 
+					"Greška!", JOptionPane.ERROR_MESSAGE);
 			logger.debug(e.getMessage(), e);
 			return false;
 		} finally {
