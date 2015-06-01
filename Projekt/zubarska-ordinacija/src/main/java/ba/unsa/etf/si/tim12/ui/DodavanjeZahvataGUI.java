@@ -182,7 +182,7 @@ public class DodavanjeZahvataGUI {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxMaterijal.getSelectedItem() instanceof MaterijalVM){
 					MaterijalVM vm = (MaterijalVM) comboBoxMaterijal.getSelectedItem();
-					textKolicina.setText(Double.toString(vm.getCijena()));
+					textKolicina.setText("");
 				}
 			}
 		});
